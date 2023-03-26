@@ -22,7 +22,7 @@ class OptionsState extends MusicBeatState {
 		'Apperance', 'Gameplay'
 	];
 	var curSelected:Int = 0;
-
+	public var isFreeplayItem:Bool = false;
 	override public function create() {
 		var bg = new FlxSprite().loadGraphic(('assets/images/menuDesat.png'));
 		bg.color = 0x340666;
@@ -33,7 +33,8 @@ class OptionsState extends MusicBeatState {
 
 		for (i in 0...menuItems.length) {
 			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, menuItems[i], true, false);
-			songText.isMenuItem = true;
+			songText.screenCenter(X);
+			songText.isFreeplayItem = true;
 			songText.targetY = i;
 			grpMenuShit.add(songText);
 		}
