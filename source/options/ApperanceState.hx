@@ -16,6 +16,8 @@ import flixel.util.FlxColor;
 class ApperanceState extends MusicBeatState {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
+	public var OldGraphics = Bool;
+
 	var menuItems:Array<String> = [
 		'Old Graphics'
 	];
@@ -56,6 +58,7 @@ class ApperanceState extends MusicBeatState {
 
 			switch (daSelected) {
 				case "Old Graphics":
+					OldGraphics = Bool;
 					trace("Fuck you");
 			}
 		}
