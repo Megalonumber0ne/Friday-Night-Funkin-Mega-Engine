@@ -1,20 +1,15 @@
 package;
 
-import flixel.graphics.FlxGraphic;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import Controls.Control;
-import flixel.addons.transition.TransitionData;
-import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
-import flixel.math.FlxRect;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.input.keyboard.FlxKey;
 import flixel.system.FlxSound;
-import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 #if discord_rpc
 import handlers.DiscordHandler;
@@ -22,9 +17,6 @@ import handlers.DiscordHandler;
 
 class OptionsState extends MusicBeatState {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
-
-	static var initialized:Bool = false;
-	var transitioning:Bool = true;
 
 	var menuItems:Array<String> = [
 		'Apperance', 'Gameplay'
@@ -49,33 +41,7 @@ class OptionsState extends MusicBeatState {
 		changeSelection();
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
-		startTransition();
 	}
-
-	function startTransition()
-		{
-			if (!initialized)
-			{
-				var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
-				diamond.persist = true;
-				diamond.destroyOnNoUse = false;
-	
-				FlxTransitionableState.defaultTransIn = new TransitionData(FADE, FlxColor.BLACK, 1, new FlxPoint(0, -1), {asset: diamond, width: 32, height: 32},
-					new FlxRect(0, 0, FlxG.width, FlxG.height));
-				FlxTransitionableState.defaultTransOut = new TransitionData(FADE, FlxColor.BLACK, 0.7, new FlxPoint(0, 1),
-					{asset: diamond, width: 32, height: 32}, new FlxRect(0, 0, FlxG.width, FlxG.height));
-	
-				FlxTransitionableState.defaultTransIn.tileData = {asset: diamond, width: 32, height: 32};
-				FlxTransitionableState.defaultTransOut.tileData = {asset: diamond, width: 32, height: 32};
-	
-				transIn = FlxTransitionableState.defaultTransIn;
-				transOut = FlxTransitionableState.defaultTransOut;
-	
-				FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt, 0);
-	
-				FlxG.sound.music.fadeIn(4, 0, 0.7);
-			}
-		}
 
 	override function update(elapsed:Float) {
 		super.update(elapsed);

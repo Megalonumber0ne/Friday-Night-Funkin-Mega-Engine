@@ -18,7 +18,7 @@ class MainMenuState extends MusicBeatState
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
-	var optionShit:Array<String> = ['story mode', 'freeplay', 'donate'];
+	var optionShit:Array<String> = ['story mode', 'freeplay', 'donate', 'options'];
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
@@ -72,10 +72,15 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 0.06);
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "v" + Application.current.meta.get('version'));
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 34, 0, "Funkin' v" + Application.current.meta.get('version'));
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
+
+		var engineVerShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Engine v0.1.0 - Beta Release 1");
+		engineVerShit.scrollFactor.set();
+		engineVerShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(engineVerShit);
 
 		changeItem();
 
@@ -109,7 +114,7 @@ class MainMenuState extends MusicBeatState
 			{
 				if (optionShit[curSelected] == 'donate')
 				{
-					FlxG.openURL('https://ninja-muffin24.itch.io/funkin');
+					FlxG.openURL('https://www.kickstarter.com/projects/funkin/friday-night-funkin-the-full-ass-game');
 				}
 				else
 				{
@@ -142,6 +147,8 @@ class MainMenuState extends MusicBeatState
 										FlxG.switchState(new StoryMenuState());
 									case 'freeplay':
 										FlxG.switchState(new FreeplayState());
+									case 'options':
+										FlxG.switchState(new OptionsState());
 								}
 							});
 						}
