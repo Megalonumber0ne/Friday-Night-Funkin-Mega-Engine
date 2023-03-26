@@ -10,8 +10,6 @@ class Highscore
 	{
 		var daSong:String = formatSong(song, diff);
 
-		NGio.postScore(score, song);
-
 		if (songScores.exists(daSong))
 		{
 			if (songScores.get(daSong) < score)
@@ -23,8 +21,6 @@ class Highscore
 
 	public static function saveWeekScore(week:Int = 1, score:Int = 0, ?diff:Int = 0):Void
 	{
-		NGio.postScore(score, "Week " + week);
-
 		var daWeek:String = formatSong('week' + week, diff);
 
 		if (songScores.exists(daWeek))

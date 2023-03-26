@@ -36,15 +36,11 @@
 
 	<classpath name="source" />
 
-	<assets path="assets/images"/>
-	<assets path="assets/data"/>
-	
-	<!-- <library name="noPreload" preload='false'/> -->
-	<!-- <library name="noPreload"/> -->
-	<assets path="assets/music" include="*.mp3" if="web"/>
-	<assets path="assets/music" include="*.ogg" unless="web"/>
-	<assets path="assets/sounds" include="*.mp3" if="web" />
-	<assets path="assets/sounds" include="*.ogg" unless="web" />
+	<assets path="assets" exclude="*.ogg" if="web"/>
+	<assets path="assets" exclude="*.mp3" unless="web"/>
+
+	<assets path="mods" embed="false" unless="web"/>
+	<assets path="mods" embed="true" if="web"/>
 
 	<assets path="CHANGELOG.md"/>
 
@@ -57,11 +53,11 @@
 
 	<!--In case you want to use the addons package-->
 	<haxelib name="flixel-addons" />
-	<haxelib name="hscript" />
+	<haxelib name="scriptless-polymod" />
+	<haxelib name="hscript-improved" />
 
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
-	<haxelib name="newgrounds" />
 	<!-- <haxelib name="markdown" /> -->
 	<!-- <haxelib name="HtmlParser" /> -->
 
@@ -106,7 +102,6 @@
 
 	<icon path="art/icon.png" />
 	<!-- <haxedef name="SKIP_TO_PLAYSTATE" if="debug" /> -->
-	<haxedef name="NG_LOGIN" if="newgrounds" />
 
 
 </project>
