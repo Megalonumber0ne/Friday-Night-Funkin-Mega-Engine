@@ -17,9 +17,10 @@ class ApperanceState extends MusicBeatState {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	public var OldGraphics = Bool;
+	public var EngineStuff = Bool;
 
 	var menuItems:Array<String> = [
-		'Old Graphics'
+		'Old Graphics', 'Show Engine Info'
 	];
 	var curSelected:Int = 0;
 	public var isFreeplayItem:Bool = false;
@@ -59,7 +60,17 @@ class ApperanceState extends MusicBeatState {
 			switch (daSelected) {
 				case "Old Graphics":
 					OldGraphics = Bool;
-					trace("Fuck you");
+					trace("Old Graphics");
+				case "Show Engine Info":
+					EngineStuff = Bool;
+					if (EngineStuff = true){
+						EngineStuff = false;
+						trace("Engine Stuff - False");
+					}
+					else{
+						EngineStuff = true;
+						trace("Engine Stuff - True");
+					}				
 			}
 		}
 	}
