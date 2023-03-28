@@ -11,6 +11,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import lime.app.Application;
+import BuildNumber;
 
 class MainMenuState extends MusicBeatState
 {
@@ -29,7 +30,7 @@ class MainMenuState extends MusicBeatState
 
 		var bg:FlxSprite = new FlxSprite(-80).loadGraphic('assets/images/menuBG.png');
 		bg.scrollFactor.x = 0;
-		bg.scrollFactor.y = 0.18;
+		bg.scrollFactor.y = 0.15;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
 		bg.updateHitbox();
 		bg.screenCenter();
@@ -41,7 +42,7 @@ class MainMenuState extends MusicBeatState
 
 		magenta = new FlxSprite(-80).loadGraphic('assets/images/menuDesat.png');
 		magenta.scrollFactor.x = 0;
-		magenta.scrollFactor.y = 0.18;
+		magenta.scrollFactor.y = 0.15;
 		magenta.setGraphicSize(Std.int(magenta.width * 1.1));
 		magenta.updateHitbox();
 		magenta.screenCenter();
@@ -72,12 +73,17 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 0.06);
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 34, 0, "Funkin' v" + Application.current.meta.get('version'));
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Friday Night Funkin' v" + Application.current.meta.get('version'));
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
 
-		var engineVerShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Engine v0.1.0 - Beta Release 1");
+		var buildNumShit:FlxText = new FlxText(5, FlxG.height - 52, 0, "Engine Build Number " + BuildNumber.getBuildNumber());
+		buildNumShit.scrollFactor.set();
+		buildNumShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(buildNumShit);
+
+		var engineVerShit:FlxText = new FlxText(5, FlxG.height - 34, 0, "Engine v0.1.0 - Beta Release 1");
 		engineVerShit.scrollFactor.set();
 		engineVerShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(engineVerShit);
@@ -148,7 +154,7 @@ class MainMenuState extends MusicBeatState
 									case 'freeplay':
 										FlxG.switchState(new FreeplayState());
 									case 'options':
-										FlxG.switchState(new OptionsState());
+										FlxG.switchState(new options.OptionsState());
 								}
 							});
 						}
