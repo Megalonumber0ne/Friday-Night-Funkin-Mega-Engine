@@ -60,17 +60,18 @@ class ApperanceState extends MusicBeatState {
 			switch (daSelected) {
 				case "Old Graphics":
 					OldGraphics = Bool;
-					trace("Old Graphics");
+					trace("Old Graphics - Unfinished");
 				case "Show Engine Info":
-					EngineStuff = Bool;
-					if (EngineStuff = true){
-						EngineStuff = false;
-						trace("Engine Stuff - False");
-					}
-					else{
-						EngineStuff = true;
-						trace("Engine Stuff - True");
-					}				
+					trace("Engine Stuff - Unfinished");
+					//EngineStuff = Bool;
+					//if (EngineStuff = true){
+						//EngineStuff = false;
+						//trace("Engine Stuff - False");
+					//}
+					//else:
+						//EngineStuff = true;
+						//trace("Engine Stuff - True");
+					//}				
 			}
 		}
 	}
