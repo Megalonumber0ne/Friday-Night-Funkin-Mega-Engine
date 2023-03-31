@@ -29,6 +29,8 @@ import flixel.util.FlxStringUtil;
 import flixel.util.FlxTimer;
 import haxe.Json;
 import lime.utils.Assets;
+import HealthIcon;
+import Stages;
 
 using StringTools;
 
@@ -42,6 +44,7 @@ class PlayState extends MusicBeatState
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
+	public static var instance:PlayState = null;
 
 	var halloweenLevel:Bool = false;
 
@@ -74,9 +77,12 @@ class PlayState extends MusicBeatState
 	private var generatedMusic:Bool = false;
 	private var startingSong:Bool = false;
 
-	private var healthHeads:FlxSprite;
+	//private var healthHeads:FlxSprite;
 	private var camHUD:FlxCamera;
 	private var camGame:FlxCamera;
+
+	private var iconP1:HealthIcon;
+	private var iconP2:HealthIcon;
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 
@@ -95,6 +101,7 @@ class PlayState extends MusicBeatState
 
 	override public function create()
 	{
+		instance = this;
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
@@ -152,7 +159,8 @@ class PlayState extends MusicBeatState
 		}
 		else
 		{
-			var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic('assets/images/stageback.png');
+			Stages;
+			/*var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic('assets/images/stageback.png');
 			// bg.setGraphicSize(Std.int(bg.width * 2.5));
 			// bg.updateHitbox();
 			bg.antialiasing = true;
@@ -175,7 +183,7 @@ class PlayState extends MusicBeatState
 			stageCurtains.scrollFactor.set(1.3, 1.3);
 			stageCurtains.active = false;
 
-			add(stageCurtains);
+			add(stageCurtains);*/
 		}
 
 		gf = new Character(400, 130, 'gf');
@@ -267,7 +275,18 @@ class PlayState extends MusicBeatState
 		scoreTxt.scrollFactor.set();
 		add(scoreTxt);
 
-		healthHeads = new FlxSprite();
+		iconP1 = new HealthIcon(SONG.player1, true);
+		iconP1.y = healthBar.y - (iconP1.height / 2);
+		add(iconP1);
+
+		iconP2 = new HealthIcon(SONG.player2, false);
+		iconP2.y = healthBar.y - (iconP2.height / 2);
+		add(iconP2);
+
+		iconP1.cameras = [camHUD];
+		iconP2.cameras = [camHUD];
+
+		/*healthHeads = new FlxSprite();
 		var headTex = FlxAtlasFrames.fromSparrow('assets/images/healthHeads.png', 'assets/images/healthHeads.xml');
 		healthHeads.frames = headTex;
 		healthHeads.animation.add('healthy', [0]);
@@ -275,7 +294,7 @@ class PlayState extends MusicBeatState
 		healthHeads.y = healthBar.y - (healthHeads.height / 2);
 		healthHeads.scrollFactor.set();
 		healthHeads.antialiasing = true;
-		add(healthHeads);
+		add(healthHeads);*/
 
 		startCountdown();
 
@@ -283,7 +302,7 @@ class PlayState extends MusicBeatState
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
 		healthBarBG.cameras = [camHUD];
-		healthHeads.cameras = [camHUD];
+		//healthHeads.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 
@@ -629,7 +648,7 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 
-		healthHeads.setGraphicSize(Std.int(FlxMath.lerp(150, healthHeads.width, 0.50)));
+		/*healthHeads.setGraphicSize(Std.int(FlxMath.lerp(150, healthHeads.width, 0.50)));
 		healthHeads.updateHitbox();
 		healthHeads.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (healthHeads.width / 2);
 
@@ -639,10 +658,43 @@ class PlayState extends MusicBeatState
 		if (healthBar.percent < 20)
 			healthHeads.animation.play('unhealthy');
 		else
-			healthHeads.animation.play('healthy');
+			healthHeads.animation.play('healthy');*/
 
-		/* if (FlxG.keys.justPressed.NINE)
-			FlxG.switchState(new Charting()); */
+		if (FlxG.keys.justPressed.NINE)
+			{
+				if (iconP1.animation.curAnim.name == 'bf-old')
+					iconP1.animation.play(SONG.player1);
+				else
+					iconP1.animation.play('bf-old');
+			}
+
+			iconP1.setGraphicSize(Std.int(FlxMath.lerp(150, iconP1.width, 0.50)));
+			iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width, 0.50)));
+	
+			iconP1.updateHitbox();
+			iconP2.updateHitbox();
+	
+			var iconOffset:Int = 26;
+	
+			iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
+			iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
+	
+			if (health > 2)
+				health = 2;
+	
+			if (healthBar.percent < 20)
+				iconP1.animation.curAnim.curFrame = 1;
+			else
+				iconP1.animation.curAnim.curFrame = 0;
+	
+			if (healthBar.percent > 80)
+				iconP2.animation.curAnim.curFrame = 1;
+			else
+				iconP2.animation.curAnim.curFrame = 0;
+
+
+		 //if (FlxG.keys.justPressed.NINE)
+			//FlxG.switchState(new Charting()); 
 
 		#if debug
 		if (FlxG.keys.justPressed.EIGHT)
@@ -1388,14 +1440,20 @@ class PlayState extends MusicBeatState
 		}
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
 
+		iconP1.setGraphicSize(Std.int(iconP1.width + 30));
+		iconP2.setGraphicSize(Std.int(iconP2.width + 30));
+
+		iconP1.updateHitbox();
+		iconP2.updateHitbox();
+
 		if (camZooming && FlxG.camera.zoom < 1.35 && totalBeats % 4 == 0)
 		{
 			FlxG.camera.zoom += 0.015;
 			camHUD.zoom += 0.03;
 		}
 
-		healthHeads.setGraphicSize(Std.int(healthHeads.width + 30));
-		healthHeads.updateHitbox();
+		//healthHeads.setGraphicSize(Std.int(healthHeads.width + 30));
+		//healthHeads.updateHitbox();
 
 		if (totalBeats % gfSpeed == 0)
 		{
@@ -1408,10 +1466,11 @@ class PlayState extends MusicBeatState
 		if (totalBeats % 8 == 7 && curSong == 'Bopeebo')
 		{
 			boyfriend.playAnim('hey', true);
+			gf.playAnim('cheer', true);
 
 			if (SONG.song == 'Tutorial' && dad.curCharacter == 'gf')
 			{
-				dad.playAnim('cheer', true);
+				gf.playAnim('cheer', true);
 			}
 		}
 
