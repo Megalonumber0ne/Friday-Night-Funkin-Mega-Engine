@@ -1,4 +1,4 @@
-package;
+/*package;
 
 import flixel.FlxSprite;
 import PlayState;
@@ -10,10 +10,10 @@ class Stages extends FlxSprite
     public static var SONG:SwagSong;
     private var game:Dynamic = PlayState.instance;
     
-	function create()
+	function onCreate()
 	{
-        if (SONG.song.toLowerCase() == 'tutorial' || SONG.song.toLowerCase() == 'bopeebo' || SONG.song.toLowerCase() == 'fresh' || SONG.song.toLowerCase() == 'dadbattle'){
-
+        //if (SONG.song.toLowerCase() == 'tutorial' || SONG.song.toLowerCase() == 'bopeebo' || SONG.song.toLowerCase() == 'fresh' || SONG.song.toLowerCase() == 'dadbattle'){
+        
         var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic('assets/images/stageback.png');
         bg.antialiasing = true;
         bg.scrollFactor.set(0.9, 0.9);
@@ -36,6 +36,7 @@ class Stages extends FlxSprite
         stageCurtains.active = false;
 
         game.add(stageCurtains);
-        }
+        //}
     }
 }
+I'll fix this later*/ 

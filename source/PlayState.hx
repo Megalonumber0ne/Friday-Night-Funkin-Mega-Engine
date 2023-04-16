@@ -159,8 +159,8 @@ class PlayState extends MusicBeatState
 		}
 		else
 		{
-			Stages;
-			/*var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic('assets/images/stageback.png');
+			//Stages; //This will be fixed later
+			var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic('assets/images/stageback.png');
 			// bg.setGraphicSize(Std.int(bg.width * 2.5));
 			// bg.updateHitbox();
 			bg.antialiasing = true;
@@ -183,7 +183,7 @@ class PlayState extends MusicBeatState
 			stageCurtains.scrollFactor.set(1.3, 1.3);
 			stageCurtains.active = false;
 
-			add(stageCurtains);*/
+			add(stageCurtains);
 		}
 
 		gf = new Character(400, 130, 'gf');
