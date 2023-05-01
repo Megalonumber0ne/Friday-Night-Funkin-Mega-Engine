@@ -31,6 +31,7 @@ import haxe.Json;
 import lime.utils.Assets;
 import HealthIcon;
 import Stages;
+import handlers.ClientPrefs;
 
 using StringTools;
 
@@ -157,7 +158,7 @@ class PlayState extends MusicBeatState
 
 			isHalloween = true;
 		}
-		else
+		if (SONG.song.toLowerCase() == 'bopeebo' || SONG.song.toLowerCase() == 'fresh' || SONG.song.toLowerCase() == 'dadbattle' || SONG.song.toLowerCase() == 'tutorial')
 		{
 			//Stages; //This will be fixed later
 			var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic('assets/images/stageback.png');
@@ -286,16 +287,6 @@ class PlayState extends MusicBeatState
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 
-		/*healthHeads = new FlxSprite();
-		var headTex = FlxAtlasFrames.fromSparrow('assets/images/healthHeads.png', 'assets/images/healthHeads.xml');
-		healthHeads.frames = headTex;
-		healthHeads.animation.add('healthy', [0]);
-		healthHeads.animation.add('unhealthy', [1]);
-		healthHeads.y = healthBar.y - (healthHeads.height / 2);
-		healthHeads.scrollFactor.set();
-		healthHeads.antialiasing = true;
-		add(healthHeads);*/
-
 		startCountdown();
 
 		strumLineNotes.cameras = [camHUD];
@@ -305,12 +296,6 @@ class PlayState extends MusicBeatState
 		//healthHeads.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
-
-		// if (SONG.song == 'South')
-		// FlxG.camera.alpha = 0.7;
-		// UI_camera.zoom = 1;
-
-		// cameras = [FlxG.cameras.list[1]];
 
 		super.create();
 	}
@@ -382,7 +367,6 @@ class PlayState extends MusicBeatState
 			}
 
 			swagCounter += 1;
-			// generateSong('fresh');
 		}, 5);
 	}
 
@@ -988,13 +972,6 @@ class PlayState extends MusicBeatState
 
 		songScore += score;
 
-		/* if (combo > 60)
-				daRating = 'sick';
-			else if (combo > 12)
-				daRating = 'good'
-			else if (combo > 4)
-				daRating = 'bad';
-		 */
 		rating.loadGraphic('assets/images/' + daRating + ".png");
 		rating.screenCenter();
 		rating.x = coolText.x - 40;
@@ -1005,6 +982,7 @@ class PlayState extends MusicBeatState
 		rating.updateHitbox();
 		rating.antialiasing = true;
 		rating.velocity.x -= FlxG.random.int(0, 10);
+		add(rating);		
 
 		var comboSpr:FlxSprite = new FlxSprite().loadGraphic('assets/images/combo.png');
 		comboSpr.screenCenter();
@@ -1014,9 +992,11 @@ class PlayState extends MusicBeatState
 		comboSpr.velocity.y -= 150;
 		comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7));
 		comboSpr.updateHitbox();
-		comboSpr.velocity.x += FlxG.random.int(1, 10);
-		add(rating);
-
+		comboSpr.velocity.x += FlxG.random.int(1, 10);					
+		if (ClientPrefs.comboSplash)	
+			add(comboSpr);
+			return;
+			
 		var seperatedScore:Array<Int> = [];
 
 		seperatedScore.push(Math.floor(combo / 100));
@@ -1036,11 +1016,11 @@ class PlayState extends MusicBeatState
 			numScore.acceleration.y = FlxG.random.int(200, 300);
 			numScore.velocity.y -= FlxG.random.int(140, 160);
 			numScore.velocity.x = FlxG.random.float(-5, 5);
-
-			if (combo > 9){
-				add(numScore);
-				add(comboSpr);
-			}
+			add(numScore);
+			//if (combo > 9)
+			//{
+			//	add(numScore);
+			//}
 
 			FlxTween.tween(numScore, {alpha: 0}, 0.2, {
 				onComplete: function(tween:FlxTween)
@@ -1237,47 +1217,18 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	function badNoteCheck()
-	{
-		// just double pasting this shit cuz fuk u
-		// REDO THIS SYSTEM!
-		var upP = controls.UP_P;
-		var rightP = controls.RIGHT_P;
-		var downP = controls.DOWN_P;
-		var leftP = controls.LEFT_P;
-
-		var gamepad = FlxG.gamepads.lastActive;
-		if (gamepad != null)
-		{
-			if (gamepad.anyJustPressed(["DPAD_LEFT", "LEFT_STICK_DIGITAL_LEFT", X]))
-			{
-				leftP = true;
-			}
-
-			if (gamepad.anyJustPressed(["DPAD_RIGHT", "LEFT_STICK_DIGITAL_RIGHT", B]))
-			{
-				rightP = true;
-			}
-
-			if (gamepad.anyJustPressed(['DPAD_UP', "LEFT_STICK_DIGITAL_UP", Y]))
-			{
-				upP = true;
-			}
-
-			if (gamepad.anyJustPressed(["DPAD_DOWN", "LEFT_STICK_DIGITAL_DOWN", A]))
-			{
-				downP = true;
-			}
-		}
-
-		if (leftP)
-			noteMiss(0);
-		if (upP)
-			noteMiss(2);
-		if (rightP)
-			noteMiss(3);
-		if (downP)
-			noteMiss(1);
+	function badNoteCheck() {
+		// totally not ripped from Test Engine
+		if (ClientPrefs.ghostTapping)
+			return;
+		var pressedIndex:Int = [
+			controls.LEFT_P,
+			controls.DOWN_P,
+			controls.UP_P,
+			controls.RIGHT_P
+		].indexOf(true);
+		if (pressedIndex != -1)
+			noteMiss(pressedIndex);
 	}
 
 	function noteCheck(keyP:Bool, note:Note):Void

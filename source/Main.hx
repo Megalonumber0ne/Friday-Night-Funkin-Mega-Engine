@@ -3,7 +3,14 @@ package;
 import flixel.FlxGame;
 import openfl.display.FPS;
 import openfl.display.Sprite;
-
+import openfl.display.Sprite;
+import handlers.Files;
+import handlers.ClientPrefs;
+import flixel.FlxG;
+#if sys
+import sys.io.File;
+import sys.FileSystem;
+#end
 class Main extends Sprite
 {
 	public function new()
