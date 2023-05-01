@@ -1,5 +1,6 @@
 package options;
 
+import handlers.ClientPrefs;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import Controls.Control;
@@ -13,11 +14,14 @@ import flixel.input.keyboard.FlxKey;
 import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 
-class OptionsState extends MusicBeatState {
+class GameplayState extends MusicBeatState {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
+	public var ghostTapping = Bool;
+	var gtText:FlxText;
+	
 	var menuItems:Array<String> = [
-		'Apperance', 'Gameplay'
+		'Ghost Tapping'
 	];
 	var curSelected:Int = 0;
 	public var isFreeplayItem:Bool = false;
@@ -40,6 +44,11 @@ class OptionsState extends MusicBeatState {
 		changeSelection();
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+
+		gtText = new FlxText(5, FlxG.height - 18, 0, "", 12);
+		gtText.scrollFactor.set();
+		gtText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(gtText);
 	}
 
 	override function update(elapsed:Float) {
@@ -50,15 +59,29 @@ class OptionsState extends MusicBeatState {
 		if (controls.DOWN_P)
 			changeSelection(1);
 		if (controls.BACK)
-			FlxG.switchState(new MainMenuState());
+			FlxG.switchState(new OptionsState());
 		if (controls.ACCEPT) {
 			var daSelected:String = menuItems[curSelected];
 
 			switch (daSelected) {
-				case "Apperance":
-					FlxG.switchState(new ApperanceState());
-				case "Gameplay":
-					FlxG.switchState(new GameplayState());
+				case "Ghost Tapping":
+					if (ClientPrefs.ghostTapping == false) {
+						ClientPrefs.ghostTapping = true;
+						trace("on");
+					}
+					else
+					{
+						ClientPrefs.ghostTapping = false;
+						trace("off");
+					}
+					if (ClientPrefs.ghostTapping == true) {
+						gtText.text = "Ghost Tapping Is Currently on";
+					}
+					else
+					{
+						gtText.text = "Ghost Tapping Is Currently off";
+					}
+					trace("Ghost Tapping Toggled");		
 			}
 		}
 	}
