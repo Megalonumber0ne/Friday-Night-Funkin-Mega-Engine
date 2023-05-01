@@ -14,6 +14,9 @@ class Character extends FlxSprite
 	public var curCharacter:String = 'bf';
 
 	public var holdTimer:Float = 0;
+	static public var bfHpColor:Int;
+	static public var dadHpColor:Int;
+
 
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
 	{
@@ -67,6 +70,7 @@ class Character extends FlxSprite
 				addOffset('scared', -4);
 
 				flipX = true;
+				bfHpColor = (0xff31b0d1);
 			case 'gf':
 				// GIRLFRIEND CODE
 				tex = FlxAtlasFrames.fromSparrow('assets/images/GF_assets.png', 'assets/images/GF_assets.xml');
@@ -95,7 +99,8 @@ class Character extends FlxSprite
 				addOffset('scared');
 
 				playAnim('danceRight');
-
+				dadHpColor = (0xff9d0049);
+				bfHpColor = (0xff9d0049);
 			case 'dad':
 				// DAD ANIMATION LOADING CODE
 				tex = FlxAtlasFrames.fromSparrow('assets/images/DADDY_DEAREST.png', 'assets/images/DADDY_DEAREST.xml');
@@ -112,6 +117,8 @@ class Character extends FlxSprite
 				addOffset("singRIGHT", 0, 27);
 				addOffset("singLEFT", -10, 10);
 				addOffset("singDOWN", 0, -30);
+				dadHpColor = (0xffaf66ce);
+				bfHpColor = (0xffaf66ce);
 			case 'spooky':
 				tex = FlxAtlasFrames.fromSparrow('assets/images/spooky_kids_assets.png', 'assets/images/spooky_kids_assets.xml');
 				frames = tex;
@@ -131,6 +138,8 @@ class Character extends FlxSprite
 				addOffset("singDOWN", -50, -130);
 
 				playAnim('danceRight');
+				dadHpColor = (0xffd57e00);
+				bfHpColor = (0xffd57e00);
 			case 'monster':
 				tex = FlxAtlasFrames.fromSparrow('assets/images/Monster_Assets.png', 'assets/images/Monster_Assets.xml');
 				frames = tex;
@@ -146,6 +155,8 @@ class Character extends FlxSprite
 				addOffset("singLEFT", -30);
 				addOffset("singDOWN", -30, -40);
 				playAnim('idle');
+				dadHpColor = (0xfff3ff6e);
+				bfHpColor = (0xfff3ff6e);
 		}
 
 		if (isPlayer){
