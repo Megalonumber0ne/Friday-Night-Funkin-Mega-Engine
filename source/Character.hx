@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
+import Song;
 
 using StringTools;
 
@@ -16,7 +17,7 @@ class Character extends FlxSprite
 	public var holdTimer:Float = 0;
 	static public var bfHpColor:Int;
 	static public var dadHpColor:Int;
-
+	static public var hpColor:Int;
 
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
 	{
@@ -71,6 +72,7 @@ class Character extends FlxSprite
 
 				flipX = true;
 				bfHpColor = (0xff31b0d1);
+				//hpColor = (0xff31b0d1);
 			case 'gf':
 				// GIRLFRIEND CODE
 				tex = FlxAtlasFrames.fromSparrow('assets/images/GF_assets.png', 'assets/images/GF_assets.xml');

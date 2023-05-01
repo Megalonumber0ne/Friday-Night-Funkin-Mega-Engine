@@ -937,7 +937,7 @@ class PlayState extends MusicBeatState
 
 	var endingSong:Bool = false;
 
-	private function popUpScore(strumtime:Float):Void
+	/*private function popUpScore(strumtime:Float):Void
 	{
 		var noteDiff:Float = Math.abs(strumtime - Conductor.songPosition);
 		vocals.volume = 1;
@@ -982,7 +982,6 @@ class PlayState extends MusicBeatState
 		rating.updateHitbox();
 		rating.antialiasing = true;
 		rating.velocity.x -= FlxG.random.int(0, 10);
-		add(rating);		
 
 		var comboSpr:FlxSprite = new FlxSprite().loadGraphic('assets/images/combo.png');
 		comboSpr.screenCenter();
@@ -992,16 +991,20 @@ class PlayState extends MusicBeatState
 		comboSpr.velocity.y -= 150;
 		comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7));
 		comboSpr.updateHitbox();
+
 		comboSpr.velocity.x += FlxG.random.int(1, 10);					
-		if (ClientPrefs.comboSplash)	
-			add(comboSpr);
-			return;
 			
 		var seperatedScore:Array<Int> = [];
 
 		seperatedScore.push(Math.floor(combo / 100));
 		seperatedScore.push(Math.floor((combo - (seperatedScore[0] * 100)) / 10));
 		seperatedScore.push(combo % 10);
+		add(rating);
+
+		if (ClientPrefs.comboSplash)	
+			add(comboSpr);
+		return;
+	
 
 		var daLoop:Int = 0;
 		for (i in seperatedScore)
@@ -1016,11 +1019,10 @@ class PlayState extends MusicBeatState
 			numScore.acceleration.y = FlxG.random.int(200, 300);
 			numScore.velocity.y -= FlxG.random.int(140, 160);
 			numScore.velocity.x = FlxG.random.float(-5, 5);
-			add(numScore);
-			//if (combo > 9)
-			//{
-			//	add(numScore);
-			//}
+			if (combo > 9)
+			{
+				add(numScore);
+			}
 
 			FlxTween.tween(numScore, {alpha: 0}, 0.2, {
 				onComplete: function(tween:FlxTween)
@@ -1032,10 +1034,7 @@ class PlayState extends MusicBeatState
 
 			daLoop++;
 		}
-		/* 
-			trace(combo);
-			trace(seperatedScore);
-		 */
+		 
 
 		coolText.text = Std.string(seperatedScore);
 		// add(coolText);
@@ -1056,7 +1055,151 @@ class PlayState extends MusicBeatState
 		});
 
 		curSection += 1;
-	}
+	}*/
+
+	private function popUpScore(strumtime:Float):Void
+		{
+			var noteDiff:Float = Math.abs(strumtime - Conductor.songPosition);
+			// boyfriend.playAnim('hey');
+			vocals.volume = 1;
+	
+			var placement:String = Std.string(combo);
+	
+			var coolText:FlxText = new FlxText(0, 0, 0, placement, 32);
+			coolText.screenCenter();
+			coolText.x = FlxG.width * 0.55;
+			//
+	
+			var rating:FlxSprite = new FlxSprite();
+			var score:Int = 350;
+	
+			var daRating:String = "sick";
+	
+			if (noteDiff > Conductor.safeZoneOffset * 0.9)
+			{
+				daRating = 'shit';
+				score = 50;
+			}
+			else if (noteDiff > Conductor.safeZoneOffset * 0.75)
+			{
+				daRating = 'bad';
+				score = 100;
+			}
+			else if (noteDiff > Conductor.safeZoneOffset * 0.2)
+			{
+				daRating = 'good';
+				score = 200;
+			}
+	
+			songScore += score;
+	
+			/* if (combo > 60)
+					daRating = 'sick';
+				else if (combo > 12)
+					daRating = 'good'
+				else if (combo > 4)
+					daRating = 'bad';
+			 */
+	
+			var pixelShitPart1:String = "";
+			var pixelShitPart2:String = '';
+	
+			if (curStage.startsWith('school'))
+			{
+				pixelShitPart1 = 'weeb/pixelUI/';
+				pixelShitPart2 = '-pixel';
+			}
+	
+			rating.loadGraphic('assets/images/' + daRating + ".png");
+			rating.screenCenter();
+			rating.x = coolText.x - 40;
+			rating.y -= 60;
+			rating.acceleration.y = 550;
+			rating.velocity.y -= FlxG.random.int(140, 175);
+			rating.velocity.x -= FlxG.random.int(0, 10);
+	
+			var comboSpr:FlxSprite = new FlxSprite().loadGraphic('assets/images/' + 'combo' + '.png');
+			comboSpr.screenCenter();
+			comboSpr.x = coolText.x;
+			comboSpr.acceleration.y = 600;
+			comboSpr.velocity.y -= 150;
+	
+			comboSpr.velocity.x += FlxG.random.int(1, 10);
+			add(rating);
+	
+			rating.setGraphicSize(Std.int(rating.width * 0.7));
+			rating.antialiasing = true;
+			comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7));
+			comboSpr.antialiasing = true;
+			if (ClientPrefs.comboSplash)	
+				if (combo >9) 
+					add(comboSpr);
+			if (!ClientPrefs.comboSplash)
+				
+			comboSpr.updateHitbox();
+			rating.updateHitbox();
+	
+			var seperatedScore:Array<Int> = [];
+	
+			seperatedScore.push(Math.floor(combo / 100));
+			seperatedScore.push(Math.floor((combo - (seperatedScore[0] * 100)) / 10));
+			seperatedScore.push(combo % 10);
+	
+			var daLoop:Int = 0;
+			for (i in seperatedScore)
+			{
+				var numScore:FlxSprite = new FlxSprite().loadGraphic('assets/images/' + pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2 + '.png');
+				numScore.screenCenter();
+				numScore.x = coolText.x + (43 * daLoop) - 90;
+				numScore.y += 80;
+
+				numScore.antialiasing = true;
+				numScore.setGraphicSize(Std.int(numScore.width * 0.5));
+
+				numScore.updateHitbox();
+	
+				numScore.acceleration.y = FlxG.random.int(200, 300);
+				numScore.velocity.y -= FlxG.random.int(140, 160);
+				numScore.velocity.x = FlxG.random.float(-5, 5);
+	
+				if (combo >= 10 || combo == 0)
+					add(numScore);
+	
+				FlxTween.tween(numScore, {alpha: 0}, 0.2, {
+					onComplete: function(tween:FlxTween)
+					{
+						numScore.destroy();
+					},
+					startDelay: Conductor.crochet * 0.002
+				});
+	
+				daLoop++;
+			}
+			/*
+				trace(combo);
+				trace(seperatedScore);
+			 */
+	
+			coolText.text = Std.string(seperatedScore);
+			// add(coolText);
+	
+			FlxTween.tween(rating, {alpha: 0}, 0.2, {
+				startDelay: Conductor.crochet * 0.001
+			});
+	
+			FlxTween.tween(comboSpr, {alpha: 0}, 0.2, {
+				onComplete: function(tween:FlxTween)
+				{
+					coolText.destroy();
+					comboSpr.destroy();
+	
+					rating.destroy();
+				},
+				startDelay: Conductor.crochet * 0.001
+			});
+	
+			curSection += 1;
+		}
 
 	private function keyShit():Void
 		{
