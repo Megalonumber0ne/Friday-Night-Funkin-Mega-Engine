@@ -2,7 +2,10 @@ package;
 
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.math.FlxMath;
 import flixel.util.FlxColor;
+
+using StringTools;
 
 class Note extends FlxSprite
 {
@@ -43,26 +46,32 @@ class Note extends FlxSprite
 
 		this.noteData = noteData;
 
-		var tex = FlxAtlasFrames.fromSparrow('assets/images/NOTE_assets.png', 'assets/images/NOTE_assets.xml');
-		frames = tex;
-		animation.addByPrefix('greenScroll', 'green0');
-		animation.addByPrefix('redScroll', 'red0');
-		animation.addByPrefix('blueScroll', 'blue0');
-		animation.addByPrefix('purpleScroll', 'purple0');
+		var daStage:String = PlayState.curStage;
 
-		animation.addByPrefix('purpleholdend', 'pruple end hold');
-		animation.addByPrefix('greenholdend', 'green hold end');
-		animation.addByPrefix('redholdend', 'red hold end');
-		animation.addByPrefix('blueholdend', 'blue hold end');
+		switch (daStage)
+		{
+			default:
+				frames = FlxAtlasFrames.fromSparrow('assets/images/NOTE_assets.png', 'assets/images/NOTE_assets.xml');
 
-		animation.addByPrefix('purplehold', 'purple hold piece');
-		animation.addByPrefix('greenhold', 'green hold piece');
-		animation.addByPrefix('redhold', 'red hold piece');
-		animation.addByPrefix('bluehold', 'blue hold piece');
+				animation.addByPrefix('greenScroll', 'green0');
+				animation.addByPrefix('redScroll', 'red0');
+				animation.addByPrefix('blueScroll', 'blue0');
+				animation.addByPrefix('purpleScroll', 'purple0');
 
-		setGraphicSize(Std.int(width * 0.7));
-		updateHitbox();
-		antialiasing = true;
+				animation.addByPrefix('purpleholdend', 'pruple end hold');
+				animation.addByPrefix('greenholdend', 'green hold end');
+				animation.addByPrefix('redholdend', 'red hold end');
+				animation.addByPrefix('blueholdend', 'blue hold end');
+
+				animation.addByPrefix('purplehold', 'purple hold piece');
+				animation.addByPrefix('greenhold', 'green hold piece');
+				animation.addByPrefix('redhold', 'red hold piece');
+				animation.addByPrefix('bluehold', 'blue hold piece');
+
+				setGraphicSize(Std.int(width * 0.7));
+				updateHitbox();
+				antialiasing = true;
+		}
 
 		switch (noteData)
 		{
@@ -109,18 +118,18 @@ class Note extends FlxSprite
 			{
 				switch (prevNote.noteData)
 				{
+					case 0:
+						prevNote.animation.play('purplehold');
+					case 1:
+						prevNote.animation.play('bluehold');
 					case 2:
 						prevNote.animation.play('greenhold');
 					case 3:
 						prevNote.animation.play('redhold');
-					case 1:
-						prevNote.animation.play('bluehold');
-					case 0:
-						prevNote.animation.play('purplehold');
 				}
 
-				prevNote.offset.y = -19;
-				prevNote.scale.y *= (2.25 * PlayState.SONG.speed);
+				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * PlayState.SONG.speed;
+				prevNote.updateHitbox();
 				// prevNote.setGraphicSize();
 			}
 		}

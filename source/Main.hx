@@ -1,5 +1,6 @@
 package;
 
+//import js.html.Client;
 import flixel.FlxGame;
 import openfl.display.FPS;
 import openfl.display.Sprite;
@@ -17,6 +18,9 @@ class Main extends Sprite
 	{
 		super();
 		addChild(new FlxGame(0, 0, TitleState));
+
+		ClientPrefs.loadPrefs();
+		trace("Settings & Preferences loaded...");
 
 		#if !mobile
 		addChild(new FPS(10, 3, 0xFFFFFF));
