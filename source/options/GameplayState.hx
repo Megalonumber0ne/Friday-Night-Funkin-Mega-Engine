@@ -1,5 +1,6 @@
 package options;
 
+//import js.html.Client;
 import handlers.ClientPrefs;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
@@ -13,11 +14,12 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.input.keyboard.FlxKey;
 import flixel.system.FlxSound;
 import flixel.util.FlxColor;
+import flixel.util.FlxSave;
 
 class GameplayState extends MusicBeatState {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
+	var settingsSave:FlxSave = new FlxSave();
 
-	public var ghostTapping = Bool;
 	var gtText:FlxText;
 	
 	var menuItems:Array<String> = [
@@ -65,23 +67,21 @@ class GameplayState extends MusicBeatState {
 
 			switch (daSelected) {
 				case "Ghost Tapping":
-					if (ClientPrefs.ghostTapping == false) {
+					if (ClientPrefs.ghostTapping == false)
+					{
 						ClientPrefs.ghostTapping = true;
 						trace("on");
+						gtText.text = "Ghost Tapping Is Currently on";
 					}
-					else
+					else if (ClientPrefs.ghostTapping == true)
 					{
 						ClientPrefs.ghostTapping = false;
 						trace("off");
-					}
-					if (ClientPrefs.ghostTapping == true) {
-						gtText.text = "Ghost Tapping Is Currently on";
-					}
-					else
-					{
 						gtText.text = "Ghost Tapping Is Currently off";
 					}
-					trace("Ghost Tapping Toggled");		
+					trace("Ghost Tapping Toggled");
+					ClientPrefs.saveSettings();
+					trace("Settings Saved.");		
 			}
 		}
 	}
