@@ -13,10 +13,10 @@ class ClientPrefs {
 		"OldGraphics", "ghostTapping"
 	];
 	// Options
-	public static var ghostTapping:Bool = true;
-	public static var oldGraphics:Bool = false;
-	public static var comboSplash:Bool = true;
-	public static var showComboSprite:Bool = true;
+	public static var ghostTapping:Bool;
+	public static var oldGraphics:Bool;
+	public static var comboSplash:Bool;
+	public static var showComboSprite:Bool;
 
 	public static var leftKeybinds:Array<FlxKey> = [FlxKey.A, FlxKey.LEFT];
 	public static var downKeybinds:Array<FlxKey> = [FlxKey.S, FlxKey.DOWN];
