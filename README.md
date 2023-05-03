@@ -1,4 +1,4 @@
-# Friday Night Funkin' - 0.2.2 Engine (Temporary name!!)
+# Friday Night Funkin' - Super Engine! (Early Development Stage!)
 
 This is the repository for Friday Night Funkin' 0.2.2 Engine, a game originally made for Ludum Dare 47 "Stuck In a Loop" by Ninjamuffin99 and the Funkin' devs.
 Huge credits to them for the base game!
