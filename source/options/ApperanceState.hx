@@ -17,12 +17,10 @@ import flixel.util.FlxColor;
 class ApperanceState extends MusicBeatState {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
-	public var OldGraphics = Bool;
-	public var EngineStuff = Bool;
 	var gtText:FlxText;
 
 	var menuItems:Array<String> = [
-		'Old Graphics', 'Show Combo Splash', 'Show Engine Info'
+		'Old Graphics', 'Show Combo Splash', 'Show Info Text'
 	];
 	var curSelected:Int = 0;
 	public var isFreeplayItem:Bool = false;
@@ -69,42 +67,45 @@ class ApperanceState extends MusicBeatState {
 					if (ClientPrefs.oldGraphics == false) {
 						ClientPrefs.oldGraphics = true;
 						trace("on");
+						gtText.text = "Old Graphics are currently on";
 					}
 					else
 					{
 						ClientPrefs.oldGraphics = false;
 						trace("off");
-					}
-					if (ClientPrefs.oldGraphics == true) {
-						gtText.text = "Old Graphics are currently on";
-					}
-					else
-					{
 						gtText.text = "Old Graphics are currently off";
-					}
+					}	
 					trace("Old Graphics Toggled");	
 					
 				case "Show Combo Splash":
 					if (ClientPrefs.comboSplash == false) {
 						ClientPrefs.comboSplash = true;
+						gtText.text = "The Combo Splash is currently on";
 						trace("on");
 					}
 					else
 					{
 						ClientPrefs.comboSplash = false;
-						trace("off");
-					}
-					if (ClientPrefs.comboSplash == true) {
-						gtText.text = "The Combo Splash is currently on";
-					}
-					else
-					{
 						gtText.text = "The Combo Splash is currently off";
+						trace("off");
 					}
 					trace("Combo Splash Toggled");
 					
-				case "Show Engine Info":
-					trace("Engine Stuff - Unfinished");			
+				case "Show Info Text":
+					if (ClientPrefs.showInfoText == false) {
+						ClientPrefs.showInfoText = true;
+						gtText.text = "Show Info Text is currently on";
+						trace("on");
+					}
+					else
+					{
+						ClientPrefs.showInfoText = false;
+						gtText.text = "Show Info Text is currently off";
+						trace("off");
+					}
+					trace("Show Info Text Toggled");
+					ClientPrefs.saveSettings();
+					trace("Settings Saved.");			
 			}
 		}
 	}
