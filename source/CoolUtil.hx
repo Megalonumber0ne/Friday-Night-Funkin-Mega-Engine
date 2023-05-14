@@ -1,6 +1,8 @@
 package;
 
+import polymod.Polymod;
 import openfl.Assets;
+import handlers.ClientPrefs;
 
 using StringTools;
 
@@ -26,25 +28,29 @@ class CoolUtil{
 	}
     
     public static function loadMods() {
-        #if sys
-		polymod.Polymod.init({
-			modRoot: "mods",
-			dirs: sys.FileSystem.readDirectory('./mods'),
-			errorCallback: (e) ->
-			{
-				trace(e.message);
-			},
+        //if (ClientPrefs.mods == true)
+			#if sys
+			polymod.Polymod.init({
+					modRoot: "mods",
+				dirs: sys.FileSystem.readDirectory('./mods'),
+				errorCallback: (e) ->
+				{
+					trace(e.message);
+				},
 			frameworkParams: {
-				assetLibraryPaths: [
-					"songs" => "assets/songs",
-					"images" => "assets/images",
-					"data" => "assets/data",
-					"fonts" => "assets/fonts",
-					"sounds" => "assets/sounds",
-					"music" => "assets/music",
-				]
-			}
-		});
+					assetLibraryPaths: [
+						"songs" => "assets/songs",
+						"images" => "assets/images",
+						"data" => "assets/data",
+						"fonts" => "assets/fonts",
+						"sounds" => "assets/sounds",
+						"music" => "assets/music",
+						
+					]
+				}
+			});
+		//if (ClientPrefs.mods == false)
+			//Polymod;
 		#end
     }
 }

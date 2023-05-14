@@ -16,6 +16,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.utils.Assets;
+import handlers.ClientPrefs;
 
 class TitleState extends MusicBeatState
 {
@@ -53,7 +54,6 @@ class TitleState extends MusicBeatState
 			if (StoryMenuState.weekUnlocked.length < 3)
 				StoryMenuState.weekUnlocked.insert(0, true);
 		}
-
 		CoolUtil.loadMods();
 
 		startIntro();
