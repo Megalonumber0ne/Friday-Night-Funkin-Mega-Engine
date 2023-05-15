@@ -22,7 +22,7 @@ class OptionsState extends MusicBeatState {
 	var curSelected:Int = 0;
 	public var isFreeplayItem:Bool = false;
 	override public function create() {
-		var bg = new FlxSprite().loadGraphic(('assets/images/menuDesat.png'));
+		var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
 		bg.color = 0x340666;
 		add(bg);
 

@@ -23,12 +23,12 @@ class GameplayState extends MusicBeatState {
 	var gtText:FlxText;
 	
 	var menuItems:Array<String> = [
-		'Ghost Tapping'
+		'Ghost Tapping', 'Mods'
 	];
 	var curSelected:Int = 0;
 	public var isFreeplayItem:Bool = false;
 	override public function create() {
-		var bg = new FlxSprite().loadGraphic(('assets/images/menuDesat.png'));
+		var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
 		bg.color = 0x340666;
 		add(bg);
 
@@ -70,18 +70,39 @@ class GameplayState extends MusicBeatState {
 					if (ClientPrefs.ghostTapping == false)
 					{
 						ClientPrefs.ghostTapping = true;
+						ClientPrefs.saveSettings();
 						trace("on");
 						gtText.text = "Ghost Tapping Is Currently on";
 					}
 					else if (ClientPrefs.ghostTapping == true)
 					{
 						ClientPrefs.ghostTapping = false;
+						ClientPrefs.saveSettings();
 						trace("off");
 						gtText.text = "Ghost Tapping Is Currently off";
 					}
 					trace("Ghost Tapping Toggled");
 					ClientPrefs.saveSettings();
-					trace("Settings Saved.");		
+					trace("Settings Saved.");
+
+				case "Mods":
+					if (ClientPrefs.mods == false)
+					{
+						ClientPrefs.mods = true;
+						ClientPrefs.saveSettings();
+						trace("on");
+						gtText.text = "Mods are Is Currently on";
+					}
+					else if (ClientPrefs.mods == true)
+					{
+						ClientPrefs.mods = false;
+						ClientPrefs.saveSettings();
+						trace("off");
+						gtText.text = "Mods are Currently off";
+					}
+					trace("Mods Toggled");
+					ClientPrefs.saveSettings();
+					trace("Settings Saved.");
 			}
 		}
 	}
