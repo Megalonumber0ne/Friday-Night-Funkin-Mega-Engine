@@ -43,7 +43,8 @@ class TitleState extends MusicBeatState
 
 		super.create();
 
-		FlxG.save.bind('funkin', 'ninjamuffin99');
+		FlxG.save.bind('controls', 'Mega-Engine-Save');
+		FlxG.save.bind('settings', 'Mega-Engine-Save');
 
 		Highscore.load();
 
@@ -55,7 +56,7 @@ class TitleState extends MusicBeatState
 				StoryMenuState.weekUnlocked.insert(0, true);
 		}
 		CoolUtil.loadMods();
-
+		ClientPrefs.loadPrefs();
 		startIntro();
 	}
 
@@ -92,14 +93,14 @@ class TitleState extends MusicBeatState
 		persistentUpdate = true;
 
 		logoBl = new FlxSprite(-150, -100);
-		logoBl.frames = FlxAtlasFrames.fromSparrow('assets/images/logoBumpin.png', 'assets/images/logoBumpin.xml');
+		logoBl.frames = FlxAtlasFrames.fromSparrow('assets/images/menu_assets/logoBumpin.png', 'assets/images/menu_assets/logoBumpin.xml');
 		logoBl.antialiasing = true;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
 		logoBl.animation.play('bump');
 		logoBl.updateHitbox();
 
 		gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
-		gfDance.frames = FlxAtlasFrames.fromSparrow('assets/images/gfDanceTitle.png', 'assets/images/gfDanceTitle.xml');
+		gfDance.frames = FlxAtlasFrames.fromSparrow('assets/images/menu_assets/gfDanceTitle.png', 'assets/images/menu_assets/gfDanceTitle.xml');
 		gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 		gfDance.antialiasing = true;
@@ -107,7 +108,7 @@ class TitleState extends MusicBeatState
 		add(logoBl);
 
 		titleText = new FlxSprite(100, FlxG.height * 0.8);
-		titleText.frames = FlxAtlasFrames.fromSparrow('assets/images/titleEnter.png', 'assets/images/titleEnter.xml');
+		titleText.frames = FlxAtlasFrames.fromSparrow('assets/images/menu_assets/titleEnter.png', 'assets/images/menu_assets/titleEnter.xml');
 		titleText.animation.addByPrefix('idle', "Press Enter to Begin", 24);
 		titleText.animation.addByPrefix('press', "ENTER PRESSED", 24);
 		titleText.antialiasing = true;

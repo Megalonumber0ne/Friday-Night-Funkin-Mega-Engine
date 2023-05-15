@@ -20,6 +20,7 @@ class Alphabet extends FlxSpriteGroup
 	// for menu shit
 	public var targetY:Float = 0;
 	public var isMenuItem:Bool = false;
+	public var isFreeplayItem:Bool = false;
 
 	public var text:String = "";
 
@@ -230,6 +231,10 @@ class Alphabet extends FlxSpriteGroup
 			y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.48), 0.16);
 			x = FlxMath.lerp(x, (targetY * 20) + 90, 0.16);
 		}
+		if (isFreeplayItem){
+			var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
+			y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.48), 0.16);
+		}
 
 		super.update(elapsed);
 	}
@@ -237,7 +242,7 @@ class Alphabet extends FlxSpriteGroup
 
 class AlphaCharacter extends FlxSprite
 {
-	public static var alphabet:String = "abcdefghijklmnopqrstuvwxyz";
+	public static var alphabet:String = "abcdefghijklmnopqrstuvwxyz1234567890|~#$%()*+:;<=>@[]^_.,'!?";
 
 	public static var numbers:String = "1234567890";
 
@@ -248,7 +253,7 @@ class AlphaCharacter extends FlxSprite
 	public function new(x:Float, y:Float)
 	{
 		super(x, y);
-		var tex = FlxAtlasFrames.fromSparrow('assets/images/alphabet.png', 'assets/images/alphabet.xml');
+		var tex = FlxAtlasFrames.fromSparrow('assets/images/ui/alphabet.png', 'assets/images/ui/alphabet.xml');
 		frames = tex;
 
 		antialiasing = true;

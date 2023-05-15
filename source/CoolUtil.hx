@@ -45,6 +45,7 @@ class CoolUtil{
 						"fonts" => "assets/fonts",
 						"sounds" => "assets/sounds",
 						"music" => "assets/music",
+						"characters" => "characters",
 						
 					]
 				}
