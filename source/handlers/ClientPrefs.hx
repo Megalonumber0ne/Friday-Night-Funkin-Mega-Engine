@@ -10,13 +10,13 @@ import Controls;
 class ClientPrefs {
 	// For load and save.
 	static var settingNames:Array<String> = [
-		"OldGraphics", "ghostTapping"
+		'OldGraphics', 'ghostTapping', 'comboSplash' 
 	];
-	// Options
 	public static var ghostTapping:Bool;
 	public static var oldGraphics:Bool;
 	public static var comboSplash:Bool;
-	public static var showComboSprite:Bool;
+	public static var showInfoText:Bool;
+	public static var mods:Bool;
 
 	public static var leftKeybinds:Array<FlxKey> = [FlxKey.A, FlxKey.LEFT];
 	public static var downKeybinds:Array<FlxKey> = [FlxKey.S, FlxKey.DOWN];
@@ -28,22 +28,9 @@ class ClientPrefs {
 	public static var antialiasing:Bool = true;
 	public static var framerate:Int = 60;
 
-	// Info Text stuff
-
-	// easter eggs
-	public static var tristanPlayer:Bool = false;
-	public static var monikaGF:Bool = false;
-
-	// funny
-	public static var tankmanFloat:Bool = false;
-
-	// Extra
 	public static var fullscreen:Bool = false;
 	public static var autoPause:Bool = true;
-	public static var scoreMultiplier:Float = 1.0; // for future multiplier stuff
 
-	// modifiable stuff for modding
-	public static var fairFightHealthLossCount:Float = 0.02;
 	public static var defaultFont:String = 'vcr';
 
 	public static function saveSettings() {
@@ -55,14 +42,15 @@ class ClientPrefs {
 		FlxG.save.flush();
 
 		var settingsSave:FlxSave = new FlxSave();
-		settingsSave.bind('settings', 'Funkin-0.2.2-Engine-Save');
+		settingsSave.bind('settings', 'Mega-Engine-Save');
 		settingsSave.data.ghostTapping = ghostTapping;
 		settingsSave.data.comboSplash = comboSplash;
 		settingsSave.data.oldGraphics = oldGraphics;
+		settingsSave.data.showInfoText = showInfoText;
 		settingsSave.flush();
 
 		var controlSave:FlxSave = new FlxSave();
-		controlSave.bind('controls', 'Funkin-0.2.2-Engine-Save'); // Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
+		controlSave.bind('controls', 'Mega-Engine-Save'); // Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
 		controlSave.data.leftBinds = leftKeybinds;
 		controlSave.data.downBinds = downKeybinds;
 		controlSave.data.upBinds = upKeybinds;
@@ -74,15 +62,38 @@ class ClientPrefs {
 
 	public static function loadPrefs() {
 		var settingsSave:FlxSave = new FlxSave();
-		settingsSave.bind('settings', 'Funkin-0.2.2-Engine-Save');
+		settingsSave.bind('settings', 'Mega-Engine-Save');
         if(settingsSave.data.comboSplash != null)
 			comboSplash = settingsSave.data.comboSplash;
+
         if(settingsSave.data.oldGraphics != null)
 			oldGraphics = settingsSave.data.oldGraphics;
+
         if(settingsSave.data.ghostTapping != null)
 			ghostTapping = settingsSave.data.ghostTapping;
+
+		if(settingsSave.data.showInfoText != null)
+			showInfoText = settingsSave.data.showInfoText;
+
 		if(settingsSave.data.ghostTapping == null)
-			trace('THIS IS NULL');
+			trace('Ghost Tapping Setting not present, defaulting to OFF');
+			ghostTapping = false;
+			ClientPrefs.saveSettings();
+
+		if(settingsSave.data.comboSplash == null)
+			trace('Combo Splash Setting not present, defaulting to ON');
+			comboSplash = true;
+			ClientPrefs.saveSettings();
+
+		if(settingsSave.data.oldGraphics == null)
+			trace('Old Graphics Setting not present, defaulting to OFF');
+			oldGraphics = false;
+			ClientPrefs.saveSettings();
+
+		if(settingsSave.data.showInfoText == null)
+			trace('Show Info Text Setting not present, defaulting to ON');
+			showInfoText = true;
+			ClientPrefs.saveSettings();
 
 		var controlSave:FlxSave = new FlxSave();
 		controlSave.bind('controls', 'Funkin-0.2.2-Engine-Save');
