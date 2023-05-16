@@ -18,10 +18,14 @@ class ClientPrefs {
 	public static var showInfoText:Bool;
 	public static var mods:Bool;
 
-	public static var leftKeybinds:Array<FlxKey> = [FlxKey.A, FlxKey.LEFT];
-	public static var downKeybinds:Array<FlxKey> = [FlxKey.S, FlxKey.DOWN];
-	public static var upKeybinds:Array<FlxKey> = [FlxKey.W, FlxKey.UP];
-	public static var rightKeybinds:Array<FlxKey> = [FlxKey.D, FlxKey.RIGHT];
+	//public static var leftKeybinds:Array<FlxKey> = [FlxKey.A, FlxKey.LEFT];
+	//public static var downKeybinds:Array<FlxKey> = [FlxKey.S, FlxKey.DOWN];
+	//public static var upKeybinds:Array<FlxKey> = [FlxKey.W, FlxKey.UP];
+	//public static var rightKeybinds:Array<FlxKey> = [FlxKey.D, FlxKey.RIGHT];
+	public static var leftKeybinds:Array<FlxKey> = [FlxKey.D, FlxKey.LEFT];
+	public static var downKeybinds:Array<FlxKey> = [FlxKey.F, FlxKey.DOWN];
+	public static var upKeybinds:Array<FlxKey> = [FlxKey.J, FlxKey.UP];
+	public static var rightKeybinds:Array<FlxKey> = [FlxKey.K, FlxKey.RIGHT];
 	public static var resetKeybind:FlxKey = FlxKey.R;
 	public static final controls:Controls = new Controls("player0", Solo);
 
@@ -42,12 +46,12 @@ class ClientPrefs {
 		FlxG.save.flush();
 
 		var settingsSave:FlxSave = new FlxSave();
-		settingsSave.bind('settings', 'Mega-Engine-Save');
+		settingsSave.bind('Mega-Engine-Save');
 		settingsSave.data.ghostTapping = ghostTapping;
 		settingsSave.data.comboSplash = comboSplash;
 		settingsSave.data.oldGraphics = oldGraphics;
 		settingsSave.data.showInfoText = showInfoText;
-		settingsSave.flush();
+		//settingsSave.flush();
 
 		var controlSave:FlxSave = new FlxSave();
 		controlSave.bind('controls', 'Mega-Engine-Save'); // Placing this in a separate save so that it can be manually deleted without removing your Score and stuff
