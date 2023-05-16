@@ -27,7 +27,8 @@ class TitleState extends MusicBeatState
 	var credGroup:FlxGroup;
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
-	//var ngSpr:FlxSprite;
+	var ngSpr:FlxSprite;
+	
 
 	var curWacky:Array<String> = [];
 
@@ -254,49 +255,35 @@ class TitleState extends MusicBeatState
 		{
 			case 1:
 				createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
-			// credTextShit.visible = true;
 			case 3:
 				addMoreText('present');
-			// credTextShit.text += '\npresent...';
-			// credTextShit.addText();
 			case 4:
 				deleteCoolText();
-			// credTextShit.visible = false;
-			// credTextShit.text = 'In association \nwith';
-			// credTextShit.screenCenter();
 			case 5:
 				createCoolText(['In association', 'with']);
 			case 7:
-				//addMoreText('newgrounds');
-				//ngSpr.visible = true;
-			// credTextShit.text += '\nNewgrounds';
+				addMoreText('Newgrounds');
+				ngSpr = new FlxSprite('assets/images/menu_assets/newgrounds_logo.png');
+				ngSpr.screenCenter(X);
+				ngSpr.y = 370;
+				ngSpr.width = 0.9;
+				ngSpr.height = 0.9;
+				add(ngSpr);
 			case 8:
-				//deleteCoolText();
-				//ngSpr.visible = false;
-			// credTextShit.visible = false;
-
-			// credTextShit.text = 'Shoutouts Tom Fulp';
-			// credTextShit.screenCenter();
+				deleteCoolText();
+				ngSpr.alpha = 0;
 			case 9:
 				createCoolText([curWacky[0]]);
-			// credTextShit.visible = true;
 			case 11:
 				addMoreText(curWacky[1]);
-			// credTextShit.text += '\nlmao';
 			case 12:
 				deleteCoolText();
-			// credTextShit.visible = false;
-			// credTextShit.text = "Friday";
-			// credTextShit.screenCenter();
 			case 13:
 				addMoreText('Friday');
-			// credTextShit.visible = true;
 			case 14:
 				addMoreText('Night');
-			// credTextShit.text += '\nNight';
 			case 15:
-				addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
-
+				addMoreText('Funkin');
 			case 16:
 				skipIntro();
 		}
@@ -308,7 +295,7 @@ class TitleState extends MusicBeatState
 	{
 		if (!skippedIntro)
 		{
-			//remove(ngSpr);
+			remove(ngSpr);
 
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			remove(credGroup);
