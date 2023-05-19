@@ -189,6 +189,13 @@ class PlayState extends MusicBeatState
 		dad = new Character(100, 100, SONG.player2);
 		add(dad);
 
+		if (SONG.player1 == null)
+			SONG.player1 == 'bf';
+		if (SONG.player2 == null)
+			SONG.player2 == 'bf';
+		if (SONG.player3 == null)
+			SONG.player3 == 'bf';
+
 		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y);
 
 		switch (SONG.player2)
