@@ -100,6 +100,7 @@ class PlayState extends MusicBeatState
 
 	override public function create()
 	{
+		FlxG.mouse.visible = false;
 		instance = this;
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
@@ -189,13 +190,6 @@ class PlayState extends MusicBeatState
 		dad = new Character(100, 100, SONG.player2);
 		add(dad);
 
-		if (SONG.player1 == null)
-			SONG.player1 == 'bf';
-		if (SONG.player2 == null)
-			SONG.player2 == 'bf';
-		if (SONG.player3 == null)
-			SONG.player3 == 'bf';
-
 		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y);
 
 		switch (SONG.player2)
@@ -266,22 +260,17 @@ class PlayState extends MusicBeatState
 		healthBar.createFilledBar(Character.dadHpColor, Character.bfHpColor);//0xFFFF0000, 0xFF66FF33);
 		add(healthBar);
 
-		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 190, healthBarBG.y + 30, 0, "", 20);
+		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 190, healthBarBG.y + 45, 0, "", 20);
 		scoreTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 
-		comboTxt = new FlxText(healthBarBG.x + healthBarBG.width - 290, healthBarBG.y + 30, 0, "", 20);
+		comboTxt = new FlxText(healthBarBG.x + healthBarBG.width - 290, healthBarBG.y + 45, 0, "", 20);
 		comboTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		comboTxt.scrollFactor.set();
 
-		missTxt = new FlxText(healthBarBG.x + healthBarBG.width - 390, healthBarBG.y + 30, 0, "", 20);
+		missTxt = new FlxText(healthBarBG.x + healthBarBG.width - 390, healthBarBG.y + 45, 0, "", 20);
 		missTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		missTxt.scrollFactor.set();
-
-		//if (ClientPrefs.showInfoText == true)
-		//	add(scoreTxt);
-		//	add(comboTxt);
-		//	add(missTxt);
 
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
@@ -308,8 +297,17 @@ class PlayState extends MusicBeatState
 		super.create();
 		if (ClientPrefs.showInfoText == true)
 			add(scoreTxt);
+		if (ClientPrefs.showInfoText == true)
 			add(comboTxt);
+		if (ClientPrefs.showInfoText == true)
 			add(missTxt);
+
+		if (SONG.player1 == null)
+			SONG.player1 == 'bf';
+		if (SONG.player2 == null)
+			SONG.player2 == 'bf';
+		if (SONG.player3 == null)
+			SONG.player3 == 'gf';
 	}
 
 	var startTimer:FlxTimer;
@@ -1253,6 +1251,15 @@ class PlayState extends MusicBeatState
 
 	override function beatHit()
 	{
+		if (boyfriend.animation.name == null || !boyfriend.animation.name.startsWith("sing"))
+			boyfriend.dance();
+
+		if (dad.animation.name == null || !dad.animation.name.startsWith("sing"))
+			dad.dance();
+
+		if (gf.animation.name == null || !gf.animation.name.startsWith("sing"))
+			gf.dance();
+
 		super.beatHit();
 
 		if (generatedMusic)

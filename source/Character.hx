@@ -2,12 +2,14 @@ package;
 
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
-import Song;
+import Song.SwagSong;
+import HealthIcon;
 
 using StringTools;
 
 class Character extends FlxSprite
 {
+	public static var SONG:SwagSong;
 	public var animOffsets:Map<String, Array<Dynamic>>;
 	public var debugMode:Bool = false;
 
@@ -33,6 +35,22 @@ class Character extends FlxSprite
 
 		switch (curCharacter)
 		{
+			case 'nullChar':
+				var tex = FlxAtlasFrames.fromSparrow('assets/images/characters/nullChar.png', 'assets/images/characters/nullChar.xml');
+				animation.addByPrefix('idle', 'nullChar', 1, false);
+				animation.addByPrefix('singUP', 'nullChar', 1, false);
+				animation.addByPrefix('singLEFT', 'nullChar', 1, false);
+				animation.addByPrefix('singRIGHT', 'nullChar', 1, false);
+				animation.addByPrefix('singDOWN', 'nullChar', 1, false);
+				playAnim('idle');
+				if ('nullChar' == SONG.player2)
+					dadHpColor = (0xff000000);
+				if ('nullChar' == SONG.player3)
+					dadHpColor = (0xff000000);
+				if ('nullChar' == SONG.player1)
+					bfHpColor = (0xff000000);
+				
+
 			case 'bf':
 				var tex = FlxAtlasFrames.fromSparrow('assets/images/characters/BOYFRIEND.png', 'assets/images/characters/BOYFRIEND.xml');
 				frames = tex;
@@ -74,6 +92,7 @@ class Character extends FlxSprite
 				flipX = true;
 				bfHpColor = (0xff31b0d1);
 				charIcon = 'icon-bf';
+
 				//hpColor = (0xff31b0d1);
 			case 'gf':
 				// GIRLFRIEND CODE
@@ -174,6 +193,13 @@ class Character extends FlxSprite
 
 	override function update(elapsed:Float)
 	{
+		if (animation.curAnim == null)
+			return;
+
+		if (HealthIcon == null)
+			animation.add('bf', [0, 1], 0, false, isPlayer);
+			animation.play('bf');
+
 		if (curCharacter != 'bf')
 		{
 			if (animation.curAnim.name.startsWith('sing'))
