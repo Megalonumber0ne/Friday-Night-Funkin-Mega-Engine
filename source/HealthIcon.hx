@@ -11,8 +11,6 @@ class HealthIcon extends FlxSprite
 	{
 		super();
 		loadGraphic('assets/images/ui/iconGrid.png', true, 150, 150);
-		//loadGraphic('assets/images/icons/',(Character.charIcon) + '.png'); //I tried to make individual icon grids lol
-
 
 		antialiasing = true;
 		animation.add('bf', [0, 1], 0, false, isPlayer);
@@ -34,8 +32,13 @@ class HealthIcon extends FlxSprite
 		animation.add('parents-christmas', [17], 0, false, isPlayer);
 		animation.add('monster', [19, 20], 0, false, isPlayer);
 		animation.add('monster-christmas', [19, 20], 0, false, isPlayer);
-		//animation.add('nullChar', [0, 0], 0, false, isPlayer);
-		animation.play(char);
+
+		trace(char);
+
+		if (animation.exists(char))
+			animation.play(char);
+		else
+			animation.play('face');
 		scrollFactor.set(); 
 	}
 }

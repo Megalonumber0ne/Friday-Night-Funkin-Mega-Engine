@@ -44,7 +44,6 @@ class TitleState extends MusicBeatState
 
 		super.create();
 
-		FlxG.save.bind('controls', 'Mega-Engine-Save');
 		FlxG.save.bind('settings', 'Mega-Engine-Save');
 
 		Highscore.load();
@@ -57,7 +56,6 @@ class TitleState extends MusicBeatState
 				StoryMenuState.weekUnlocked.insert(0, true);
 		}
 		CoolUtil.loadMods();
-		ClientPrefs.loadPrefs();
 		startIntro();
 	}
 

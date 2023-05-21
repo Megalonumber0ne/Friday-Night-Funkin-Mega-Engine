@@ -31,9 +31,6 @@ class Files {
 	}
 
 	inline public static function font(font:String, ?extention:String = 'ttf') {
-		if (font == '')
-			font = ClientPrefs.defaultFont;
-
 		#if html5
 		extention = 'woff';
 		#end

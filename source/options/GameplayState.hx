@@ -66,42 +66,12 @@ class GameplayState extends MusicBeatState {
 
 			switch (daSelected) {
 				case "Ghost Tapping":
-					if (ClientPrefs.ghostTapping == false)
-					{
-						ClientPrefs.ghostTapping = true;
-						ClientPrefs.saveSettings();
-						trace("on");
-						gtText.text = "Ghost Tapping Is Currently on";
-					}
-					else if (ClientPrefs.ghostTapping == true)
-					{
-						ClientPrefs.ghostTapping = false;
-						ClientPrefs.saveSettings();
-						trace("off");
-						gtText.text = "Ghost Tapping Is Currently off";
-					}
-					trace("Ghost Tapping Toggled");
-					ClientPrefs.saveSettings();
-					trace("Settings Saved.");
+						ClientPrefs.setOption('ghostTapping', !ClientPrefs.getOption('ghostTapping'));
+						gtText.text = 'Ghost Tapping Is Currently ${ClientPrefs.getOption('ghostTapping')}';
 
 				case "Mods":
-					if (ClientPrefs.mods == false)
-					{
-						ClientPrefs.mods = true;
-						ClientPrefs.saveSettings();
-						trace("on");
-						gtText.text = "Mods are Is Currently on";
-					}
-					else if (ClientPrefs.mods == true)
-					{
-						ClientPrefs.mods = false;
-						ClientPrefs.saveSettings();
-						trace("off");
-						gtText.text = "Mods are Currently off";
-					}
-					trace("Mods Toggled");
-					ClientPrefs.saveSettings();
-					trace("Settings Saved.");
+						ClientPrefs.setOption('mods', !ClientPrefs.getOption('mods'));
+						gtText.text = 'Mods are Is Currently ${ClientPrefs.getOption('mods')}';
 			}
 		}
 	}

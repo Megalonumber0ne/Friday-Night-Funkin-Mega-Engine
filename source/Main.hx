@@ -19,8 +19,7 @@ class Main extends Sprite
 		super();
 		addChild(new FlxGame(0, 0, TitleState));
 
-		ClientPrefs.loadPrefs();
-		trace("Settings & Preferences loaded...");
+		ClientPrefs.initOptions();
 
 		#if !mobile
 		addChild(new FPS(10, 3, 0xFFFFFF));

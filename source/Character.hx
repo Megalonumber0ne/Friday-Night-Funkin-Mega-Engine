@@ -1,26 +1,26 @@
 package;
 
+import flixel.util.FlxColor;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import Song.SwagSong;
-import HealthIcon;
 
 using StringTools;
 
 class Character extends FlxSprite
 {
 	public static var SONG:SwagSong;
+
 	public var animOffsets:Map<String, Array<Dynamic>>;
 	public var debugMode:Bool = false;
 
 	public var isPlayer:Bool = false;
 	public var curCharacter:String = 'bf';
+
 	public static var charIcon:String;
 
 	public var holdTimer:Float = 0;
-	static public var bfHpColor:Int;
-	static public var dadHpColor:Int;
-	static public var hpColor:Int;
+	public var hpColor:FlxColor = FlxColor.BLACK;
 
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
 	{
@@ -30,27 +30,14 @@ class Character extends FlxSprite
 		curCharacter = character;
 		this.isPlayer = isPlayer;
 
+		if (charIcon == null)
+			charIcon == curCharacter;
+
 		var tex:FlxAtlasFrames;
 		antialiasing = true;
 
 		switch (curCharacter)
 		{
-			/*case 'nullChar':
-				var tex = FlxAtlasFrames.fromSparrow('assets/images/characters/nullChar.png', 'assets/images/characters/nullChar.xml');
-				animation.addByPrefix('idle', 'nullChar', 1, false);
-				animation.addByPrefix('singUP', 'nullChar', 1, false);
-				animation.addByPrefix('singLEFT', 'nullChar', 1, false);
-				animation.addByPrefix('singRIGHT', 'nullChar', 1, false);
-				animation.addByPrefix('singDOWN', 'nullChar', 1, false);
-				playAnim('idle');
-				if ('nullChar' == SONG.player2)
-					dadHpColor = (0xff000000);
-				if ('nullChar' == SONG.player3)
-					dadHpColor = (0xff000000);
-				if ('nullChar' == SONG.player1)
-					bfHpColor = (0xff000000);
-			*/	
-
 			case 'bf':
 				var tex = FlxAtlasFrames.fromSparrow('assets/images/characters/BOYFRIEND.png', 'assets/images/characters/BOYFRIEND.xml');
 				frames = tex;
@@ -90,10 +77,8 @@ class Character extends FlxSprite
 				addOffset('scared', -4);
 
 				flipX = true;
-				bfHpColor = (0xff31b0d1);
-				charIcon = 'icon-bf';
-
-				//hpColor = (0xff31b0d1);
+				hpColor = (0xff31b0d1);
+				charIcon = 'bf';
 			case 'gf':
 				// GIRLFRIEND CODE
 				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/GF_assets.png', 'assets/images/characters/GF_assets.xml');
@@ -122,9 +107,8 @@ class Character extends FlxSprite
 				addOffset('scared');
 
 				playAnim('danceRight');
-				dadHpColor = (0xff9d0049);
 				charIcon = 'gf';
-				bfHpColor = (0xff9d0049);
+				hpColor = (0xff9d0049);
 			case 'dad':
 				// DAD ANIMATION LOADING CODE
 				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/DADDY_DEAREST.png', 'assets/images/characters/DADDY_DEAREST.xml');
@@ -141,9 +125,8 @@ class Character extends FlxSprite
 				addOffset("singRIGHT", 0, 27);
 				addOffset("singLEFT", -10, 10);
 				addOffset("singDOWN", 0, -30);
-				dadHpColor = (0xffaf66ce);
 				charIcon = 'icon-dad';
-				bfHpColor = (0xffaf66ce);
+				hpColor = (0xffaf66ce);
 			case 'spooky':
 				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/spooky_kids_assets.png', 'assets/images/characters/spooky_kids_assets.xml');
 				frames = tex;
@@ -163,9 +146,8 @@ class Character extends FlxSprite
 				addOffset("singDOWN", -50, -130);
 
 				playAnim('danceRight');
-				dadHpColor = (0xffd57e00);
 				charIcon = 'spooky';
-				bfHpColor = (0xffd57e00);
+				hpColor = (0xffd57e00);
 			case 'monster':
 				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/Monster_Assets.png', 'assets/images/characters/Monster_Assets.xml');
 				frames = tex;
@@ -181,22 +163,21 @@ class Character extends FlxSprite
 				addOffset("singLEFT", -30);
 				addOffset("singDOWN", -30, -40);
 				playAnim('idle');
-				dadHpColor = (0xfff3ff6e);
 				charIcon = 'monster';
-				bfHpColor = (0xfff3ff6e);
+				hpColor = (0xfff3ff6e);
 		}
 
-		if (isPlayer){
+		if (isPlayer)
+		{
 			flipX = !flipX;
 		}
 	}
 
 	override function update(elapsed:Float)
 	{
-
 		if (curCharacter != 'bf')
 		{
-			if (animation.curAnim.name.startsWith('sing'))
+			if (animation.curAnim != null && animation.curAnim.name.startsWith('sing'))
 			{
 				holdTimer += elapsed;
 			}
@@ -224,8 +205,6 @@ class Character extends FlxSprite
 	{
 		switch (curCharacter)
 		{
-			case 'bf':
-
 			case 'gf':
 				danced = !danced;
 
@@ -240,38 +219,42 @@ class Character extends FlxSprite
 					playAnim('danceRight');
 				else
 					playAnim('danceLeft');
-			case 'dad':
-				playAnim('idle');
-			case 'monster':
+
+			default:
 				playAnim('idle');
 		}
 	}
 
 	public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void
 	{
-		animation.play(AnimName, Force, Reversed, Frame);
-
-		var daOffset = animOffsets.get(animation.curAnim.name);
-		if (animOffsets.exists(animation.curAnim.name))
+		if (animation.exists(AnimName))
 		{
-			offset.set(daOffset[0], daOffset[1]);
-		}
+			animation.play(AnimName, Force, Reversed, Frame);
 
-		if (curCharacter == 'gf')
-		{
-			if (AnimName == 'singLEFT')
+			var daOffset = animOffsets.get(animation.curAnim.name);
+			if (animOffsets.exists(animation.curAnim.name))
 			{
-				danced = true;
-			}
-			else if (AnimName == 'singRIGHT')
-			{
-				danced = false;
+				offset.set(daOffset[0], daOffset[1]);
 			}
 
-			if (AnimName == 'singUP' || AnimName == 'singDOWN')
+			if (curCharacter == 'gf')
 			{
-				danced = !danced;
+				if (AnimName == 'singLEFT')
+				{
+					danced = true;
+				}
+				else if (AnimName == 'singRIGHT')
+				{
+					danced = false;
+				}
+
+				if (AnimName == 'singUP' || AnimName == 'singDOWN')
+				{
+					danced = !danced;
+				}
 			}
+		}else{
+			return;
 		}
 	}
 
