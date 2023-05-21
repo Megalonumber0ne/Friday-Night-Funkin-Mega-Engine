@@ -257,7 +257,7 @@ class PlayState extends MusicBeatState
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
-		healthBar.createFilledBar(Character.dadHpColor, Character.bfHpColor);//0xFFFF0000, 0xFF66FF33);
+		healthBar.createFilledBar(dad.hpColor, boyfriend.hpColor);//0xFFFF0000, 0xFF66FF33);
 		add(healthBar);
 
 		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 190, healthBarBG.y + 45, 0, "", 20);
@@ -295,19 +295,11 @@ class PlayState extends MusicBeatState
 		doof.cameras = [camHUD];
 
 		super.create();
-		if (ClientPrefs.showInfoText == true)
+		if (ClientPrefs.getOption('showInfoText')){
 			add(scoreTxt);
-		if (ClientPrefs.showInfoText == true)
 			add(comboTxt);
-		if (ClientPrefs.showInfoText == true)
 			add(missTxt);
-
-		if (SONG.player1 == null)
-			SONG.player1 = 'bf';
-		if (SONG.player2 == null)
-			SONG.player2 = 'dad';
-		if (SONG.player3 == null)
-			SONG.player3 = 'gf';
+		}
 	}
 
 	var startTimer:FlxTimer;
@@ -939,11 +931,10 @@ class PlayState extends MusicBeatState
 			rating.antialiasing = true;
 			comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7));
 			comboSpr.antialiasing = true;
-			if (ClientPrefs.comboSplash)	
-				if (combo >9) 
+			if (ClientPrefs.getOption('comboSplash')){	
+				if (combo > 9) 
 					add(comboSpr);
-			if (!ClientPrefs.comboSplash)
-				
+			}
 			comboSpr.updateHitbox();
 			rating.updateHitbox();
 	
@@ -1161,7 +1152,7 @@ class PlayState extends MusicBeatState
 	}
 
 	function badNoteCheck() {
-		if (ClientPrefs.ghostTapping)
+		if (ClientPrefs.getOption('ghostTapping'))
 			return;
 		
 		var pressedIndex:Int = [
