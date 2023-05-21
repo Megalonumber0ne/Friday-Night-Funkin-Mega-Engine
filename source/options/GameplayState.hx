@@ -1,6 +1,6 @@
 package options;
 
-//import js.html.Client;
+// import js.html.Client;
 import handlers.ClientPrefs;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
@@ -15,18 +15,20 @@ import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import flixel.util.FlxSave;
 
-class GameplayState extends MusicBeatState {
+class GameplayState extends MusicBeatState
+{
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 	var settingsSave:FlxSave = new FlxSave();
 
 	var gtText:FlxText;
-	
-	var menuItems:Array<String> = [
-		'Ghost Tapping', 'Mods'
-	];
+
+	var menuItems:Array<String> = ['Ghost Tapping', 'Mods'];
 	var curSelected:Int = 0;
+
 	public var isFreeplayItem:Bool = false;
-	override public function create() {
+
+	override public function create()
+	{
 		var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
 		bg.color = 0x340666;
 		add(bg);
@@ -34,7 +36,8 @@ class GameplayState extends MusicBeatState {
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
 
-		for (i in 0...menuItems.length) {
+		for (i in 0...menuItems.length)
+		{
 			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, menuItems[i], true, false);
 			songText.screenCenter(X);
 			songText.isFreeplayItem = true;
@@ -52,7 +55,8 @@ class GameplayState extends MusicBeatState {
 		add(gtText);
 	}
 
-	override function update(elapsed:Float) {
+	override function update(elapsed:Float)
+	{
 		super.update(elapsed);
 
 		if (controls.UP_P)
@@ -61,25 +65,30 @@ class GameplayState extends MusicBeatState {
 			changeSelection(1);
 		if (controls.BACK)
 			FlxG.switchState(new OptionsState());
-		if (controls.ACCEPT) {
-			var daSelected:String = menuItems[curSelected];
+		var daSelected:String = menuItems[curSelected];
 
-			switch (daSelected) {
-				case "Ghost Tapping":
-						ClientPrefs.setOption('ghostTapping', !ClientPrefs.getOption('ghostTapping'));
-						gtText.text = 'Ghost Tapping Is Currently ${ClientPrefs.getOption('ghostTapping')}';
+		switch (daSelected)
+		{
+			case "Ghost Tapping":
+				if (controls.ACCEPT)
+					ClientPrefs.setOption('ghostTapping', !ClientPrefs.getOption('ghostTapping'));
 
-				case "Mods":
-						ClientPrefs.setOption('mods', !ClientPrefs.getOption('mods'));
-						gtText.text = 'Mods are Is Currently ${ClientPrefs.getOption('mods')}';
-			}
+				gtText.text = 'Ghost Tapping Is Currently ${ClientPrefs.getOption('ghostTapping')}';
+
+			case "Mods":
+				if (controls.ACCEPT)
+					ClientPrefs.setOption('mods', !ClientPrefs.getOption('mods'));
+
+				gtText.text = 'Mods are Is Currently ${ClientPrefs.getOption('mods')}';
 		}
 	}
 
-	function changeSelection(change:Int = 0):Void {
+	function changeSelection(change:Int = 0):Void
+	{
 		curSelected = FlxMath.wrap(curSelected + change, 0, menuItems.length - 1);
 
-		for (i in 0...grpMenuShit.length) {
+		for (i in 0...grpMenuShit.length)
+		{
 			var item = grpMenuShit.members[i];
 			item.targetY = i - curSelected;
 			item.alpha = item.targetY == 0 ? 1 : 0.6;
