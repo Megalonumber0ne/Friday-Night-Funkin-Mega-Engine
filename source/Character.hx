@@ -35,7 +35,7 @@ class Character extends FlxSprite
 
 		switch (curCharacter)
 		{
-			case 'nullChar':
+			/*case 'nullChar':
 				var tex = FlxAtlasFrames.fromSparrow('assets/images/characters/nullChar.png', 'assets/images/characters/nullChar.xml');
 				animation.addByPrefix('idle', 'nullChar', 1, false);
 				animation.addByPrefix('singUP', 'nullChar', 1, false);
@@ -49,7 +49,7 @@ class Character extends FlxSprite
 					dadHpColor = (0xff000000);
 				if ('nullChar' == SONG.player1)
 					bfHpColor = (0xff000000);
-				
+			*/	
 
 			case 'bf':
 				var tex = FlxAtlasFrames.fromSparrow('assets/images/characters/BOYFRIEND.png', 'assets/images/characters/BOYFRIEND.xml');
@@ -193,12 +193,6 @@ class Character extends FlxSprite
 
 	override function update(elapsed:Float)
 	{
-		if (animation.curAnim == null)
-			return;
-
-		if (HealthIcon == null)
-			animation.add('bf', [0, 1], 0, false, isPlayer);
-			animation.play('bf');
 
 		if (curCharacter != 'bf')
 		{

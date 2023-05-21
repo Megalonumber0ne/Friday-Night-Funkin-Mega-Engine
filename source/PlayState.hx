@@ -303,11 +303,11 @@ class PlayState extends MusicBeatState
 			add(missTxt);
 
 		if (SONG.player1 == null)
-			SONG.player1 == 'bf';
+			SONG.player1 = 'bf';
 		if (SONG.player2 == null)
-			SONG.player2 == 'bf';
+			SONG.player2 = 'dad';
 		if (SONG.player3 == null)
-			SONG.player3 == 'gf';
+			SONG.player3 = 'gf';
 	}
 
 	var startTimer:FlxTimer;
@@ -1251,15 +1251,6 @@ class PlayState extends MusicBeatState
 
 	override function beatHit()
 	{
-		if (boyfriend.animation.name == null || !boyfriend.animation.name.startsWith("sing"))
-			boyfriend.dance();
-
-		if (dad.animation.name == null || !dad.animation.name.startsWith("sing"))
-			dad.dance();
-
-		if (gf.animation.name == null || !gf.animation.name.startsWith("sing"))
-			gf.dance();
-
 		super.beatHit();
 
 		if (generatedMusic)
