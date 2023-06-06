@@ -101,6 +101,8 @@ class PlayState extends MusicBeatState
 	var missTxt:FlxText;
 	var accuracyTxt:FlxText;
 	var infoTxt:FlxText;
+	public var ratingTxt:String;
+	var songRating:FlxText;
 
 	public static var campaignScore:Int = 0;
 
@@ -265,26 +267,26 @@ class PlayState extends MusicBeatState
 		healthBar.scrollFactor.set();
 		healthBar.createFilledBar(dad.hpColor, boyfriend.hpColor);//0xFFFF0000, 0xFF66FF33);
 		add(healthBar);
+		
+		infoTxt = new FlxText(healthBarBG.x + healthBarBG.width - 600, healthBarBG.y + 45, 0, "", 20);
+		infoTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		infoTxt.scrollFactor.set();
 
-		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 190, healthBarBG.y + 45, 0, "", 20);
-		scoreTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		scoreTxt.scrollFactor.set();
-
-		comboTxt = new FlxText(healthBarBG.x + healthBarBG.width - 290, healthBarBG.y + 45, 0, "", 20);
-		comboTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		comboTxt.scrollFactor.set();
-
-		missTxt = new FlxText(healthBarBG.x + healthBarBG.width - 390, healthBarBG.y + 45, 0, "", 20);
+		missTxt = new FlxText(healthBarBG.x + healthBarBG.width - 600, healthBarBG.y + 45, 0, "", 20);
 		missTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		missTxt.scrollFactor.set();
 
-		accuracyTxt = new FlxText(healthBarBG.x + healthBarBG.width - 540, healthBarBG.y + 45, 0, "", 20);
+		accuracyTxt = new FlxText(healthBarBG.x + healthBarBG.width - 600, healthBarBG.y + 45, 0, "", 20);
 		accuracyTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		accuracyTxt.scrollFactor.set();
 
-		infoTxt = new FlxText(healthBarBG.x + healthBarBG.width - 540, healthBarBG.y + 45, 0, "", 20);
-		infoTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		infoTxt.scrollFactor.set();
+		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 600, healthBarBG.y + 45, 0, "", 20);
+		scoreTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt.scrollFactor.set();
+
+		missTxt = new FlxText(healthBarBG.x + healthBarBG.width - 600, healthBarBG.y + 45, 0, "", 20);
+		missTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		missTxt.scrollFactor.set();
 
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
@@ -303,11 +305,7 @@ class PlayState extends MusicBeatState
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
 		healthBarBG.cameras = [camHUD];
-		scoreTxt.cameras = [camHUD];
-		comboTxt.cameras = [camHUD];
-		missTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
-		accuracyTxt.cameras = [camHUD];
 		infoTxt.cameras = [camHUD];
 
 		super.create();
@@ -609,11 +607,39 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		scoreTxt.text = "Score:" + songScore;
-		comboTxt.text = "Combo:" + comboScore;
-		missTxt.text = "Misses:" + misses;
-		accuracyTxt.text = "Accuracy:" + songAccuracy +"%";
-		infoTxt.text = "Score: " + songScore + " || " + "Accuracy: " + songAccuracy + "%" + " || " + "Combo: " + comboScore + " || " + "Misses: " + misses;
+		//scoreTxt.text = "Score:" + songScore;
+		//comboTxt.text = "Combo:" + comboScore;
+		//missTxt.text = "Misses:" + misses;
+		//accuracyTxt.text = "Accuracy:" + songAccuracy +"%";
+		
+		if (songAccuracy >= 99.95)
+			ratingTxt = "[S+]";
+
+		else if (songAccuracy >= 99)
+			ratingTxt = "[S]";
+
+		else if (songAccuracy >= 95)
+			ratingTxt = "[A+]";
+
+		else if (songAccuracy >= 90)
+			ratingTxt = "[A]";
+
+		else if (songAccuracy >= 85)
+			ratingTxt = "[B+]";
+
+		else if (songAccuracy >= 80)
+			ratingTxt = "[B]";
+
+		else if (songAccuracy >= 75)
+			ratingTxt = "[C+]"
+
+		else if (songAccuracy >= 70)
+			ratingTxt = "[C]";
+
+		else
+			ratingTxt = "[D]";
+
+		infoTxt.text = "Score: " + songScore + " || " + "Accuracy: " + songAccuracy + "% " +  ratingTxt + " || " + "Combo: " + comboScore + " || " + "Misses: " + misses;
 
 		comboScore = combo;
 
@@ -1330,6 +1356,6 @@ class PlayState extends MusicBeatState
         if (allNotes == 0)
             songAccuracy = 100;
         else
-            songAccuracy = FlxMath.roundDecimal(Math.max(0, coolNoteFloat / allNotes * 100), 1);
+            songAccuracy = FlxMath.roundDecimal(Math.max(0, coolNoteFloat / allNotes * 100), 2);
 	}
 }
