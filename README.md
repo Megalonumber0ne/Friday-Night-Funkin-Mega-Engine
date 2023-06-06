@@ -23,6 +23,4 @@ In the `data` folder, add the song's charts in a folder titled the same as the `
 
 Do the same for the `songs` folder, but add the `Inst` and `Voices` files
 
-Make sure that player 2 in the `.json` file is a character from the game (as I haven't finished the mod system yet, and it _will_ crash. (I use GF for simplicity.))
-
 You should be able to play the song from the Freeplay menu!
