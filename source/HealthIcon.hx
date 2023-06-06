@@ -6,7 +6,8 @@ import flixel.math.FlxMath;
 
 class HealthIcon extends FlxSprite
 {
-
+	public var sprTracker:FlxSprite;
+	
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{
 		super();
@@ -39,6 +40,9 @@ class HealthIcon extends FlxSprite
 			animation.play(char);
 		else
 			animation.play('face');
-		scrollFactor.set(); 
+		scrollFactor.set();
+		
+		if (sprTracker != null)
+			setPosition(sprTracker.x + sprTracker.width + 10, sprTracker.y - 30);
 	}
 }

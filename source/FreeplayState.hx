@@ -47,12 +47,12 @@ class FreeplayState extends MusicBeatState
 		for (i in 0...songs.length)
 		{
 			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, songs[i], true, false);
-			songText.isFreeplayItem = true;
+			songText.isMenuItem = true;
 			songText.targetY = i;
 			grpSongs.add(songText);
 			// songText.x += 40;
 			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
-			songText.screenCenter(X);
+			//songText.screenCenter(X);
 		}
 		
 		scoreText = new FlxText(FlxG.width * 0.7, 5, 0, "", 32);
