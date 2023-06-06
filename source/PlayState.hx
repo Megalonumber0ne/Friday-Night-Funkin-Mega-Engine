@@ -36,6 +36,9 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
+	public static var songAccuracy:Float = 0;
+	public var coolNoteFloat:Float = 0; 
+
 	var perfectMode:Bool = false;
 	public static var curLevel:String = 'Tutorial';
 	public static var curStage:String = '';
@@ -45,6 +48,7 @@ class PlayState extends MusicBeatState
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
 	public static var instance:PlayState = null;
+	private var allNotes:Int = 0;
 
 	var halloweenLevel:Bool = false;
 
@@ -95,6 +99,8 @@ class PlayState extends MusicBeatState
 	var scoreTxt:FlxText;
 	var comboTxt:FlxText;
 	var missTxt:FlxText;
+	var accuracyTxt:FlxText;
+	var infoTxt:FlxText;
 
 	public static var campaignScore:Int = 0;
 
@@ -272,6 +278,14 @@ class PlayState extends MusicBeatState
 		missTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		missTxt.scrollFactor.set();
 
+		accuracyTxt = new FlxText(healthBarBG.x + healthBarBG.width - 540, healthBarBG.y + 45, 0, "", 20);
+		accuracyTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		accuracyTxt.scrollFactor.set();
+
+		infoTxt = new FlxText(healthBarBG.x + healthBarBG.width - 540, healthBarBG.y + 45, 0, "", 20);
+		infoTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		infoTxt.scrollFactor.set();
+
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 		add(iconP1);
@@ -293,12 +307,12 @@ class PlayState extends MusicBeatState
 		comboTxt.cameras = [camHUD];
 		missTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
+		accuracyTxt.cameras = [camHUD];
+		infoTxt.cameras = [camHUD];
 
 		super.create();
 		if (ClientPrefs.getOption('showInfoText')){
-			add(scoreTxt);
-			add(comboTxt);
-			add(missTxt);
+			add(infoTxt);
 		}
 	}
 
@@ -306,6 +320,8 @@ class PlayState extends MusicBeatState
 
 	function startCountdown():Void
 	{
+		recalculateAccuracy();
+
 		generateStaticArrows(0);
 		generateStaticArrows(1);
 
@@ -589,12 +605,16 @@ class PlayState extends MusicBeatState
 
 		override public function update(elapsed:Float)
 		{
+			recalculateAccuracy();
 
 		super.update(elapsed);
 
 		scoreTxt.text = "Score:" + songScore;
 		comboTxt.text = "Combo:" + comboScore;
 		missTxt.text = "Misses:" + misses;
+		accuracyTxt.text = "Accuracy:" + songAccuracy +"%";
+		infoTxt.text = "Score: " + songScore + " || " + "Accuracy: " + songAccuracy + "%" + " || " + "Combo: " + comboScore + " || " + "Misses: " + misses;
+
 		comboScore = combo;
 
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
@@ -805,6 +825,7 @@ class PlayState extends MusicBeatState
 						health -= 0.045;
 						vocals.volume = 0;
 						misses += 1;
+						allNotes++;
 						combo = 0;
 					}
 
@@ -880,6 +901,7 @@ class PlayState extends MusicBeatState
 	
 			var rating:FlxSprite = new FlxSprite();
 			var score:Int = 350;
+			var ratingMod:Float = 1;
 	
 			var daRating:String = "sick";
 	
@@ -887,18 +909,22 @@ class PlayState extends MusicBeatState
 			{
 				daRating = 'shit';
 				score = 50;
+				ratingMod = 0;
 			}
 			else if (noteDiff > Conductor.safeZoneOffset * 0.75)
 			{
 				daRating = 'bad';
 				score = 100;
+				ratingMod = 0.4;
 			}
 			else if (noteDiff > Conductor.safeZoneOffset * 0.2)
 			{
 				daRating = 'good';
 				score = 200;
+				ratingMod = 0.75;
 			}
-	
+			coolNoteFloat += ratingMod;
+
 			songScore += score;
 	
 			var pixelShitPart1:String = "";
@@ -1177,6 +1203,7 @@ class PlayState extends MusicBeatState
 	{
 			if (!note.isSustainNote) {
 				combo += 1;
+				allNotes++;
 				popUpScore(note.strumTime);
 			}
 
@@ -1292,5 +1319,17 @@ class PlayState extends MusicBeatState
 				gf.playAnim('cheer', true);
 			}
 		}
+	}
+
+	function recalculateAccuracy(miss:Bool = false)
+	{
+        if (miss)
+            coolNoteFloat -= 1;
+    
+        //to make sure we don't divide by 0
+        if (allNotes == 0)
+            songAccuracy = 100;
+        else
+            songAccuracy = FlxMath.roundDecimal(Math.max(0, coolNoteFloat / allNotes * 100), 1);
 	}
 }
