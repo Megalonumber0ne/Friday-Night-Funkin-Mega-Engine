@@ -103,6 +103,7 @@ class PlayState extends MusicBeatState
 	var infoTxt:FlxText;
 	public var ratingTxt:String;
 	var songRating:FlxText;
+	public var ratingColor:String;
 
 	public static var campaignScore:Int = 0;
 
@@ -606,38 +607,55 @@ class PlayState extends MusicBeatState
 			recalculateAccuracy();
 
 		super.update(elapsed);
-
-		//scoreTxt.text = "Score:" + songScore;
-		//comboTxt.text = "Combo:" + comboScore;
-		//missTxt.text = "Misses:" + misses;
-		//accuracyTxt.text = "Accuracy:" + songAccuracy +"%";
 		
-		if (songAccuracy >= 99.95)
-			ratingTxt = "[S+]";
+			if (songAccuracy >= 99.95)
+			{
+				ratingTxt = "[S+]";
+				ratingColor = "gold";
+			}
 
-		else if (songAccuracy >= 99)
-			ratingTxt = "[S]";
+			else if (songAccuracy >= 99)
+			{
+				ratingTxt = "[S]";
+				ratingColor = "cyan";
+			}
+			else if (songAccuracy >= 95)
+			{
+				ratingTxt = "[A+]";
+				ratingColor = "lime";
+			}
+			else if (songAccuracy >= 90)
+			{
+				ratingTxt = "[A]";
+				ratingColor = "green";
+			}
 
-		else if (songAccuracy >= 95)
-			ratingTxt = "[A+]";
+			else if (songAccuracy >= 85)
+			{
+				ratingTxt = "[B+]";
+				ratingColor = "orange-pastel";
+			}
+			else if (songAccuracy >= 80)
+			{
+				ratingTxt = "[B]";
+				ratingColor = "orange";
+			}
+			else if (songAccuracy >= 75)
+			{
+				ratingTxt = "[C+]";
+				ratingColor = "red-light";
+			}
+			else if (songAccuracy >= 70)
+			{
+				ratingTxt = "[C]";
+				ratingColor = "def";
+			}
 
-		else if (songAccuracy >= 90)
-			ratingTxt = "[A]";
-
-		else if (songAccuracy >= 85)
-			ratingTxt = "[B+]";
-
-		else if (songAccuracy >= 80)
-			ratingTxt = "[B]";
-
-		else if (songAccuracy >= 75)
-			ratingTxt = "[C+]"
-
-		else if (songAccuracy >= 70)
-			ratingTxt = "[C]";
-
-		else
-			ratingTxt = "[D]";
+			else
+			{
+				ratingTxt = "[D]";
+				ratingColor = "def";
+			}
 
 		infoTxt.text = "Score: " + songScore + " || " + "Accuracy: " + songAccuracy + "% " +  ratingTxt + " || " + "Combo: " + comboScore + " || " + "Misses: " + misses;
 
@@ -962,7 +980,7 @@ class PlayState extends MusicBeatState
 				pixelShitPart2 = '-pixel';
 			}
 	
-			rating.loadGraphic('assets/images/ui/' + daRating + ".png");
+			rating.loadGraphic('assets/images/ui/ratings/' + daRating + ratingColor +".png");
 			rating.screenCenter();
 			rating.x = coolText.x - 40;
 			rating.y -= 60;
@@ -970,7 +988,7 @@ class PlayState extends MusicBeatState
 			rating.velocity.y -= FlxG.random.int(140, 175);
 			rating.velocity.x -= FlxG.random.int(0, 10);
 	
-			var comboSpr:FlxSprite = new FlxSprite().loadGraphic('assets/images/ui/' + 'combo' + '.png');
+			var comboSpr:FlxSprite = new FlxSprite().loadGraphic('assets/images/ui/ratings/' + 'combo' + ratingColor + '.png');
 			comboSpr.screenCenter();
 			comboSpr.x = coolText.x;
 			comboSpr.acceleration.y = 600;
@@ -999,7 +1017,7 @@ class PlayState extends MusicBeatState
 			var daLoop:Int = 0;
 			for (i in seperatedScore)
 			{
-				var numScore:FlxSprite = new FlxSprite().loadGraphic('assets/images/ui/' + pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2 + '.png');
+				var numScore:FlxSprite = new FlxSprite().loadGraphic('assets/images/ui/numbers/' + pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2 + ratingColor +'.png');
 				numScore.screenCenter();
 				numScore.x = coolText.x + (43 * daLoop) - 90;
 				numScore.y += 80;
