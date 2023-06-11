@@ -83,7 +83,7 @@ class MainMenuState extends MusicBeatState
 		buildNumShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(buildNumShit);
 
-		var engineVerShit:FlxText = new FlxText(5, FlxG.height - 34, 0, "Engine v0.2.1 - Beta Release 4 - Hotfix");
+		var engineVerShit:FlxText = new FlxText(5, FlxG.height - 34, 0, "Engine v0.3 - Beta Release 5");
 		engineVerShit.scrollFactor.set();
 		engineVerShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(engineVerShit);
