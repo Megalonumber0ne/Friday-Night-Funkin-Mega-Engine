@@ -35,7 +35,7 @@ class TitleState extends MusicBeatState
 	var wackyImage:FlxSprite;
 
 	override public function create():Void
-	{
+	{		
 		PlayerSettings.init();
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());

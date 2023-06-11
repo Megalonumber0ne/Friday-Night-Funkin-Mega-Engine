@@ -24,11 +24,11 @@ class ClientPrefs
 			ClientPrefs.setOption('ghostTapping', true);
 		if (ClientPrefs.getOption('mods') == null)
 			ClientPrefs.setOption('mods', true);
-		if (ClientPrefs.getOption('oldGraphics') == null)
-			ClientPrefs.setOption('oldGraphics', false);
 		if (ClientPrefs.getOption('comboSplash') == null)
 			ClientPrefs.setOption('comboSplash', true);
 		if (ClientPrefs.getOption('showInfoText') == null)
 			ClientPrefs.setOption('showInfoText', true);
+		if (ClientPrefs.getOption('ratingColors') == null)
+			ClientPrefs.setOption('ratingColors', true);
 	}
 }

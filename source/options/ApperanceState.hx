@@ -19,7 +19,8 @@ class ApperanceState extends MusicBeatState
 
 	var gtText:FlxText;
 
-	var menuItems:Array<String> = ['Old Graphics', 'Show Combo Splash', 'Show Info Text'];
+	var menuItems:Array<String> = ['Show Combo Splash', 'Show Info Text', 'Use Rating Based Colors'];
+
 	var curSelected:Int = 0;
 
 	public var isFreeplayItem:Bool = false;
@@ -66,25 +67,26 @@ class ApperanceState extends MusicBeatState
 
 		switch (daSelected)
 		{
-			case "Old Graphics":
-				if (controls.ACCEPT)
-					ClientPrefs.setOption('oldGraphics', !ClientPrefs.getOption('oldGraphics'));
-
-				gtText.text = 'Old Graphics are currently ${ClientPrefs.getOption('oldGraphics')}';
-
 			case "Show Combo Splash":
 				if (controls.ACCEPT)
 					ClientPrefs.setOption('comboSplash', !ClientPrefs.getOption('comboSplash'));
 
-				gtText.text = 'The Combo Splash is currently ${ClientPrefs.getOption('comboSplash')}';
+				gtText.text = 'The Combo Splash is currently set to ${ClientPrefs.getOption('comboSplash')}';
 
 			case "Show Info Text":
 				if (controls.ACCEPT)
 					ClientPrefs.setOption('showInfoText', !ClientPrefs.getOption('showInfoText'));
 
-				gtText.text = 'Show Info Text is currently ${ClientPrefs.getOption('showInfoText')}';
+				gtText.text = 'Show Info Text is currently set to ${ClientPrefs.getOption('showInfoText')}';
+
+			case "Use Rating Based Colors":
+				if (controls.ACCEPT)
+					ClientPrefs.setOption('ratingColors', !ClientPrefs.getOption('ratingColors'));
+
+				gtText.text = 'Using Rating Based Colors is currently set to ${ClientPrefs.getOption('ratingColors')}';
 		}
 	}
+
 
 	function changeSelection(change:Int = 0):Void
 	{
@@ -98,3 +100,4 @@ class ApperanceState extends MusicBeatState
 		}
 	}
 }
+

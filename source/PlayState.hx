@@ -109,6 +109,8 @@ class PlayState extends MusicBeatState
 
 	override public function create()
 	{
+		recalculateAccuracy();
+
 		FlxG.mouse.visible = false;
 		instance = this;
 		camGame = new FlxCamera();
@@ -319,17 +321,14 @@ class PlayState extends MusicBeatState
 
 	function startCountdown():Void
 	{
-		recalculateAccuracy();
-
 		generateStaticArrows(0);
 		generateStaticArrows(1);
 
 		talking = false;
 		startedCountdown = true;
 		Conductor.songPosition = 0;
-		Conductor.songPosition -= Conductor.crochet * 5;
-
 		var swagCounter:Int = 0;
+		Conductor.songPosition -= Conductor.crochet * 5;
 
 		startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
 		{
@@ -381,8 +380,7 @@ class PlayState extends MusicBeatState
 					});
 					FlxG.sound.play('assets/sounds/introGo' + TitleState.soundExt, 0.6);
 				case 4:
-			}
-
+			}		
 			swagCounter += 1;
 		}, 5);
 	}
@@ -932,7 +930,7 @@ class PlayState extends MusicBeatState
 				score = 100;
 				ratingMod = 0.4;
 			}
-			else if (noteDiff > Conductor.safeZoneOffset * 0.2)
+			else if (noteDiff > Conductor.safeZoneOffset * 0.275)
 			{
 				daRating = 'good';
 				score = 200;
@@ -952,7 +950,9 @@ class PlayState extends MusicBeatState
 			}
 	
 			rating.loadGraphic('assets/images/ui/' + daRating + ".png");
-			rating.color = ratingColor;
+			if (ClientPrefs.getOption('ratingColors') == true)
+				rating.color = ratingColor;
+
 			rating.screenCenter();
 			rating.x = coolText.x - 40;
 			rating.y -= 60;
@@ -961,7 +961,8 @@ class PlayState extends MusicBeatState
 			rating.velocity.x -= FlxG.random.int(0, 10);
 	
 			var comboSpr:FlxSprite = new FlxSprite().loadGraphic('assets/images/ui/' + 'combo' + '.png');
-			comboSpr.color = ratingColor;
+			if (ClientPrefs.getOption('ratingColors') == true)
+				comboSpr.color = ratingColor;
 			comboSpr.screenCenter();
 			comboSpr.x = coolText.x;
 			comboSpr.acceleration.y = 600;
@@ -991,7 +992,8 @@ class PlayState extends MusicBeatState
 			for (i in seperatedScore)
 			{
 				var numScore:FlxSprite = new FlxSprite().loadGraphic('assets/images/ui/' + pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2 + '.png');
-				numScore.color = ratingColor;
+				if (ClientPrefs.getOption('ratingColors') == true)
+					numScore.color = ratingColor;
 				numScore.screenCenter();
 				numScore.x = coolText.x + (43 * daLoop) - 90;
 				numScore.y += 80;

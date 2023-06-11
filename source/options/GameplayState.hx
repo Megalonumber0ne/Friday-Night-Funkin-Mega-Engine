@@ -73,13 +73,13 @@ class GameplayState extends MusicBeatState
 				if (controls.ACCEPT)
 					ClientPrefs.setOption('ghostTapping', !ClientPrefs.getOption('ghostTapping'));
 
-				gtText.text = 'Ghost Tapping Is Currently ${ClientPrefs.getOption('ghostTapping')}';
+				gtText.text = 'Ghost Tapping is currently set to ${ClientPrefs.getOption('ghostTapping')}';
 
 			case "Mods":
 				if (controls.ACCEPT)
 					ClientPrefs.setOption('mods', !ClientPrefs.getOption('mods'));
 
-				gtText.text = 'Mods are Is Currently ${ClientPrefs.getOption('mods')}';
+				gtText.text = 'Mods are currently set to ${ClientPrefs.getOption('mods')}';
 		}
 	}
 

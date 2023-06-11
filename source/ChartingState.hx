@@ -31,6 +31,8 @@ import openfl.events.IOErrorEvent;
 import openfl.media.Sound;
 import openfl.net.FileReference;
 import openfl.utils.ByteArray;
+import flixel.addons.ui.FlxUICursor;
+import HealthIcon;
 
 using StringTools;
 
@@ -40,10 +42,6 @@ class ChartingState extends MusicBeatState
 
 	var UI_box:FlxUITabMenu;
 
-	/**
-	 * Array of notes showing when each section STARTS in STEPS
-	 * Usually rounded up??
-	 */
 	var curSection:Int = 0;
 
 	var bpmTxt:FlxText;
@@ -76,8 +74,24 @@ class ChartingState extends MusicBeatState
 
 	var vocals:FlxSound;
 
+	var leftIcon:HealthIcon;
+	var rightIcon:HealthIcon;
+
 	override function create()
 	{
+		leftIcon = new HealthIcon('bf');
+		rightIcon = new HealthIcon('dad');
+		leftIcon.scrollFactor.set(1, 1);
+		rightIcon.scrollFactor.set(1, 1);
+
+		leftIcon.setGraphicSize(0, 90);
+		rightIcon.setGraphicSize(0, 90);
+
+		add(leftIcon);
+		add(rightIcon);
+
+		FlxG.mouse.visible = true;
+		
 		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 8, GRID_SIZE * 16);
 		add(gridBG);
 
@@ -104,11 +118,10 @@ class ChartingState extends MusicBeatState
 
 		tempBpm = _song.bpm;
 
+		updateGrid();
 		addSection();
 
 		// sections = _song.notes;
-
-		updateGrid();
 
 		loadSong(_song.song);
 		Conductor.changeBPM(_song.bpm);
@@ -184,9 +197,7 @@ class ChartingState extends MusicBeatState
 		var stepperBPM:FlxUINumericStepper = new FlxUINumericStepper(10, 65, 1, 1, 1, 250, 0);
 		stepperBPM.value = Conductor.bpm;
 		stepperBPM.name = 'song_bpm';
-
-		var characters:Array<String> = ["bf", 'dad', 'gf', 'spooky', 'monster'];
-
+		
 		var player1DropDown = new FlxUIDropDownMenu(10, 100, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 		{
 			_song.player1 = characters[Std.parseInt(character)];
@@ -197,8 +208,13 @@ class ChartingState extends MusicBeatState
 		{
 			_song.player2 = characters[Std.parseInt(character)];
 		});
-
 		player2DropDown.selectedLabel = _song.player2;
+
+		var player3DropDown = new FlxUIDropDownMenu(10, 150, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
+		{
+				_song.player3 = characters[Std.parseInt(character)];
+		});
+		player3DropDown.selectedLabel = _song.player3;
 
 		var tab_group_song = new FlxUI(null, UI_box);
 		tab_group_song.name = "Song";
@@ -212,6 +228,7 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(stepperSpeed);
 		tab_group_song.add(player1DropDown);
 		tab_group_song.add(player2DropDown);
+		tab_group_song.add(player3DropDown);
 
 		UI_box.addGroup(tab_group_song);
 		UI_box.scrollFactor.set();
@@ -387,6 +404,16 @@ class ChartingState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		if (check_mustHitSection.checked = true)
+		{
+			leftIcon.setPosition(0, -100);
+			rightIcon.setPosition(gridBG.width / 2, -150);
+		}
+		else if (check_mustHitSection.checked = false)
+		{
+			rightIcon.setPosition(0, -100);
+			leftIcon.setPosition(gridBG.width / 2, -150);
+		}
 		Conductor.songPosition = FlxG.sound.music.time;
 		_song.song = typingShit.text;
 
@@ -579,6 +606,18 @@ class ChartingState extends MusicBeatState
 		check_mustHitSection.checked = sec.mustHitSection;
 		check_changeBPM.checked = sec.changeBPM;
 		stepperSectionBPM.value = sec.bpm;
+
+		updateHeads();
+	}
+
+	function updateHeads():Void {
+		if (check_mustHitSection.checked) {
+			leftIcon.animation.play(_song.player1);
+			rightIcon.animation.play(_song.player2);
+		} else {
+			leftIcon.animation.play(_song.player2);
+			rightIcon.animation.play(_song.player1);
+		}
 	}
 
 	function updateNoteUI():Void
