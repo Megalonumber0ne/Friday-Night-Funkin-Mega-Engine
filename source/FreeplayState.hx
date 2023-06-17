@@ -31,12 +31,8 @@ class FreeplayState extends MusicBeatState
 	public static var freePlayHealthIcon = String;
 
 	override function create()
-	{
+	{	
 		songs = CoolUtil.loadTextLowercase('assets/data/freeplaySongs.txt');
-
-		// LOAD MUSIC
-
-		// LOAD CHARACTERS
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic('assets/images/menu_assets/menuBGBlue.png');
 		add(bg);
@@ -50,15 +46,11 @@ class FreeplayState extends MusicBeatState
 			songText.isMenuItem = true;
 			songText.targetY = i;
 			grpSongs.add(songText);
-			// songText.x += 40;
-			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
 			//songText.screenCenter(X);
 		}
 		
 		scoreText = new FlxText(FlxG.width * 0.7, 5, 0, "", 32);
-		// scoreText.autoSize = false;
 		scoreText.setFormat("assets/fonts/vcr.ttf", 32, FlxColor.WHITE, RIGHT);
-		// scoreText.alignment = RIGHT;
 
 		var scoreBG:FlxSprite = new FlxSprite(scoreText.x - 6, 0).makeGraphic(Std.int(FlxG.width * 0.35), 66, 0xFF000000);
 		scoreBG.alpha = 0.6;
@@ -73,13 +65,10 @@ class FreeplayState extends MusicBeatState
 		changeSelection();
 		changeDiff();
 
-		// FlxG.sound.playMusic('assets/music/title' + TitleState.soundExt, 0);
-		// FlxG.sound.music.fadeIn(2, 0, 0.8);
 		selector = new FlxText();
 
 		selector.size = 40;
 		selector.text = ">";
-		// add(selector);
 
 		var swag:Alphabet = new Alphabet(1, 0, "swag");
 
@@ -87,7 +76,11 @@ class FreeplayState extends MusicBeatState
 	}
 
 	override function update(elapsed:Float)
-	{
+	{		
+		if (!FlxG.sound.music.playing) {
+			FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt, 0);
+		}
+
 		super.update(elapsed);
 
 		if (FlxG.sound.music.volume < 0.7)
@@ -173,12 +166,9 @@ class FreeplayState extends MusicBeatState
 		if (curSelected >= songs.length)
 			curSelected = 0;
 
-		// selector.y = (70 * curSelected) + 30;
-
 		intendedScore = Highscore.getScore(songs[curSelected], curDifficulty);
-		// lerpScore = 0;
 
-		FlxG.sound.playMusic('assets/songs/' + songs[curSelected].toLowerCase() + "/Inst" + TitleState.soundExt, 0);
+		//FlxG.sound.playMusic('assets/songs/' + songs[curSelected].toLowerCase() + "/Inst" + TitleState.soundExt, 0);
 
 		var bullShit:Int = 0;
 
@@ -188,12 +178,10 @@ class FreeplayState extends MusicBeatState
 			bullShit++;
 
 			item.alpha = 0.6;
-			// item.setGraphicSize(Std.int(item.width * 0.8));
 
 			if (item.targetY == 0)
 			{
 				item.alpha = 1;
-				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
 	}

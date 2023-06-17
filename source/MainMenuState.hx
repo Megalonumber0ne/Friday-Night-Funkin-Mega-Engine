@@ -26,6 +26,10 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
+		if (!FlxG.sound.music.playing) {
+			FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt, 0);
+		}
+
 		persistentUpdate = persistentDraw = true;
 
 		var bg:FlxSprite = new FlxSprite(-80).loadGraphic('assets/images/menu_assets/menuBG.png');

@@ -25,7 +25,7 @@ class OptionsState extends MusicBeatState
 	override public function create():Void
 	{
 		super.create();
-		
+
 		var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
 		bg.color = 0x340666;
 		add(bg);
