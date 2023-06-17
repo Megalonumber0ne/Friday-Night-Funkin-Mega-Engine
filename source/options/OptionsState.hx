@@ -63,8 +63,6 @@ class OptionsState extends MusicBeatState
 					FlxG.switchState(new ApperanceState());
 				case "Gameplay":
 					FlxG.switchState(new GameplayState());
-				//case "TestState":
-					//FlxG.switchState(new TestTransitionState());
 				case "Discord":
 					FlxG.openURL('https://discord.gg/Mb78ZKtEYY');
 			}
