@@ -1,5 +1,8 @@
 package options;
 
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
+import flixel.tweens.misc.NumTween;
 import handlers.ClientPrefs;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
@@ -14,7 +17,7 @@ import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 
 class ApperanceState extends MusicBeatState
-{
+{	
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var gtText:FlxText;
@@ -24,9 +27,12 @@ class ApperanceState extends MusicBeatState
 	var curSelected:Int = 0;
 
 	public var isFreeplayItem:Bool = false;
+	
 
-	override public function create()
+	override public function create():Void
 	{
+		super.create();
+			
 		var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
 		bg.color = 0x340666;
 		add(bg);

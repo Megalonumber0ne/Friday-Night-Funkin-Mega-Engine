@@ -12,15 +12,20 @@ import flixel.input.keyboard.FlxKey;
 import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 
-class OptionsState extends MusicBeatState {
+class OptionsState extends MusicBeatState
+{
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
-	var menuItems:Array<String> = [
-		'Apperance', 'Gameplay'
-	];
+	var menuItems:Array<String> = ['Apperance', 'Gameplay', 'Discord'];
+
 	var curSelected:Int = 0;
+
 	public var isFreeplayItem:Bool = false;
-	override public function create() {
+
+	override public function create():Void
+	{
+		super.create();
+		
 		var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
 		bg.color = 0x340666;
 		add(bg);
@@ -58,6 +63,10 @@ class OptionsState extends MusicBeatState {
 					FlxG.switchState(new ApperanceState());
 				case "Gameplay":
 					FlxG.switchState(new GameplayState());
+				//case "TestState":
+					//FlxG.switchState(new TestTransitionState());
+				case "Discord":
+					FlxG.openURL('https://discord.gg/Mb78ZKtEYY');
 			}
 		}
 	}

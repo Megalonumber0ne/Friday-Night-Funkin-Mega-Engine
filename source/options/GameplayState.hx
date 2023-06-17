@@ -14,9 +14,11 @@ import flixel.input.keyboard.FlxKey;
 import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import flixel.util.FlxSave;
+import Controls.KeyboardScheme;
 
 class GameplayState extends MusicBeatState
 {
+	var dfjkORwasd:String;
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 	var settingsSave:FlxSave = new FlxSave();
 
@@ -29,6 +31,8 @@ class GameplayState extends MusicBeatState
 
 	override public function create()
 	{
+		super.create();
+		
 		var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
 		bg.color = 0x340666;
 		add(bg);
@@ -80,6 +84,24 @@ class GameplayState extends MusicBeatState
 					ClientPrefs.setOption('mods', !ClientPrefs.getOption('mods'));
 
 				gtText.text = 'Mods are currently set to ${ClientPrefs.getOption('mods')}';
+
+			/*case "WASD or DFJK":
+				if (controls.ACCEPT)
+					ClientPrefs.setOption('WASD or DFJK', !ClientPrefs.getOption('WASD or DFJK'));
+
+				if (ClientPrefs.getOption('WASD or DFJK') == false)
+					{
+						var dfjkORwasd = "DFJK";
+
+					}
+				
+				if (ClientPrefs.getOption('WASD or DFJK') == true)
+					{
+						var dfjkORwasd = "WASD";
+
+					}
+				
+				gtText.text = 'Keybinds are currently set to ' + dfjkORwasd;*/
 		}
 	}
 
