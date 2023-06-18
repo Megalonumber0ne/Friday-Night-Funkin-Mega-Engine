@@ -49,6 +49,7 @@ class PlayState extends MusicBeatState
 	public static var storyDifficulty:Int = 1;
 	public static var instance:PlayState = null;
 	private var allNotes:Int = 0;
+	private var vocalsFinished:Bool = false;
 
 	var halloweenLevel:Bool = false;
 
@@ -193,7 +194,7 @@ class PlayState extends MusicBeatState
 			add(stageCurtains);
 		}
 
-		gf = new Character(400, 130, 'gf');
+		gf = new Character(400, 130, SONG.player3);
 		gf.scrollFactor.set(0.95, 0.95);
 		gf.antialiasing = true;
 		add(gf);
@@ -415,7 +416,12 @@ class PlayState extends MusicBeatState
 				vocals = new FlxSound();
 	
 			FlxG.sound.list.add(vocals);
-	
+
+			vocals.onComplete = function()
+				{
+					vocalsFinished = true;
+				};
+
 			notes = new FlxTypedGroup<Note>();
 			add(notes);
 	
@@ -596,6 +602,22 @@ class PlayState extends MusicBeatState
 		super.closeSubState();
 	}
 
+	function resyncVocals():Void
+		{
+			if (_exiting)
+				return;
+	
+			vocals.pause();
+			FlxG.sound.music.play();
+			Conductor.songPosition = FlxG.sound.music.time + Conductor.offset;
+	
+			if (vocalsFinished)
+				return;
+	
+			vocals.time = Conductor.songPosition;
+			vocals.play();
+		}
+
 	private var paused:Bool = false;
 	var startedCountdown:Bool = false;
 	var canPause:Bool = true;
@@ -603,7 +625,7 @@ class PlayState extends MusicBeatState
 		override public function update(elapsed:Float)
 		{
 			recalculateAccuracy();
-
+						
 		super.update(elapsed);
 		
 		var ratingArray:Array<Dynamic> = [
@@ -652,9 +674,9 @@ class PlayState extends MusicBeatState
 					iconP1.animation.play('bf-old');
 			}
 
-			iconP1.setGraphicSize(Std.int(FlxMath.lerp(150, iconP1.width, 0.50)));
-			iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width, 0.50)));
-	
+			iconP1.scale.set(FlxMath.lerp(iconP1.scale.x, 1, elapsed * 9), FlxMath.lerp(iconP1.scale.y, 1, elapsed * 9));
+			iconP2.scale.set(FlxMath.lerp(iconP2.scale.x, 1, elapsed * 9), FlxMath.lerp(iconP2.scale.y, 1, elapsed * 9));
+			
 			iconP1.updateHitbox();
 			iconP2.updateHitbox();
 	
@@ -1271,17 +1293,12 @@ class PlayState extends MusicBeatState
 
 	override function stepHit()
 	{
-		if (SONG.needsVoices)
-		{
-			if (vocals.time > Conductor.songPosition + Conductor.stepCrochet
-				|| vocals.time < Conductor.songPosition - Conductor.stepCrochet)
-			{
-				vocals.pause();
-				vocals.time = Conductor.songPosition;
-				vocals.play();
-			}
-		}
 		super.stepHit();
+		if (Math.abs(FlxG.sound.music.time - (Conductor.songPosition - Conductor.offset)) > 20
+			|| (SONG.needsVoices && Math.abs(vocals.time - (Conductor.songPosition - Conductor.offset)) > 20))
+		{
+			resyncVocals();
+		}
 	}
 
 	var lightningStrikeBeat:Int = 0;

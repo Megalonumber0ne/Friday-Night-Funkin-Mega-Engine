@@ -24,7 +24,7 @@ class GameplayState extends MusicBeatState
 
 	var gtText:FlxText;
 
-	var menuItems:Array<String> = ['Ghost Tapping', 'Mods'];
+	var menuItems:Array<String> = ['Ghost Tapping', 'Mods', 'Auto Pause UNFINISHED'];
 	var curSelected:Int = 0;
 
 	public var isFreeplayItem:Bool = false;
@@ -85,25 +85,14 @@ class GameplayState extends MusicBeatState
 
 				gtText.text = 'Mods are currently set to ${ClientPrefs.getOption('mods')}';
 
-			/*case "WASD or DFJK":
+			case "Auto Pause UNFINISHED":
 				if (controls.ACCEPT)
-					ClientPrefs.setOption('WASD or DFJK', !ClientPrefs.getOption('WASD or DFJK'));
-
-				if (ClientPrefs.getOption('WASD or DFJK') == false)
-					{
-						var dfjkORwasd = "DFJK";
-
-					}
+					ClientPrefs.setOption('autoPause', !ClientPrefs.getOption('autoPause'));
 				
-				if (ClientPrefs.getOption('WASD or DFJK') == true)
-					{
-						var dfjkORwasd = "WASD";
-
-					}
-				
-				gtText.text = 'Keybinds are currently set to ' + dfjkORwasd;*/
+				gtText.text = 'Auto Pause is currently ${ClientPrefs.getOption('autoPause')}. This currently does not do anything!';
 		}
 	}
+
 
 	function changeSelection(change:Int = 0):Void
 	{

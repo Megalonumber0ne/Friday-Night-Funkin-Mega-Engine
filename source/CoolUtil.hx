@@ -54,7 +54,7 @@ class CoolUtil
 					"sounds" => "assets/sounds",
 					"music" => "assets/music",
 					"characters" => "characters",
-
+					"icons" => "images/icons",
 				]
 			}
 		});
