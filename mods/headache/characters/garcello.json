@@ -1,0 +1,29 @@
+{
+    "image": "garcello_assets",
+    "x": 0,
+    "y": 0,
+    "hpColor": "#af66ce",
+    "anims": [
+        {
+            "animName": "idle",
+            "anim": "garcello idle dance"
+        },
+        {
+            "animName": "singUP",
+            "anim": "garcello Sing Note UP"
+        },
+        {
+            "animName": "singDOWN",
+            "anim": "garcello Sing Note DOWN"
+        },
+        {
+            "animName": "singLEFT",
+            "anim": "garcello Sing Note LEFT"
+        },
+        {
+            "animName": "singRIGHT",
+            "anim": "garcello Sing Note RIGHT"
+        }
+    ]
+}
+{
