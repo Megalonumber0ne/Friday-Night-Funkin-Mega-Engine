@@ -8,16 +8,24 @@ import openfl.display.FPS;
 import openfl.display.Sprite;
 class Main extends Sprite
 {
+	var framerate:Int = 144; // How many frames per second the game should run at.
+
+	public static var fpsCounter:FPS;
+
 	public function new()
 	{
 		super();
-		addChild(new FlxGame(0, 0, TitleState));
+		//addChild(new FlxGame(0, 0, TitleState));
+		addChild(new FlxGame(0, 0, TitleState, 1, 144, 144, true, false));
 
 		#if !mobile
-		addChild(new FPS(10, 3, 0xFFFFFF));
+		fpsCounter = new FPS(10, 3, 0xFFFFFF);
+		addChild(fpsCounter);
 		#end
 		
 		if (ClientPrefs.getOption('autoPause') == false)
 			FlxG.autoPause = false;
+
+		var skipSplash:Bool = true;
 	}
 }
