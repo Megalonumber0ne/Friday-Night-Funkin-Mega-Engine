@@ -6,6 +6,9 @@ Huge credits to them for the base game!
 Play the Ludum Dare prototype here: https://ninja-muffin24.itch.io/friday-night-funkin
 Play the Newgrounds one here: https://www.newgrounds.com/portal/view/770371
 
+We have a Discord server! Feel free to join here: https://discord.gg/Mb78ZKtEYY
+Any concerns, feel free to pop into the Discord server and make a thread.
+
 # MODDING - STILL BAREBONES
 Make a folder in the `mods` directory, I'll be using my mod "Peeco" for this (It's just adding the song Pico into the game without source code editing.)
 
