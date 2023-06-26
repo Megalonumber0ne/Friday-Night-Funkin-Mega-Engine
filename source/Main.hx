@@ -2,14 +2,13 @@ package;
 
 //import js.html.Client;
 import flixel.FlxG;
-import handlers.ClientPrefs;
+import options.GameplayState;
 import flixel.FlxGame;
 import openfl.display.FPS;
 import openfl.display.Sprite;
+
 class Main extends Sprite
 {
-	var framerate:Int = 144; // How many frames per second the game should run at.
-
 	public static var fpsCounter:FPS;
 
 	public function new()
@@ -22,10 +21,5 @@ class Main extends Sprite
 		fpsCounter = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsCounter);
 		#end
-		
-		if (ClientPrefs.getOption('autoPause') == false)
-			FlxG.autoPause = false;
-
-		var skipSplash:Bool = true;
 	}
 }

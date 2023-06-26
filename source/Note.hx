@@ -4,6 +4,7 @@ import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.math.FlxMath;
 import flixel.util.FlxColor;
+import polymod.format.ParseRules.TargetSignatureElement;
 
 using StringTools;
 
@@ -50,30 +51,6 @@ class Note extends FlxSprite
 
 		switch (daStage)
 		{
-			case 'school' | 'schoolEvil':
-				loadGraphic('assets/images/weeb/pixelUI/arrows-pixels.png', true, 17, 17);
-
-				animation.add('greenScroll', [6]);
-				animation.add('redScroll', [7]);
-				animation.add('blueScroll', [5]);
-				animation.add('purpleScroll', [4]);
-
-				if (isSustainNote)
-				{
-					loadGraphic('assets/images/weeb/pixelUI/arrowEnds.png', true, 7, 6);
-
-					animation.add('purpleholdend', [4]);
-					animation.add('greenholdend', [6]);
-					animation.add('redholdend', [7]);
-					animation.add('blueholdend', [5]);
-
-					animation.add('purplehold', [0]);
-					animation.add('greenhold', [2]);
-					animation.add('redhold', [3]);
-					animation.add('bluehold', [1]);
-				}
-				updateHitbox();
-
 			default:
 				frames = FlxAtlasFrames.fromSparrow('assets/images/ui/NOTE_assets.png', 'assets/images/ui/NOTE_assets.xml');
 
@@ -137,6 +114,9 @@ class Note extends FlxSprite
 			updateHitbox();
 
 			x -= width / 2;
+
+			if (PlayState.curStage.startsWith('school'))
+				x += 30;
 
 			if (prevNote.isSustainNote)
 			{

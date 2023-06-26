@@ -16,6 +16,7 @@ typedef SwagSong =
 	var sectionLengths:Array<Dynamic>;
 	var needsVoices:Bool;
 	var speed:Float;
+	var validScore:Bool;
 
 	var player1:String;
 	var player2:String;
@@ -83,4 +84,11 @@ class Song
 
 		return swagShit;
 	}
+
+	public static function parseJSONshit(rawJson:String):SwagSong
+		{
+			var swagShit:SwagSong = cast Json.parse(rawJson).song;
+			swagShit.validScore = true;
+			return swagShit;
+		}
 }

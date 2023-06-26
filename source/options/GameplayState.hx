@@ -18,13 +18,14 @@ import Controls.KeyboardScheme;
 
 class GameplayState extends MusicBeatState
 {
-	var dfjkORwasd:String;
+	//public static var framerate:Int = 144;
+
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 	var settingsSave:FlxSave = new FlxSave();
 
 	var gtText:FlxText;
 
-	var menuItems:Array<String> = ['Ghost Tapping', 'Mods', 'Auto Pause UNFINISHED'];
+	var menuItems:Array<String> = ['Ghost Tapping', 'Mods'];
 	var curSelected:Int = 0;
 
 	public var isFreeplayItem:Bool = false;
@@ -85,11 +86,15 @@ class GameplayState extends MusicBeatState
 
 				gtText.text = 'Mods are currently set to ${ClientPrefs.getOption('mods')}';
 
-			case "Auto Pause UNFINISHED":
-				if (controls.ACCEPT)
-					ClientPrefs.setOption('autoPause', !ClientPrefs.getOption('autoPause'));
-				
-				gtText.text = 'Auto Pause is currently ${ClientPrefs.getOption('autoPause')}. This currently does not do anything!';
+			/*case "Framerate":
+				if (controls.LEFT_P)
+					if (framerate >20)
+						framerate = framerate - 5;
+
+				if (controls.RIGHT_P)
+					if (framerate <150)
+						framerate = framerate + 5;
+				gtText.text = 'Framerate is currently '+ framerate + ' - Experimental!';*/
 		}
 	}
 

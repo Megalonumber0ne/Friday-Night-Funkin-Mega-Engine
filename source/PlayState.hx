@@ -269,7 +269,7 @@ class PlayState extends MusicBeatState
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
-		healthBar.createFilledBar(dad.hpColor, boyfriend.hpColor);//0xFFFF0000, 0xFF66FF33);
+		healthBar.createFilledBar(dad.hpColor, boyfriend.hpColor); //0xFFFF0000, 0xFF66FF33);
 		add(healthBar);
 		
 		infoTxt = new FlxText(healthBarBG.x + healthBarBG.width - 600, healthBarBG.y + 45, 0, "", 20);
@@ -829,16 +829,24 @@ class PlayState extends MusicBeatState
 					if (SONG.song != 'Tutorial')
 						camZooming = true;
 
+					var altAnim:String = "";
+
+					if (SONG.notes[Math.floor(curStep / 16)] != null)
+						{
+							if (SONG.notes[Math.floor(curStep / 16)].altAnim)
+								altAnim = '-alt';
+						}
+
 					switch (Math.abs(daNote.noteData))
 					{
 						case 2:
-							dad.playAnim('singUP', true);
+							dad.playAnim('singUP' + altAnim, true);
 						case 3:
-							dad.playAnim('singRIGHT', true);
+							dad.playAnim('singRIGHT' + altAnim, true);
 						case 1:
-							dad.playAnim('singDOWN', true);
+							dad.playAnim('singDOWN' + altAnim, true);
 						case 0:
-							dad.playAnim('singLEFT', true);
+							dad.playAnim('singLEFT' + altAnim, true);
 					}
 
 					dad.holdTimer = 0;

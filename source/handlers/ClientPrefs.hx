@@ -30,7 +30,7 @@ class ClientPrefs
 			ClientPrefs.setOption('showInfoText', true);
 		if (ClientPrefs.getOption('ratingColors') == null)
 			ClientPrefs.setOption('ratingColors', true);
-		if (ClientPrefs.getOption('autoPause') == null)
-			ClientPrefs.setOption('autoPause', false);
+		//if (ClientPrefs.getOption('framerate') == null)
+			//ClientPrefs.setOption('framerate', 60);
 	}
 }
