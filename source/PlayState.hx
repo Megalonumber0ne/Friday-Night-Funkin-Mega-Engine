@@ -31,6 +31,7 @@ import haxe.Json;
 import lime.utils.Assets;
 import HealthIcon;
 import handlers.ClientPrefs;
+import NoteSplash;
 
 using StringTools;
 
@@ -60,6 +61,8 @@ class PlayState extends MusicBeatState
 	private var boyfriend:Boyfriend;
 
 	private var notes:FlxTypedGroup<Note>;
+	var grpNoteSplashes:FlxTypedGroup<NoteSplash>;
+
 	private var unspawnNotes:Array<Note> = [];
 
 	private var strumLine:FlxSprite;
@@ -305,12 +308,21 @@ class PlayState extends MusicBeatState
 
 		startCountdown();
 
+		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
+
+		var noteSplash:NoteSplash = new NoteSplash(100, 100, 0);
+		grpNoteSplashes.add(noteSplash);
+		noteSplash.alpha = 0.1;
+
+		add(grpNoteSplashes);
+
 		strumLineNotes.cameras = [camHUD];
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
 		healthBarBG.cameras = [camHUD];
 		doof.cameras = [camHUD];
 		infoTxt.cameras = [camHUD];
+		grpNoteSplashes.cameras = [camHUD];
 
 		super.create();
 		if (ClientPrefs.getOption('showInfoText')){
@@ -931,7 +943,7 @@ class PlayState extends MusicBeatState
 
 	var endingSong:Bool = false;
 
-	private function popUpScore(strumtime:Float):Void
+	private function popUpScore(strumtime:Float, daNote:Note):Void
 		{
 			var noteDiff:Float = Math.abs(strumtime - Conductor.songPosition);
 			vocals.volume = 1;
@@ -947,25 +959,37 @@ class PlayState extends MusicBeatState
 			var ratingMod:Float = 1;
 	
 			var daRating:String = "sick";
+			var isSick:Bool = true;
 	
 			if (noteDiff > Conductor.safeZoneOffset * 0.9)
 			{
 				daRating = 'shit';
 				score = 50;
 				ratingMod = 0;
+				isSick = false;
 			}
 			else if (noteDiff > Conductor.safeZoneOffset * 0.75)
 			{
 				daRating = 'bad';
 				score = 100;
 				ratingMod = 0.4;
+				isSick = false;
 			}
 			else if (noteDiff > Conductor.safeZoneOffset * 0.275)
 			{
 				daRating = 'good';
 				score = 200;
 				ratingMod = 0.75;
+				isSick = false;
 			}
+
+			if (isSick)
+				{
+					var noteSplash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
+					noteSplash.setupNoteSplash(daNote.x, daNote.y, daNote.noteData);
+					// new NoteSplash(note.x, daNote.y, daNote.noteData);
+					grpNoteSplashes.add(noteSplash);
+				}
 			coolNoteFloat += ratingMod;
 
 			songScore += score;
@@ -1254,7 +1278,7 @@ class PlayState extends MusicBeatState
 			if (!note.isSustainNote) {
 				combo += 1;
 				allNotes++;
-				popUpScore(note.strumTime);
+				popUpScore(note.strumTime, note);
 			}
 
 			if (note.noteData >= 0)
