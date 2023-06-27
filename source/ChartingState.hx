@@ -76,17 +76,23 @@ class ChartingState extends MusicBeatState
 
 	var leftIcon:HealthIcon;
 	var rightIcon:HealthIcon;
+	var bg:FlxSprite;
 
 	override function create()
 	{
+		bg = new FlxSprite(0, 0, 'assets/images/menu_assets/menuDesat.png');
+		bg.color = 0xA54AE2;
+		bg.scrollFactor.set(0, 0);
+		add(bg);
+
 		leftIcon = new HealthIcon('bf');
 		rightIcon = new HealthIcon('dad');
 
 		leftIcon.scrollFactor.set(1, 1);
 		rightIcon.scrollFactor.set(1, 1);
 
-		leftIcon.setGraphicSize(0, 68);
-		rightIcon.setGraphicSize(0, 68);
+		leftIcon.setGraphicSize(0, 95);
+		rightIcon.setGraphicSize(0, 95);
 
 		add(leftIcon);
 		add(rightIcon);
@@ -449,6 +455,14 @@ class ChartingState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		/*if (FlxG.sound.music.playing) {
+			leftIcon.scale.set(FlxMath.lerp(leftIcon.scale.x, 0.4, elapsed * 2.5), FlxMath.lerp(leftIcon.scale.y, 0.4, elapsed * 2.5));
+			rightIcon.scale.set(FlxMath.lerp(rightIcon.scale.x, 0.4, elapsed * 2.5), FlxMath.lerp(rightIcon.scale.y, 0.4, elapsed * 2.5));
+
+			leftIcon.updateHitbox();
+			rightIcon.updateHitbox();		
+		}*/
+
 		Conductor.songPosition = FlxG.sound.music.time;
 		_song.song = typingShit.text;
 
@@ -456,8 +470,10 @@ class ChartingState extends MusicBeatState
 
 		if (curBeat % 4 == 0)
 		{
-			if (curStep > 16 * (curSection + 1))
+			if (curStep > 15.99 * (curSection + 1))
 			{
+				changeSection(curSection + 1, false);
+
 				trace(curStep);
 				trace((_song.notes[curSection].lengthInSteps) * (curSection + 1));
 				trace('DUMBSHIT');
@@ -466,8 +482,6 @@ class ChartingState extends MusicBeatState
 				{
 					addSection();
 				}
-
-				changeSection(curSection + 1, false);
 			}
 		}
 
@@ -585,6 +599,17 @@ class ChartingState extends MusicBeatState
 		super.update(elapsed);
 	}
 
+	/*override function beatHit()
+		{
+			if (FlxG.sound.music.playing)
+				{
+					leftIcon.setGraphicSize(Std.int(leftIcon.width + 30));
+					rightIcon.setGraphicSize(Std.int(rightIcon.width + 30));
+			
+					leftIcon.updateHitbox();
+					rightIcon.updateHitbox();
+				}
+		}*/
 	function changeSection(sec:Int = 0, ?updateMusic:Bool = true):Void
 	{
 		trace('changing section' + sec);
@@ -652,6 +677,8 @@ class ChartingState extends MusicBeatState
 			{
 				leftIcon.changeIcon(_song.player1);
 				rightIcon.changeIcon(_song.player2);
+				rightIcon.flipX = true;
+				leftIcon.flipX = false;
 			}
 			else
 			{
