@@ -193,7 +193,6 @@ class PlayState extends MusicBeatState
 			stageCurtains.antialiasing = true;
 			stageCurtains.scrollFactor.set(1.3, 1.3);
 			stageCurtains.active = false;
-
 			add(stageCurtains);
 		}
 
@@ -275,8 +274,8 @@ class PlayState extends MusicBeatState
 		healthBar.createFilledBar(dad.hpColor, boyfriend.hpColor); //0xFFFF0000, 0xFF66FF33);
 		add(healthBar);
 		
-		infoTxt = new FlxText(healthBarBG.x + healthBarBG.width - 600, healthBarBG.y + 45, 0, "", 20);
-		infoTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		infoTxt = new FlxText(healthBarBG.x + healthBarBG.width - 675, healthBarBG.y + 45, 0, "", 20);
+		infoTxt.setFormat("assets/fonts/vcr.ttf", 22, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		infoTxt.scrollFactor.set();
 
 		missTxt = new FlxText(healthBarBG.x + healthBarBG.width - 600, healthBarBG.y + 45, 0, "", 20);
