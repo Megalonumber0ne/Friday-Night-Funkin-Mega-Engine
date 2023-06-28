@@ -9,6 +9,8 @@ Play the Newgrounds one here: https://www.newgrounds.com/portal/view/770371
 We have a Discord server! Feel free to join here: https://discord.gg/Mb78ZKtEYY
 Any concerns, feel free to pop into the Discord server and make a thread.
 
+My goals for this engine is to be a somewhat lightweight rework that fixes issues the base game has, while staying close to what the original game is like
+
 # MODDING - STILL BAREBONES
 Make a folder in the `mods` directory, I'll be using my mod "Peeco" for this (It's just adding the song Pico into the game without source code editing.)
 

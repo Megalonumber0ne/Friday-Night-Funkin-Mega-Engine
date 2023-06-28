@@ -642,6 +642,7 @@ class PlayState extends MusicBeatState
 		
 		var ratingArray:Array<Dynamic> = [
 			[99.95, "[S++]", 0xFFFFD700],
+			[99.5, "[S+]", 0xFF8D3D8D],
 			[99, "[S]", 0xFF00FFFF],
 			[95, "[A+]", 0xFF31CD31],
 			[90, "[A]", 0xFF00FF00],
