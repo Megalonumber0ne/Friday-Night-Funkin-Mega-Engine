@@ -91,6 +91,8 @@ class Character extends FlxSprite
 				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
 				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+				animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
+				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);				
 
 				animation.addByPrefix('scared', 'GF FEAR', 24);
 
@@ -103,6 +105,8 @@ class Character extends FlxSprite
 				addOffset("singRIGHT", 0, -20);
 				addOffset("singLEFT", 0, -19);
 				addOffset("singDOWN", 0, -20);
+				addOffset('hairBlow', 45, -8);
+				addOffset('hairFall', 0, -9);
 
 				addOffset('scared');
 
@@ -165,8 +169,47 @@ class Character extends FlxSprite
 				playAnim('idle');
 				charIcon = 'monster';
 				hpColor = (0xfff3ff6e);
-		}
+			case 'pico':
+				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/Pico_FNF_assetss.png', 'assets/images/characters/Pico_FNF_assetss.xml');
+				frames = tex;
+				animation.addByPrefix('idle', "Pico Idle Dance", 24);
+				animation.addByPrefix('singUP', 'pico Up note0', 24, false);
+				animation.addByPrefix('singDOWN', 'Pico Down Note0', 24, false);
+				if (isPlayer)
+				{
+					animation.addByPrefix('singLEFT', 'Pico NOTE LEFT0', 24, false);
+					animation.addByPrefix('singRIGHT', 'Pico Note Right0', 24, false);
+					animation.addByPrefix('singRIGHTmiss', 'Pico Note Right Miss', 24, false);
+					animation.addByPrefix('singLEFTmiss', 'Pico NOTE LEFT miss', 24, false);
+				}
+				else
+				{
+					animation.addByPrefix('singLEFT', 'Pico Note Right0', 24, false);
+					animation.addByPrefix('singRIGHT', 'Pico NOTE LEFT0', 24, false);
+					animation.addByPrefix('singRIGHTmiss', 'Pico NOTE LEFT miss', 24, false);
+					animation.addByPrefix('singLEFTmiss', 'Pico Note Right Miss', 24, false);
+				}
 
+				animation.addByPrefix('singUPmiss', 'pico Up note miss', 24);
+				animation.addByPrefix('singDOWNmiss', 'Pico Down Note MISS', 24);
+
+				addOffset('idle');
+				addOffset("singUP", -29, 27);
+				addOffset("singRIGHT", -68, -7);
+				addOffset("singLEFT", 65, 9);
+				addOffset("singDOWN", 200, -70);
+				addOffset("singUPmiss", -19, 67);
+				addOffset("singRIGHTmiss", -60, 41);
+				addOffset("singLEFTmiss", 62, 64);
+				addOffset("singDOWNmiss", 210, -28);
+
+				playAnim('idle');
+
+				flipX = true;
+
+				hpColor = (0xffb7d855);
+		}
+	
 		if (isPlayer)
 		{
 			flipX = !flipX;

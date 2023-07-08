@@ -17,7 +17,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -97,6 +97,10 @@ class PlayState extends MusicBeatState
 	var halloweenBG:FlxSprite;
 	var isHalloween:Bool = false;
 
+	var phillyCityLights:FlxTypedGroup<FlxSprite>;
+	var phillyTrain:FlxSprite;
+	var trainSound:FlxSound;
+
 	var talking:Bool = true;
 	var songScore:Int = 0;
 	var comboScore:Int = 0;
@@ -155,22 +159,6 @@ class PlayState extends MusicBeatState
 				];
 		}
 
-		if (SONG.song.toLowerCase() == 'spookeez' || SONG.song.toLowerCase() == 'monster' || SONG.song.toLowerCase() == 'south')
-		{
-			halloweenLevel = true;
-
-			var hallowTex = FlxAtlasFrames.fromSparrow('assets/images/stages/week2/halloween_bg.png', 'assets/images/stages/week2/halloween_bg.xml');
-
-			halloweenBG = new FlxSprite(-200, -100);
-			halloweenBG.frames = hallowTex;
-			halloweenBG.animation.addByPrefix('idle', 'halloweem bg0');
-			halloweenBG.animation.addByPrefix('lightning', 'halloweem bg lightning strike', 24, false);
-			halloweenBG.animation.play('idle');
-			halloweenBG.antialiasing = true;
-			add(halloweenBG);
-
-			isHalloween = true;
-		}
 		if (SONG.song.toLowerCase() == 'bopeebo' || SONG.song.toLowerCase() == 'fresh' || SONG.song.toLowerCase() == 'dadbattle' || SONG.song.toLowerCase() == 'tutorial')
 		{
 			var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic('assets/images/stages/week1/stageback.png');
@@ -195,6 +183,63 @@ class PlayState extends MusicBeatState
 			stageCurtains.active = false;
 			add(stageCurtains);
 		}
+
+		if (SONG.song.toLowerCase() == 'spookeez' || SONG.song.toLowerCase() == 'monster' || SONG.song.toLowerCase() == 'south')
+		{
+			halloweenLevel = true;
+
+			var hallowTex = FlxAtlasFrames.fromSparrow('assets/images/stages/week2/halloween_bg.png', 'assets/images/stages/week2/halloween_bg.xml');
+
+			halloweenBG = new FlxSprite(-200, -100);
+			halloweenBG.frames = hallowTex;
+			halloweenBG.animation.addByPrefix('idle', 'halloweem bg0');
+			halloweenBG.animation.addByPrefix('lightning', 'halloweem bg lightning strike', 24, false);
+			halloweenBG.animation.play('idle');
+			halloweenBG.antialiasing = true;
+			add(halloweenBG);
+
+			isHalloween = true;
+		}
+
+		if (SONG.song.toLowerCase() == 'pico' || SONG.song.toLowerCase() == 'blammed' || SONG.song.toLowerCase() == 'philly nice')
+			{
+				curStage = 'philly';
+	
+				var bg:FlxSprite = new FlxSprite(-100).loadGraphic('assets/images/stages/week3/sky.png');
+				bg.scrollFactor.set(0.1, 0.1);
+				add(bg);
+	
+				var city:FlxSprite = new FlxSprite(-10).loadGraphic('assets/images/stages/week3/city.png');
+				city.scrollFactor.set(0.3, 0.3);
+				city.setGraphicSize(Std.int(city.width * 0.85));
+				city.updateHitbox();
+				add(city);
+	
+				phillyCityLights = new FlxTypedGroup<FlxSprite>();
+				add(phillyCityLights);
+	
+				for (i in 0...5)
+				{
+					var light:FlxSprite = new FlxSprite(city.x).loadGraphic('assets/images/stages/week3/win' + i + '.png');
+					light.scrollFactor.set(0.3, 0.3);
+					light.visible = false;
+					light.setGraphicSize(Std.int(light.width * 0.85));
+					light.updateHitbox();
+					light.antialiasing = true;
+					phillyCityLights.add(light);
+				}
+				var streetBehind:FlxSprite = new FlxSprite(-40, 50).loadGraphic('assets/images/stages/week3/behindTrain.png');
+				add(streetBehind);
+	
+				phillyTrain = new FlxSprite(2000, 360).loadGraphic('assets/images/stages/week3/train.png');
+				add(phillyTrain);
+	
+				trainSound = new FlxSound().loadEmbedded('assets/sounds/train_passes' + TitleState.soundExt);
+				FlxG.sound.list.add(trainSound);
+	
+				var street:FlxSprite = new FlxSprite(-40, streetBehind.y).loadGraphic('assets/images/stages/week3/street.png');
+				add(street);
+			}
 
 		gf = new Character(400, 130, SONG.player3);
 		gf.scrollFactor.set(0.95, 0.95);
@@ -686,6 +731,21 @@ class PlayState extends MusicBeatState
 					iconP1.animation.play('bf-old');
 			}
 
+			switch (curStage)
+			{
+				case 'philly':
+					if (trainMoving)
+					{
+						trainFrameTiming += elapsed;
+	
+						if (trainFrameTiming >= 1 / 24)
+						{
+							updateTrainPos();
+							trainFrameTiming = 0;
+						}
+					}
+			}
+
 			iconP1.scale.set(FlxMath.lerp(iconP1.scale.x, 1, elapsed * 9), FlxMath.lerp(iconP1.scale.y, 1, elapsed * 9));
 			iconP2.scale.set(FlxMath.lerp(iconP2.scale.x, 1, elapsed * 9), FlxMath.lerp(iconP2.scale.y, 1, elapsed * 9));
 			
@@ -1095,124 +1155,125 @@ class PlayState extends MusicBeatState
 			curSection += 1;
 		}
 
-	private function keyShit():Void
-		{
-			var up = controls.UP;
-			var right = controls.RIGHT;
-			var down = controls.DOWN;
-			var left = controls.LEFT;
-	
-			var upP = controls.UP_P;
-			var rightP = controls.RIGHT_P;
-			var downP = controls.DOWN_P;
-			var leftP = controls.LEFT_P;
-	
-			var upR = controls.UP_R;
-			var rightR = controls.RIGHT_R;
-			var downR = controls.DOWN_R;
-			var leftR = controls.LEFT_R;
-	
-			var heldControlArray:Array<Bool> = [left, down, up, right];
-			var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
-	
-			if (heldControlArray.indexOf(true) != -1 && generatedMusic)
+		private function keyShit():Void
 			{
-				notes.forEachAlive(function(daNote:Note)
+				// HOLDING
+				var up = controls.UP;
+				var right = controls.RIGHT;
+				var down = controls.DOWN;
+				var left = controls.LEFT;
+		
+				var upP = controls.UP_P;
+				var rightP = controls.RIGHT_P;
+				var downP = controls.DOWN_P;
+				var leftP = controls.LEFT_P;
+		
+				var upR = controls.UP_R;
+				var rightR = controls.RIGHT_R;
+				var downR = controls.DOWN_R;
+				var leftR = controls.LEFT_R;
+		
+				var heldControlArray:Array<Bool> = [left, down, up, right];
+				var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
+		
+				if (heldControlArray.indexOf(true) != -1 && generatedMusic)
 				{
-					if (daNote.isSustainNote && daNote.canBeHit && daNote.mustPress && heldControlArray[daNote.noteData])
+					notes.forEachAlive(function(daNote:Note)
 					{
-						goodNoteHit(daNote);
-					}
-				});
-			};
-	
-			if (controlArray.indexOf(true) != -1 && generatedMusic) {
-				boyfriend.holdTimer = 0;
-	
-				var pressedNotes:Array<Note> = [];
-				var noteDatas:Array<Int> = [];
-				var epicNotes:Array<Note> = [];
-				notes.forEachAlive(function(daNote:Note)
-				{
-					if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit)
-					{
-						if (noteDatas.indexOf(daNote.noteData) != -1)
+						if (daNote.isSustainNote && daNote.canBeHit && daNote.mustPress && heldControlArray[daNote.noteData])
 						{
-							for (i in 0...pressedNotes.length)
-							{
-								var note:Note = pressedNotes[i];
-								if (note.noteData == daNote.noteData && Math.abs(daNote.strumTime - note.strumTime) < 10)
-								{
-									epicNotes.push(daNote);
-									break;
-								} else if (note.noteData == daNote.noteData && note.strumTime > daNote.strumTime){
-									pressedNotes.remove(note);
-									pressedNotes.push(daNote);
-									break;
-								}
-							}
-						}else{
-							pressedNotes.push(daNote);
-							noteDatas.push(daNote.noteData);
+							goodNoteHit(daNote);
 						}
+					});
+				};
+		
+				if (controlArray.indexOf(true) != -1 && generatedMusic) {
+					boyfriend.holdTimer = 0;
+		
+					var pressedNotes:Array<Note> = [];
+					var noteDatas:Array<Int> = [];
+					var epicNotes:Array<Note> = [];
+					notes.forEachAlive(function(daNote:Note)
+					{
+						if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit)
+						{
+							if (noteDatas.indexOf(daNote.noteData) != -1)
+							{
+								for (i in 0...pressedNotes.length)
+								{
+									var note:Note = pressedNotes[i];
+									if (note.noteData == daNote.noteData && Math.abs(daNote.strumTime - note.strumTime) < 10)
+									{
+										epicNotes.push(daNote);
+										break;
+									} else if (note.noteData == daNote.noteData && note.strumTime > daNote.strumTime){
+										pressedNotes.remove(note);
+										pressedNotes.push(daNote);
+										break;
+									}
+								}
+							}else{
+								pressedNotes.push(daNote);
+								noteDatas.push(daNote.noteData);
+							}
+						}
+					});
+					for (i in 0...epicNotes.length) {
+						var note:Note = epicNotes[i];
+						note.kill();
+						notes.remove(note);
+						note.destroy();
+					}
+		
+					if (pressedNotes.length > 0)
+						pressedNotes.sort(sortByShit);
+		
+					if (perfectMode){
+						goodNoteHit(pressedNotes[0]);
+					}else if (pressedNotes.length > 0){
+						for (i in 0...controlArray.length) {
+							if (controlArray[i] && noteDatas.indexOf(i) == -1) {
+								badNoteCheck();
+							}
+						}
+						for (i in 0...pressedNotes.length) {
+							var note:Note = pressedNotes[i];
+							if (controlArray[note.noteData]) {
+								goodNoteHit(note);
+							}
+						}
+					}else{
+						badNoteCheck(); //turn this back to BadNoteHit if no work
+					}
+				};
+		
+				if (boyfriend.holdTimer > 0.004 * Conductor.stepCrochet && heldControlArray.indexOf(true) == -1)
+				{
+					if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
+					{
+						boyfriend.playAnim('idle');
+					}
+				}
+		
+				playerStrums.forEach(function(spr:FlxSprite)
+				{
+					if (controlArray[spr.ID] && spr.animation.curAnim.name != 'confirm')
+					{
+						spr.animation.play('pressed');
+					}
+					if (!heldControlArray[spr.ID])
+					{
+						spr.animation.play('static');
+					}
+					if (spr.animation.curAnim.name != 'confirm' || curStage.startsWith('school')) {
+						spr.centerOffsets();
+					} else {
+						spr.centerOffsets();
+						var d = spr.offset;
+						d.set(d.x - 13, d.y - 13);
 					}
 				});
-				for (i in 0...epicNotes.length) {
-					var note:Note = epicNotes[i];
-					note.kill();
-					notes.remove(note);
-					note.destroy();
-				}
-	
-				if (pressedNotes.length > 0)
-					pressedNotes.sort(sortByShit);
-	
-				if (perfectMode){
-					goodNoteHit(pressedNotes[0]);
-				}else if (pressedNotes.length > 0){
-					for (i in 0...controlArray.length) {
-						if (controlArray[i] && noteDatas.indexOf(i) == -1) {
-							badNoteCheck();
-						}
-					}
-					for (i in 0...pressedNotes.length) {
-						var note:Note = pressedNotes[i];
-						if (controlArray[note.noteData]) {
-							goodNoteHit(note);
-						}
-					}
-				}else{
-					badNoteCheck();
-				}
-			};
-	
-			if (boyfriend.holdTimer > 0.004 * Conductor.stepCrochet && heldControlArray.indexOf(true) == -1)
-			{
-				if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
-				{
-					boyfriend.playAnim('idle');
-				}
 			}
-	
-			playerStrums.forEach(function(spr:FlxSprite)
-			{
-				if (controlArray[spr.ID] && spr.animation.curAnim.name != 'confirm')
-				{
-					spr.animation.play('pressed');
-				}
-				if (!heldControlArray[spr.ID])
-				{
-					spr.animation.play('static');
-				}
-				if (spr.animation.curAnim.name != 'confirm' || curStage.startsWith('school')) {
-					spr.centerOffsets();
-				} else {
-					spr.centerOffsets();
-					var d = spr.offset;
-					d.set(d.x - 13, d.y - 13);
-				}
-			});
-		}
 
 	function noteMiss(direction:Int = 1):Void
 	{
@@ -1372,7 +1433,8 @@ class PlayState extends MusicBeatState
 
 		if (totalBeats % gfSpeed == 0)
 		{
-			gf.dance();
+			if (gfCanDance == true)
+				gf.dance();
 		}
 
 		if (!boyfriend.animation.curAnim.name.startsWith("sing"))
@@ -1388,8 +1450,94 @@ class PlayState extends MusicBeatState
 				gf.playAnim('cheer', true);
 			}
 		}
+
+		switch (curStage)
+		{
+			case "philly":
+				if (!trainMoving)
+					trainCooldown += 1;
+
+				if (curBeat % 4 == 0)
+				{
+					phillyCityLights.forEach(function(light:FlxSprite)
+					{
+						light.visible = false;
+					});
+
+					curLight = FlxG.random.int(0, phillyCityLights.length - 1);
+
+					phillyCityLights.members[curLight].visible = true;
+				}
+
+				if (curBeat % 8 == 4 && FlxG.random.bool(30) && !trainMoving && trainCooldown > 8)
+				{
+					trainCooldown = FlxG.random.int(-4, 0);
+					trainStart();
+				}
+		}
 	}
 
+	var curLight:Int = 0;
+	var trainMoving:Bool = false;
+	var trainFrameTiming:Float = 0;
+
+	var trainCars:Int = 8;
+	var trainFinishing:Bool = false;
+	var trainCooldown:Int = 0;
+
+	function trainStart():Void
+		{
+			trainMoving = true;
+			if (!trainSound.playing)
+				trainSound.play(true);
+		}
+
+	var startedMoving:Bool = false;
+
+	function updateTrainPos():Void
+		{
+			if (trainSound.time >= 4700)
+			{
+				startedMoving = true;
+				gf.playAnim('hairBlow');
+				gfCanDance = false;
+			}
+	
+			if (startedMoving)
+			{
+				phillyTrain.x -= 400;
+	
+				if (phillyTrain.x < -2000 && !trainFinishing)
+				{
+					phillyTrain.x = -1150;
+					trainCars -= 1;
+	
+					if (trainCars <= 0)
+						trainFinishing = true;
+				}
+	
+				if (phillyTrain.x < -4000 && trainFinishing)
+					trainReset();
+			}
+		}
+
+	function trainReset():Void
+		{
+			gf.playAnim('hairFall');
+			phillyTrain.x = FlxG.width + 200;
+			trainMoving = false;
+			trainCars = 8;
+			trainFinishing = false;
+			startedMoving = false;
+			resetGFAnim();
+		}
+	var gfCanDance = true;
+
+	function resetGFAnim():Void
+		{
+			gfCanDance = true;
+
+		}
 	function recalculateAccuracy(miss:Bool = false)
 	{
         if (miss)
