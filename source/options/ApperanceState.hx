@@ -22,7 +22,7 @@ class ApperanceState extends MusicBeatState
 
 	var gtText:FlxText;
 
-	var menuItems:Array<String> = ['Show Combo Splash', 'Show Info Text', 'Use Rating Based Colors'];
+	var menuItems:Array<String> = ['Show Combo Splash', 'Show Info Text', 'Use Rating Based Colors', 'Chill Mode'];
 
 	var curSelected:Int = 0;
 
@@ -33,9 +33,18 @@ class ApperanceState extends MusicBeatState
 	{
 		super.create();
 			
-		var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
-		bg.color = 0x340666;
-		add(bg);
+		if (ClientPrefs.getOption('chillMode') == true)
+			{
+				var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
+				bg.color = 0x130127;
+				add(bg);
+			}
+		else
+			{
+				var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
+				bg.color = 0x340666;
+				add(bg);
+			}
 
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
@@ -63,12 +72,13 @@ class ApperanceState extends MusicBeatState
 	{
 		super.update(elapsed);
 
-		if (controls.UP_P)
-			changeSelection(-1);
-		if (controls.DOWN_P)
-			changeSelection(1);
-		if (controls.BACK)
-			FlxG.switchState(new OptionsState());
+			if (controls.UP_P)
+				changeSelection(-1);
+			if (controls.DOWN_P)
+				changeSelection(1);
+			if (controls.BACK)
+				FlxG.switchState(new OptionsState());		
+
 		var daSelected:String = menuItems[curSelected];
 
 		switch (daSelected)
@@ -90,10 +100,17 @@ class ApperanceState extends MusicBeatState
 					ClientPrefs.setOption('ratingColors', !ClientPrefs.getOption('ratingColors'));
 
 				gtText.text = 'Using Rating Based Colors is currently set to ${ClientPrefs.getOption('ratingColors')}';
+
+			case "Chill Mode":
+				if (controls.ACCEPT)
+					ClientPrefs.setOption('chillMode', !ClientPrefs.getOption('chillMode'));
+					FlxG.sound.music.fadeOut(0.5, 0);
+					FlxG.sound.music.stop();
+	
+				gtText.text = 'Chill Mode is currently set to be ${ClientPrefs.getOption('chillMode')}';
+			}
 		}
-	}
-
-
+	
 	function changeSelection(change:Int = 0):Void
 	{
 		curSelected = FlxMath.wrap(curSelected + change, 0, menuItems.length - 1);
@@ -106,4 +123,3 @@ class ApperanceState extends MusicBeatState
 		}
 	}
 }
-

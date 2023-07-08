@@ -1,5 +1,6 @@
 package options;
 
+import handlers.ClientPrefs;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import Controls.Control;
@@ -26,9 +27,28 @@ class OptionsState extends MusicBeatState
 	{
 		super.create();
 
-		var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
-		bg.color = 0x340666;
-		add(bg);
+		if (ClientPrefs.getOption('chillMode') == true)
+			{
+				if (FlxG.sound.music == null)
+					{
+						FlxG.sound.playMusic('assets/music/ChillMenu' + TitleState.soundExt, 0);
+						FlxG.sound.music.fadeIn(2, 0, 0.7);
+					}
+				var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
+				bg.color = 0x130127;
+				add(bg);
+			}
+		else
+			{
+				if (FlxG.sound.music == null)
+					{
+						FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt, 0);
+						FlxG.sound.music.fadeIn(2, 0, 0.7);
+					}					
+				var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
+				bg.color = 0x340666;
+				add(bg);
+			}
 
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);

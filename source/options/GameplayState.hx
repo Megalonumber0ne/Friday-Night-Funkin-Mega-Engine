@@ -33,10 +33,19 @@ class GameplayState extends MusicBeatState
 	override public function create()
 	{
 		super.create();
-		
-		var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
-		bg.color = 0x340666;
-		add(bg);
+
+		if (ClientPrefs.getOption('chillMode') == true)
+			{
+				var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
+				bg.color = 0x130127;
+				add(bg);
+			}
+		else
+			{
+				var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
+				bg.color = 0x340666;
+				add(bg);
+			}
 
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
