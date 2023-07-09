@@ -1,5 +1,6 @@
 package options;
 
+import flixel.util.FlxTimer;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import flixel.tweens.misc.NumTween;
@@ -102,11 +103,10 @@ class ApperanceState extends MusicBeatState
 				gtText.text = 'Using Rating Based Colors is currently set to ${ClientPrefs.getOption('ratingColors')}';
 
 			case "Chill Mode":
-				if (controls.ACCEPT)
+				if (controls.ACCEPT){
 					ClientPrefs.setOption('chillMode', !ClientPrefs.getOption('chillMode'));
-					FlxG.sound.music.fadeOut(0.5, 0);
-					FlxG.sound.music.stop();
-	
+					songUpdate();}
+
 				gtText.text = 'Chill Mode is currently set to be ${ClientPrefs.getOption('chillMode')}';
 			}
 		}
@@ -122,4 +122,30 @@ class ApperanceState extends MusicBeatState
 			item.alpha = item.targetY == 0 ? 1 : 0.6;
 		}
 	}
+
+	function songUpdate()
+		{
+			FlxG.sound.music.fadeOut(0.5, 0);
+			var timer:FlxTimer = new FlxTimer().start(0.5, stopMusic);
+			var timer:FlxTimer = new FlxTimer().start(0.5, songUpdateFromNull);
+		}
+
+	function stopMusic(timer:FlxTimer)
+		{
+			FlxG.sound.music.stop();
+		}
+
+	function songUpdateFromNull(timer:FlxTimer):Void
+		{
+			if (ClientPrefs.getOption('chillMode') == true)
+				{
+					FlxG.sound.playMusic('assets/music/ChillMenu' + TitleState.soundExt, 0);
+					FlxG.sound.music.fadeIn(2, 0, 0.7);
+				}
+			else
+				{
+					FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt, 0);
+					FlxG.sound.music.fadeIn(2, 0, 0.7);
+				}
+		}
 }
