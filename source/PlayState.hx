@@ -1318,10 +1318,10 @@ class PlayState extends MusicBeatState
 			return;
 		
 		var pressedIndex:Int = [
-			controls.LEFT_P,
-			controls.DOWN_P,
-			controls.UP_P,
-			controls.RIGHT_P
+			controls.LEFT,
+			controls.UP,
+			controls.DOWN,
+			controls.RIGHT
 		].indexOf(true);
 		if (pressedIndex != -1)
 			noteMiss(pressedIndex); // totally not ripped from Test Engine
@@ -1530,16 +1530,16 @@ class PlayState extends MusicBeatState
 			trainCars = 8;
 			trainFinishing = false;
 			startedMoving = false;
-			resetGFAnim();
+			var timer:FlxTimer = new FlxTimer().start(0.46, resetGFAnim);
 		}
 	var gfCanDance = true;
 
-	function resetGFAnim():Void
+	function resetGFAnim(timer:FlxTimer):Void
 		{
 			gfCanDance = true;
-
 		}
-	function recalculateAccuracy(miss:Bool = false)
+
+	function recalculateAccuracy(miss:Bool = false) // Thank you Mackery
 	{
         if (miss)
             coolNoteFloat -= 1;
