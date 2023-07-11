@@ -69,8 +69,8 @@ class OptionsState extends MusicBeatState
 			var daSelected:String = menuItems[curSelected];
 
 			switch (daSelected) {
-				case "Apperance":
-					FlxG.switchState(new ApperanceState());
+				case "Appearance":
+					FlxG.switchState(new AppearanceState());
 				case "Gameplay":
 					FlxG.switchState(new GameplayState());
 				case "Latency test":

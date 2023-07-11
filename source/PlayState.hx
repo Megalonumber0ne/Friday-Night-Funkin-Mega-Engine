@@ -1082,6 +1082,11 @@ class PlayState extends MusicBeatState
 			comboSpr.x = coolText.x;
 			comboSpr.acceleration.y = 600;
 			comboSpr.velocity.y -= 150;
+
+			if (ClientPrefs.getOption('ratingOnCam') == false)
+				comboSpr.scrollFactor.set(1, 1);
+			if (ClientPrefs.getOption('ratingOnCam') == true)
+				comboSpr.scrollFactor.set(0, 0);			
 	
 			comboSpr.velocity.x += FlxG.random.int(1, 10);
 			add(rating);
@@ -1097,6 +1102,11 @@ class PlayState extends MusicBeatState
 			comboSpr.updateHitbox();
 			rating.updateHitbox();
 	
+			if (ClientPrefs.getOption('ratingOnCam') == false)
+				rating.scrollFactor.set(1, 1);
+			if (ClientPrefs.getOption('ratingOnCam') == true)
+				rating.scrollFactor.set(0, 0);	
+
 			var seperatedScore:Array<Int> = [];
 	
 			seperatedScore.push(Math.floor(combo / 100));
@@ -1112,6 +1122,11 @@ class PlayState extends MusicBeatState
 				numScore.screenCenter();
 				numScore.x = coolText.x + (43 * daLoop) - 90;
 				numScore.y += 80;
+				
+				if (ClientPrefs.getOption('ratingOnCam') == false)
+					numScore.scrollFactor.set(1, 1);
+				if (ClientPrefs.getOption('ratingOnCam') == true)
+					numScore.scrollFactor.set(0, 0);	
 
 				numScore.antialiasing = true;
 				numScore.setGraphicSize(Std.int(numScore.width * 0.5));

@@ -475,7 +475,7 @@ class ChartingState extends MusicBeatState
 
 		if (curBeat % 4 == 0)
 		{
-			if (curStep > 15.99 * (curSection + 1))
+			if (curStep >= 16 * (curSection + 1))
 			{
 				changeSection(curSection + 1, false);
 
