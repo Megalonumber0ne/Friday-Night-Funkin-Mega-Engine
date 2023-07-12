@@ -12,13 +12,13 @@ Any concerns, feel free to pop into the Discord server and make a thread.
 My goals for this engine is to be a somewhat lightweight rework that fixes issues the base game has, while staying close to what the original game is like
 
 # MODDING - STILL BAREBONES
-Make a folder in the `mods` directory, I'll be using my mod "Peeco" for this (It's just adding the song Pico into the game without source code editing.)
+Make a folder in the `mods` directory, I'll be using my mod "Headache" for this (It's just adding the song Headache from the SEOS mod into the game without source code editing.)
 
 Make a folder named `_append` - The underscore is VERY important
 
 In the `_append` folder, make a folder called `data`
 
-Make a new text file titled `freeplaySongs.txt` and add the name of the song you want to mod in to the file (Such as "Pico")
+Make a new text file titled `freeplaySongs.txt` and add the name of the song you want to mod in to the file (Such as "Headache")
 
 Go back to the mod directory (You should only see the `_append` folder for now)
 
