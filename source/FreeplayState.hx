@@ -1,5 +1,6 @@
 package;
 
+import handlers.ClientPrefs;
 import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -34,8 +35,18 @@ class FreeplayState extends MusicBeatState
 	{	
 		songs = CoolUtil.loadTextLowercase('assets/data/freeplaySongs.txt');
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic('assets/images/menu_assets/menuBGBlue.png');
-		add(bg);
+		if (ClientPrefs.getOption('chillMode') == false)
+			{
+				var bg:FlxSprite = new FlxSprite().loadGraphic('assets/images/menu_assets/menuBGBlue.png');
+				add(bg);
+			}
+
+		if (ClientPrefs.getOption('chillMode') == true)
+			{
+				var bg:FlxSprite = new FlxSprite().loadGraphic('assets/images/menu_assets/menuDesat.png');
+				bg.color = 0xFF2E1F5F;
+				add(bg);
+			}
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
@@ -76,10 +87,19 @@ class FreeplayState extends MusicBeatState
 	}
 
 	override function update(elapsed:Float)
-	{		
-		if (!FlxG.sound.music.playing) {
-			FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt, 0);
-		}
+	{
+		if (ClientPrefs.getOption('chillMode') == false)
+			{		
+				if (!FlxG.sound.music.playing) {
+					FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt, 0);
+				}
+			}
+		if (ClientPrefs.getOption('chillMode') == false)
+			{
+				if (!FlxG.sound.music.playing) {
+					FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt, 0);
+				}
+			}
 
 		super.update(elapsed);
 

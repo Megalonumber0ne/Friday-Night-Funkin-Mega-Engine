@@ -321,6 +321,7 @@ class PlayState extends MusicBeatState
 		
 		infoTxt = new FlxText(healthBarBG.x + healthBarBG.width - 675, healthBarBG.y + 45, 0, "", 20);
 		infoTxt.setFormat("assets/fonts/vcr.ttf", 22, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		//infoTxt.screenCenter();
 		infoTxt.scrollFactor.set();
 
 		missTxt = new FlxText(healthBarBG.x + healthBarBG.width - 600, healthBarBG.y + 45, 0, "", 20);
@@ -1081,6 +1082,11 @@ class PlayState extends MusicBeatState
 			comboSpr.x = coolText.x;
 			comboSpr.acceleration.y = 600;
 			comboSpr.velocity.y -= 150;
+
+			if (ClientPrefs.getOption('ratingOnCam') == false)
+				comboSpr.scrollFactor.set(1, 1);
+			if (ClientPrefs.getOption('ratingOnCam') == true)
+				comboSpr.scrollFactor.set(0, 0);			
 	
 			comboSpr.velocity.x += FlxG.random.int(1, 10);
 			add(rating);
@@ -1096,6 +1102,11 @@ class PlayState extends MusicBeatState
 			comboSpr.updateHitbox();
 			rating.updateHitbox();
 	
+			if (ClientPrefs.getOption('ratingOnCam') == false)
+				rating.scrollFactor.set(1, 1);
+			if (ClientPrefs.getOption('ratingOnCam') == true)
+				rating.scrollFactor.set(0, 0);	
+
 			var seperatedScore:Array<Int> = [];
 	
 			seperatedScore.push(Math.floor(combo / 100));
@@ -1111,6 +1122,11 @@ class PlayState extends MusicBeatState
 				numScore.screenCenter();
 				numScore.x = coolText.x + (43 * daLoop) - 90;
 				numScore.y += 80;
+				
+				if (ClientPrefs.getOption('ratingOnCam') == false)
+					numScore.scrollFactor.set(1, 1);
+				if (ClientPrefs.getOption('ratingOnCam') == true)
+					numScore.scrollFactor.set(0, 0);	
 
 				numScore.antialiasing = true;
 				numScore.setGraphicSize(Std.int(numScore.width * 0.5));
@@ -1317,10 +1333,10 @@ class PlayState extends MusicBeatState
 			return;
 		
 		var pressedIndex:Int = [
-			controls.LEFT_P,
-			controls.DOWN_P,
-			controls.UP_P,
-			controls.RIGHT_P
+			controls.LEFT,
+			controls.UP,
+			controls.DOWN,
+			controls.RIGHT
 		].indexOf(true);
 		if (pressedIndex != -1)
 			noteMiss(pressedIndex); // totally not ripped from Test Engine
@@ -1529,16 +1545,16 @@ class PlayState extends MusicBeatState
 			trainCars = 8;
 			trainFinishing = false;
 			startedMoving = false;
-			resetGFAnim();
+			var timer:FlxTimer = new FlxTimer().start(0.46, resetGFAnim);
 		}
 	var gfCanDance = true;
 
-	function resetGFAnim():Void
+	function resetGFAnim(timer:FlxTimer):Void
 		{
 			gfCanDance = true;
-
 		}
-	function recalculateAccuracy(miss:Bool = false)
+
+	function recalculateAccuracy(miss:Bool = false) // Thank you Mackery
 	{
         if (miss)
             coolNoteFloat -= 1;

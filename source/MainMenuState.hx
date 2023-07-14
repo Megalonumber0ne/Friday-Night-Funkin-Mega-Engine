@@ -1,5 +1,6 @@
 package;
 
+import handlers.ClientPrefs;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -32,29 +33,57 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic('assets/images/menu_assets/menuBG.png');
-		bg.scrollFactor.x = 0;
-		bg.scrollFactor.y = 0.15;
-		bg.setGraphicSize(Std.int(bg.width * 1.1));
-		bg.updateHitbox();
-		bg.screenCenter();
-		bg.antialiasing = true;
-		add(bg);
+		if (ClientPrefs.getOption('chillMode') == false)
+			{
+				var bg:FlxSprite = new FlxSprite(-80).loadGraphic('assets/images/menu_assets/menuBG.png');
+				bg.scrollFactor.x = 0;
+				bg.scrollFactor.y = 0.15;
+				bg.setGraphicSize(Std.int(bg.width * 1.1));
+				bg.updateHitbox();
+				bg.screenCenter();
+				bg.antialiasing = true;
+				add(bg);
 
-		camFollow = new FlxObject(0, 0, 1, 1);
-		add(camFollow);
+				camFollow = new FlxObject(0, 0, 1, 1);
+				add(camFollow);
 
-		magenta = new FlxSprite(-80).loadGraphic('assets/images/menu_assets/menuDesat.png');
-		magenta.scrollFactor.x = 0;
-		magenta.scrollFactor.y = 0.15;
-		magenta.setGraphicSize(Std.int(magenta.width * 1.1));
-		magenta.updateHitbox();
-		magenta.screenCenter();
-		magenta.visible = false;
-		magenta.antialiasing = true;
-		magenta.color = 0xFFfd719b;
-		add(magenta);
-		// magenta.scrollFactor.set();
+				magenta = new FlxSprite(-80).loadGraphic('assets/images/menu_assets/menuDesat.png');
+				magenta.color = 0xFFfd719b;
+				magenta.scrollFactor.x = 0;
+				magenta.scrollFactor.y = 0.15;
+				magenta.setGraphicSize(Std.int(magenta.width * 1.1));
+				magenta.updateHitbox();
+				magenta.screenCenter();
+				magenta.visible = false;
+				magenta.antialiasing = true;
+				add(magenta);
+			}
+		else if (ClientPrefs.getOption('chillMode') == true)
+			{
+				var bg:FlxSprite = new FlxSprite(-80).loadGraphic('assets/images/menu_assets/menuDesat.png');
+				bg.color = 0xff807122;
+				bg.scrollFactor.x = 0;
+				bg.scrollFactor.y = 0.15;
+				bg.setGraphicSize(Std.int(bg.width * 1.1));
+				bg.updateHitbox();
+				bg.screenCenter();
+				bg.antialiasing = true;
+				add(bg);
+
+				camFollow = new FlxObject(0, 0, 1, 1);
+				add(camFollow);
+
+				magenta = new FlxSprite(-80).loadGraphic('assets/images/menu_assets/menuDesat.png');
+				magenta.color = 0xff8f2e4b;
+				magenta.scrollFactor.x = 0;
+				magenta.scrollFactor.y = 0.15;
+				magenta.setGraphicSize(Std.int(magenta.width * 1.1));
+				magenta.updateHitbox();
+				magenta.screenCenter();
+				magenta.visible = false;
+				magenta.antialiasing = true;
+				add(magenta);
+			}
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
@@ -87,7 +116,7 @@ class MainMenuState extends MusicBeatState
 		buildNumShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(buildNumShit);
 
-		var engineVerShit:FlxText = new FlxText(5, FlxG.height - 34, 0, "Mega Engine v0.3.1 - Beta Release 6");
+		var engineVerShit:FlxText = new FlxText(5, FlxG.height - 34, 0, "Mega Engine v0.3.2 - Beta Release 7");
 		engineVerShit.scrollFactor.set();
 		engineVerShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(engineVerShit);

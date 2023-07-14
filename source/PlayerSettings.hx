@@ -1,5 +1,6 @@
 package;
 
+import flixel.input.keyboard.FlxKey;
 import Controls;
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -43,6 +44,31 @@ class PlayerSettings
 	{
 		controls.setKeyboardScheme(scheme);
 	}
+
+	public static var keyBinds:Map<String, Array<FlxKey>> = [
+		//Key Bind, Name for ControlsSubState
+		'note_left'		=> [A, LEFT],
+		'note_down'		=> [S, DOWN],
+		'note_up'		=> [W, UP],
+		'note_right'	=> [D, RIGHT],
+		
+		'ui_left'		=> [A, LEFT],
+		'ui_down'		=> [S, DOWN],
+		'ui_up'			=> [W, UP],
+		'ui_right'		=> [D, RIGHT],
+		
+		'accept'		=> [SPACE, ENTER],
+		'back'			=> [BACKSPACE, ESCAPE],
+		'pause'			=> [ENTER, ESCAPE],
+		'reset'			=> [R, NONE],
+		
+		'volume_mute'	=> [ZERO, NONE],
+		'volume_up'		=> [NUMPADPLUS, PLUS],
+		'volume_down'	=> [NUMPADMINUS, MINUS],
+		
+		'debug_1'		=> [SEVEN, NONE],
+		'debug_2'		=> [EIGHT, NONE]
+	];
 
 	/* 
 		static public function addAvatar(avatar:Player):PlayerSettings

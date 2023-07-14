@@ -85,12 +85,19 @@ class TitleState extends MusicBeatState
 			transIn = FlxTransitionableState.defaultTransIn;
 			transOut = FlxTransitionableState.defaultTransOut;
 
-			FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt, 0);
+			if (ClientPrefs.getOption('chillMode') == true)
+				{
+					FlxG.sound.playMusic('assets/music/ChillMenu' + TitleState.soundExt, 0);
+					Conductor.changeBPM(117);
+				}
+			else
+				{
+					FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt, 0);
+					Conductor.changeBPM(102);
+				}
 
 			FlxG.sound.music.fadeIn(4, 0, 0.7);
 		}
-
-		Conductor.changeBPM(102);
 		persistentUpdate = true;
 
 		logoBl = new FlxSprite(-150, -100);

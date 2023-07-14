@@ -18,7 +18,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.ui.FlxSpriteButton;
@@ -475,7 +475,7 @@ class ChartingState extends MusicBeatState
 
 		if (curBeat % 4 == 0)
 		{
-			if (curStep > 15.99 * (curSection + 1))
+			if (curStep >= 16 * (curSection + 1))
 			{
 				changeSection(curSection + 1, false);
 

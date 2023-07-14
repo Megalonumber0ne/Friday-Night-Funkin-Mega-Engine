@@ -1,5 +1,6 @@
 package options;
 
+import handlers.ClientPrefs;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import Controls.Control;
@@ -26,9 +27,18 @@ class OptionsState extends MusicBeatState
 	{
 		super.create();
 
-		var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
-		bg.color = 0x340666;
-		add(bg);
+		if (ClientPrefs.getOption('chillMode') == true)
+			{
+				var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
+				bg.color = 0x130127;
+				add(bg);
+			}
+		else
+			{				
+				var bg = new FlxSprite().loadGraphic(('assets/images/menu_assets/menuDesat.png'));
+				bg.color = 0x340666;
+				add(bg);
+			}
 
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
@@ -59,8 +69,8 @@ class OptionsState extends MusicBeatState
 			var daSelected:String = menuItems[curSelected];
 
 			switch (daSelected) {
-				case "Apperance":
-					FlxG.switchState(new ApperanceState());
+				case "Appearance":
+					FlxG.switchState(new AppearanceState());
 				case "Gameplay":
 					FlxG.switchState(new GameplayState());
 				case "Latency test":

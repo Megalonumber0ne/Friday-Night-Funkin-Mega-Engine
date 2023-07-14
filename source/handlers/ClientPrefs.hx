@@ -30,6 +30,10 @@ class ClientPrefs
 			ClientPrefs.setOption('showInfoText', true);
 		if (ClientPrefs.getOption('ratingColors') == null)
 			ClientPrefs.setOption('ratingColors', true);
+		if (ClientPrefs.getOption('chillMode') == null)
+			ClientPrefs.setOption('chillMode', false);
+		if (ClientPrefs.getOption('ratingOnCam') == null)
+			ClientPrefs.setOption('ratingOnCam', true);
 		//if (ClientPrefs.getOption('framerate') == null)
 			//ClientPrefs.setOption('framerate', 60);
 	}
