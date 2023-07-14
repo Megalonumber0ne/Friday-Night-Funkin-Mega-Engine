@@ -23,7 +23,7 @@ class AppearanceState extends MusicBeatState
 
 	var gtText:FlxText;
 
-	var menuItems:Array<String> = ['Chill Mode', 'Show Combo Splash', 'Show Info Text', 'Use Rating Based Colors', 'Cool splash stuff on camera'];
+	var menuItems:Array<String> = ['Chill Mode', 'Show Combo Splash', 'Show Info Text', 'Use Rating Based Colors', 'Cool Splash Stuff On Camera'];
 
 	var curSelected:Int = 0;
 

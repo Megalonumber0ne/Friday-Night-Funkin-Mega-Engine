@@ -17,7 +17,7 @@ class OptionsState extends MusicBeatState
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
-	var menuItems:Array<String> = ['Apperance', 'Gameplay', 'Discord'];
+	var menuItems:Array<String> = ['Appearance', 'Gameplay', 'The socials'];
 
 	var curSelected:Int = 0;
 
@@ -75,8 +75,8 @@ class OptionsState extends MusicBeatState
 					FlxG.switchState(new GameplayState());
 				case "Latency test":
 					FlxG.switchState(new LatencyState());
-				case "Discord":
-					FlxG.openURL('https://discord.gg/Mb78ZKtEYY');
+				case "The socials":
+					FlxG.switchState(new SocialsState());
 			}
 		}
 	}

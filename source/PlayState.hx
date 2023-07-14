@@ -369,10 +369,27 @@ class PlayState extends MusicBeatState
 		infoTxt.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
 
-		super.create();
+		var engineWatermark = new FlxText(5, FlxG.height - 18, 0, "", 12);
+		engineWatermark.scrollFactor.set();
+		engineWatermark.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		engineWatermark.cameras = [camHUD];
+		engineWatermark.text = "Mega Engine v0.3.2";
+
+		var songWatermark = new FlxText(5, FlxG.height - 34, 0, "", 12);
+		songWatermark.scrollFactor.set();
+		songWatermark.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		songWatermark.cameras = [camHUD];
+		songWatermark.text = 'Song: ' + '${curSong}';
+
 		if (ClientPrefs.getOption('showInfoText')){
 			add(infoTxt);
 		}
+
+		if (ClientPrefs.getOption('MegaEngineWatermarks') == true)
+			add(engineWatermark);
+			add(songWatermark);
+
+		super.create();
 	}
 
 	var startTimer:FlxTimer;

@@ -25,7 +25,7 @@ class GameplayState extends MusicBeatState
 
 	var gtText:FlxText;
 
-	var menuItems:Array<String> = ['Ghost Tapping', 'Mods'];
+	var menuItems:Array<String> = ['Ghost Tapping', 'Mods', 'ME Watermarks In Gameplay'];
 	var curSelected:Int = 0;
 
 	public var isFreeplayItem:Bool = false;
@@ -94,6 +94,12 @@ class GameplayState extends MusicBeatState
 					ClientPrefs.setOption('mods', !ClientPrefs.getOption('mods'));
 
 				gtText.text = 'Mods are currently set to ${ClientPrefs.getOption('mods')}';
+
+			case "Mega Watermarks In Gameplay":
+				if (controls.ACCEPT)
+					ClientPrefs.setOption('MegaEngineWatermarks', !ClientPrefs.getOption('MegaEngineWatermarks'));
+
+				gtText.text = 'A watermark for the engine (inside of a song) is set to ${ClientPrefs.getOption('MegaEngineWatermarks')}. This also includes a song watermark above.';
 
 			/*case "Framerate":
 				if (controls.LEFT_P)

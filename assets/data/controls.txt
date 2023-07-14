@@ -1,0 +1,32 @@
+setUP
+W
+setUP (ALT)
+FlxKey.UP
+setDOWN
+S
+setDOWN (ALT)
+FlxKey.DOWN
+setLEFT
+A
+setLEFT (ALT)
+FlxKey.LEFT
+setRIGHT
+D
+setRIGHT (ALT)
+FlxKey.RIGHT
+setACCEPT
+Z
+setACCEPT (ALT)
+ENTER
+setBACK
+BACKSPACE
+setBACK (ALT)
+ESCAPE
+setPAUSE
+P
+setPAUSE (ALT)
+ENTER
+setRESET
+R
+setRESET (ALT)
+null
