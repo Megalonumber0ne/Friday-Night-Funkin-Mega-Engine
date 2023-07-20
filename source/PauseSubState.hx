@@ -84,10 +84,14 @@ class PauseSubState extends MusicBeatSubstate
 			}
 		}
 
-		if (FlxG.keys.justPressed.J)
+		if (FlxG.keys.justPressed.SEVEN)
 		{
-			// for reference later!
-			// PlayerSettings.player1.controls.replaceBinding(Control.LEFT, Keys, FlxKey.J, null);
+			/* for reference later!
+			PlayerSettings.player1.controls.replaceBinding(Control.LEFT, Keys, FlxKey.D, null);
+			PlayerSettings.player1.controls.replaceBinding(Control.DOWN, Keys, FlxKey.F, null);
+			PlayerSettings.player1.controls.replaceBinding(Control.UP, Keys, FlxKey.J, null);
+			PlayerSettings.player1.controls.replaceBinding(Control.RIGHT, Keys, FlxKey.K, null);
+			*/
 		}
 	}
 

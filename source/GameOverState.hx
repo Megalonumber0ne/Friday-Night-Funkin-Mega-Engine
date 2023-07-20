@@ -23,7 +23,7 @@ class GameOverState extends FlxTransitionableState
 
 	override function create()
 	{
-		var bf:Boyfriend = new Boyfriend(bfX, bfY);
+		var bf:Boyfriend = new Boyfriend(bfX, bfY, 'bf');
 		// bf.scrollFactor.set();
 		add(bf);
 		bf.playAnim('firstDeath');
