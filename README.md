@@ -9,7 +9,8 @@ Play the Newgrounds one here: https://www.newgrounds.com/portal/view/770371
 We have a Discord server! Feel free to join here: https://discord.gg/Mb78ZKtEYY
 Any concerns, feel free to pop into the Discord server and make a thread.
 
-#The modding system is being altered in priority starting v0.4
+# An Announcement
+The modding system is being altered in priority starting v0.4
 Because I asked a friend to help me with the modding system almost 3 months ago, he hasn't gotten round to it (even after numerous promises.) That's alright though, as time goes on I'll either ask another to help out, or I'll finish Mega Engine's modding system myself.
 Please be patient for now, as I really don't know where to begin solving this issue. Don't expect too much to happen for a little while, but I promise it'll get finished eventually.
 
