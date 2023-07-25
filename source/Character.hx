@@ -1,5 +1,6 @@
 package;
 
+import handlers.Paths;
 import flixel.util.FlxColor;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -79,8 +80,36 @@ class Character extends FlxSprite
 				flipX = true;
 				hpColor = (0xff31b0d1);
 				charIcon = 'bf';
+
+			case 'bf-car':
+				var tex = FlxAtlasFrames.fromSparrow('assets/images/characters/bfCar.png', 'assets/images/characters/bfCar.xml');
+				frames = tex;
+				animation.addByPrefix('idle', 'BF idle dance', 24, false);
+				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
+				animation.addByPrefix('singLEFT', 'BF NOTE LEFT0', 24, false);
+				animation.addByPrefix('singRIGHT', 'BF NOTE RIGHT0', 24, false);
+				animation.addByPrefix('singDOWN', 'BF NOTE DOWN0', 24, false);
+				animation.addByPrefix('singUPmiss', 'BF NOTE UP MISS', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'BF NOTE LEFT MISS', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'BF NOTE RIGHT MISS', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'BF NOTE DOWN MISS', 24, false);
+
+				addOffset('idle', -5);
+				addOffset("singUP", -29, 27);
+				addOffset("singRIGHT", -38, -7);
+				addOffset("singLEFT", 12, -6);
+				addOffset("singDOWN", -10, -50);
+				addOffset("singUPmiss", -29, 27);
+				addOffset("singRIGHTmiss", -30, 21);
+				addOffset("singLEFTmiss", 12, 24);
+				addOffset("singDOWNmiss", -11, -19);
+				playAnim('idle');
+
+				flipX = true;
+				hpColor = (0xff31b0d1);
+				charIcon = 'bf';
+
 			case 'gf':
-				// GIRLFRIEND CODE
 				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/GF_assets.png', 'assets/images/characters/GF_assets.xml');
 				frames = tex;
 				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
@@ -113,8 +142,23 @@ class Character extends FlxSprite
 				playAnim('danceRight');
 				charIcon = 'gf';
 				hpColor = (0xff9d0049);
+
+			case 'gf-car':
+				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/gfCar.png', 'assets/images/characters/gfCar.xml');
+				frames = tex;
+				animation.addByIndices('singUP', 'GF Dancing Beat Hair blowing CAR', [0], "", 24, false);
+				animation.addByIndices('danceLeft', 'GF Dancing Beat Hair blowing CAR', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
+				animation.addByIndices('danceRight', 'GF Dancing Beat Hair blowing CAR', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24,
+					false);
+	
+				addOffset('danceLeft', 0);
+				addOffset('danceRight', 0);
+	
+				playAnim('danceRight');
+				charIcon = 'gf';
+				hpColor = (0xff9d0049);
+
 			case 'dad':
-				// DAD ANIMATION LOADING CODE
 				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/DADDY_DEAREST.png', 'assets/images/characters/DADDY_DEAREST.xml');
 				frames = tex;
 				animation.addByPrefix('idle', 'Dad idle dance', 24);
@@ -131,6 +175,7 @@ class Character extends FlxSprite
 				addOffset("singDOWN", 0, -30);
 				charIcon = 'icon-dad';
 				hpColor = (0xffaf66ce);
+
 			case 'spooky':
 				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/spooky_kids_assets.png', 'assets/images/characters/spooky_kids_assets.xml');
 				frames = tex;
@@ -152,6 +197,7 @@ class Character extends FlxSprite
 				playAnim('danceRight');
 				charIcon = 'spooky';
 				hpColor = (0xffd57e00);
+
 			case 'monster':
 				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/Monster_Assets.png', 'assets/images/characters/Monster_Assets.xml');
 				frames = tex;
@@ -169,6 +215,7 @@ class Character extends FlxSprite
 				playAnim('idle');
 				charIcon = 'monster';
 				hpColor = (0xfff3ff6e);
+
 			case 'pico':
 				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/Pico_FNF_assetss.png', 'assets/images/characters/Pico_FNF_assetss.xml');
 				frames = tex;
@@ -204,10 +251,30 @@ class Character extends FlxSprite
 				addOffset("singDOWNmiss", 210, -28);
 
 				playAnim('idle');
-
 				flipX = true;
-
 				hpColor = (0xffb7d855);
+
+			case 'mom-car':
+				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/momCar.png', 'assets/images/characters/momCar.xml');
+				frames = tex;
+
+				animation.addByPrefix('idle', "Mom Idle", 24, false);
+				animation.addByPrefix('singUP', "Mom Up Pose", 24, false);
+				animation.addByPrefix('singDOWN', "MOM DOWN POSE", 24, false);
+				animation.addByPrefix('singLEFT', 'Mom Left Pose', 24, false);
+				// ANIMATION IS CALLED MOM LEFT POSE BUT ITS FOR THE RIGHT
+				// I'll fix this when all the weeks are out, kay? - Megalo
+				animation.addByPrefix('singRIGHT', 'Mom Pose Left', 24, false);
+
+				addOffset('idle');
+				addOffset("singUP", 14, 71);
+				addOffset("singRIGHT", 10, -60);
+				addOffset("singLEFT", 250, -23);
+				addOffset("singDOWN", 20, -160);
+
+				playAnim('idle');
+				hpColor = (0xffd8558e);
+				charIcon = 'mom';
 		}
 	
 		if (isPlayer)
@@ -218,7 +285,7 @@ class Character extends FlxSprite
 
 	override function update(elapsed:Float)
 	{
-		if (curCharacter != 'bf')
+		if (!curCharacter.startsWith('bf'))
 		{
 			if (animation.curAnim != null && animation.curAnim.name.startsWith('sing'))
 			{
@@ -248,13 +315,14 @@ class Character extends FlxSprite
 	{
 		switch (curCharacter)
 		{
-			case 'gf':
+			case 'gf', 'gf-car':
 				danced = !danced;
 
 				if (danced)
 					playAnim('danceRight');
 				else
 					playAnim('danceLeft');
+
 			case 'spooky':
 				danced = !danced;
 

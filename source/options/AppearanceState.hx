@@ -23,7 +23,7 @@ class AppearanceState extends MusicBeatState
 
 	var gtText:FlxText;
 
-	var menuItems:Array<String> = ['Chill Mode', 'Show Combo Splash', 'Show Info Text', 'Use Rating Based Colors', 'Cool Splash Stuff On Camera'];
+	var menuItems:Array<String> = ['Chill Mode', 'Show Combo Splash', 'Show Info Text', 'Use Rating Based Colors', 'Cool Splash Stuff On Camera', 'Show Beta Tester Message'];
 
 	var curSelected:Int = 0;
 
@@ -88,28 +88,28 @@ class AppearanceState extends MusicBeatState
 				if (controls.ACCEPT)
 					ClientPrefs.setOption('comboSplash', !ClientPrefs.getOption('comboSplash'));
 
-				gtText.text = 'The Combo Splash is currently set to ${ClientPrefs.getOption('comboSplash')}';
+				gtText.text = 'The Combo Splash is currently set to ${ClientPrefs.getOption('comboSplash')}.';
 
 			case "Show Info Text":
 				if (controls.ACCEPT)
 					ClientPrefs.setOption('showInfoText', !ClientPrefs.getOption('showInfoText'));
 
-				gtText.text = 'Show Info Text is currently set to ${ClientPrefs.getOption('showInfoText')}';
+				gtText.text = 'Show Info Text is currently set to ${ClientPrefs.getOption('showInfoText')}.';
 
 			case "Use Rating Based Colors":
 				if (controls.ACCEPT)
 					ClientPrefs.setOption('ratingColors', !ClientPrefs.getOption('ratingColors'));
 
-				gtText.text = 'Using Rating Based Colors is currently set to ${ClientPrefs.getOption('ratingColors')}';
+				gtText.text = 'Using Rating Based Colors is currently set to ${ClientPrefs.getOption('ratingColors')}.';
 
 			case "Chill Mode":
 				if (controls.ACCEPT){
 					ClientPrefs.setOption('chillMode', !ClientPrefs.getOption('chillMode'));
 					songUpdate();}
 
-				gtText.text = 'Chill Mode is currently set to be ${ClientPrefs.getOption('chillMode')}';
+				gtText.text = 'Chill Mode is currently set to be ${ClientPrefs.getOption('chillMode')}.';
 
-			case "Cool splash stuff on camera":
+			case "Cool Splash Stuff On Camera":
 				if (controls.ACCEPT)
 					ClientPrefs.setOption('ratingOnCam', !ClientPrefs.getOption('ratingOnCam'));
 
@@ -117,6 +117,12 @@ class AppearanceState extends MusicBeatState
 						gtText.text = 'This option is currently set to ${ClientPrefs.getOption('ratingOnCam')}. This puts the rating, combo and combo splash on the camera rather than the world.';
 					if (ClientPrefs.getOption('ratingOnCam') == false)
 						gtText.text = 'This option is currently set to ${ClientPrefs.getOption('ratingOnCam')}. This puts the rating, combo and combo splash on the world rather than the camera.';
+
+			case "Show Beta Tester Message":
+				if (controls.ACCEPT)
+					ClientPrefs.setOption('BetaTesterState', !ClientPrefs.getOption('BetaTesterState'));
+
+				gtText.text = 'The beta tester message is currently set to be ${ClientPrefs.getOption('BetaTesterState')}. (Thank you.)';
 			}
 		}
 	

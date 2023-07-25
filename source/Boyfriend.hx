@@ -6,9 +6,9 @@ class Boyfriend extends Character
 {
 	public var stunned:Bool = false;
 
-	public function new(x:Float, y:Float, char:String)
+	public function new(x:Float, y:Float, ?char:String = 'bf')
 	{
-		super(x, y);
+		super(x, y, char);
 		flipX = !flipX;
 	}
 
@@ -19,7 +19,6 @@ class Boyfriend extends Character
 			holdTimer += elapsed;
 		}
 		else
-			holdTimer = 0;
 
 		if (animation.curAnim.name.endsWith('miss') && animation.curAnim.finished && !debugMode)
 		{

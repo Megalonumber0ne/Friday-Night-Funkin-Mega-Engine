@@ -36,6 +36,8 @@ class ClientPrefs
 			ClientPrefs.setOption('ratingOnCam', true);
 		if (ClientPrefs.getOption('MegaEngineWatermarks') == null)
 			ClientPrefs.setOption('MegaEngineWatermarks', true);
+		if (ClientPrefs.getOption('BetaTesterState') == null)
+			ClientPrefs.setOption('BetaTesterState', true);
 		//if (ClientPrefs.getOption('framerate') == null)
 			//ClientPrefs.setOption('framerate', 60);
 	}

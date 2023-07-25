@@ -201,7 +201,10 @@ class TitleState extends MusicBeatState
 
 			new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
-				FlxG.switchState(new BetaTesterState());
+				if (ClientPrefs.getOption('BetaTesterState') == true){
+					FlxG.switchState(new BetaTesterState());}
+				else
+					FlxG.switchState(new MainMenuState());
 			});
 			// FlxG.sound.play('assets/music/titleShoot' + TitleState.soundExt, 0.7);
 		}

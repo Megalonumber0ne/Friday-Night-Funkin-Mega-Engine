@@ -1,5 +1,6 @@
 package;
 
+import Song.SwagSong;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.transition.FlxTransitionableState;
@@ -12,7 +13,8 @@ class GameOverState extends FlxTransitionableState
 {
 	var bfX:Float = 0;
 	var bfY:Float = 0;
-
+	public static var SONG:SwagSong;
+	
 	public function new(x:Float, y:Float)
 	{
 		super();
@@ -23,8 +25,7 @@ class GameOverState extends FlxTransitionableState
 
 	override function create()
 	{
-		var bf:Boyfriend = new Boyfriend(bfX, bfY, 'bf');
-		// bf.scrollFactor.set();
+		var bf:Boyfriend = new Boyfriend(bfX, bfY, 'bf-dead');
 		add(bf);
 		bf.playAnim('firstDeath');
 
