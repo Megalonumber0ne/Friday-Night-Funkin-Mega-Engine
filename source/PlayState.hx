@@ -432,7 +432,7 @@ class PlayState extends MusicBeatState
 		engineWatermark.scrollFactor.set();
 		engineWatermark.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		engineWatermark.cameras = [camHUD];
-		engineWatermark.text = "Mega Engine v0.3.2";
+		engineWatermark.text = "Mega Engine v0.4";
 
 		var songWatermark = new FlxText(5, FlxG.height - 34, 0, "", 12);
 		songWatermark.scrollFactor.set();
