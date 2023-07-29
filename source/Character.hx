@@ -93,6 +93,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFTmiss', 'BF NOTE LEFT MISS', 24, false);
 				animation.addByPrefix('singRIGHTmiss', 'BF NOTE RIGHT MISS', 24, false);
 				animation.addByPrefix('singDOWNmiss', 'BF NOTE DOWN MISS', 24, false);
+				animation.addByIndices('idleHair', 'BF idle dance', [10, 11, 12, 13], "", 24, true);
 
 				addOffset('idle', -5);
 				addOffset("singUP", -29, 27);
@@ -265,6 +266,7 @@ class Character extends FlxSprite
 				// ANIMATION IS CALLED MOM LEFT POSE BUT ITS FOR THE RIGHT
 				// I'll fix this when all the weeks are out, kay? - Megalo
 				animation.addByPrefix('singRIGHT', 'Mom Pose Left', 24, false);
+				animation.addByIndices('idleHair', "Mom Idle", [10, 11, 12, 13], "", 24, true);
 
 				addOffset('idle');
 				addOffset("singUP", 14, 71);
@@ -303,6 +305,13 @@ class Character extends FlxSprite
 			}
 		}
 
+		if (curCharacter.endsWith('-car'))
+			{
+				// looping hair anims after idle finished
+				if (!animation.curAnim.name.startsWith('sing') && animation.curAnim.finished)
+					playAnim('idleHair');
+			}
+			
 		super.update(elapsed);
 	}
 

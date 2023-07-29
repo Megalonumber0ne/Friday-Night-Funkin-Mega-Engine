@@ -9,9 +9,9 @@ class ClientPrefs
 	public static function getOption(option:String)
 		return options.get(option);
 
-	public static function setOption(optionName:String, optionValue:Bool){
+	public static function setOption(optionName:String, optionValue:Dynamic){
 		options.set(optionName, optionValue);
-
+	
 		FlxG.save.data.options = options;
 		FlxG.save.flush();
 	}
@@ -38,7 +38,11 @@ class ClientPrefs
 			ClientPrefs.setOption('MegaEngineWatermarks', true);
 		if (ClientPrefs.getOption('BetaTesterState') == null)
 			ClientPrefs.setOption('BetaTesterState', true);
-		//if (ClientPrefs.getOption('framerate') == null)
-			//ClientPrefs.setOption('framerate', 60);
+		if (ClientPrefs.getOption('gameFrameRate') == null)
+			ClientPrefs.setOption('gameFrameRate', 60);
+		if (ClientPrefs.getOption('naughtiness') == null)
+			ClientPrefs.setOption('naughtiness', true);
+		if (ClientPrefs.getOption('notesplashes') == null)
+			ClientPrefs.setOption('notesplashes', true);
 	}
 }

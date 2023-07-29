@@ -18,14 +18,12 @@ import Controls.KeyboardScheme;
 
 class GameplayState extends MusicBeatState
 {
-	//public static var framerate:Int = 144;
-
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 	var settingsSave:FlxSave = new FlxSave();
 
 	var gtText:FlxText;
 
-	var menuItems:Array<String> = ['Ghost Tapping', 'Mods', 'ME Watermarks In Gameplay'];
+	var menuItems:Array<String> = ['Ghost Tapping', 'Mods', 'ME Watermarks In Gameplay', 'Framerate', 'Note Splashes'];
 	var curSelected:Int = 0;
 
 	public var isFreeplayItem:Bool = false;
@@ -72,6 +70,8 @@ class GameplayState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+		
+        FlxG.stage.frameRate = ClientPrefs.getOption('gameFrameRate');
 
 		if (controls.UP_P)
 			changeSelection(-1);
@@ -101,15 +101,22 @@ class GameplayState extends MusicBeatState
 
 				gtText.text = 'A watermark for the engine (inside of a song) is set to ${ClientPrefs.getOption('MegaEngineWatermarks')}. This also includes a song watermark above.';
 
-			/*case "Framerate":
-				if (controls.LEFT_P)
-					if (framerate >20)
-						framerate = framerate - 5;
+			case "Framerate":
+				if (controls.LEFT)
+					if (ClientPrefs.getOption('gameFrameRate') >20)
+						(ClientPrefs.setOption('gameFrameRate', ClientPrefs.getOption('gameFrameRate') - 5));
+				
+				if (controls.RIGHT)
+					if (ClientPrefs.getOption('gameFrameRate') <150)
+						(ClientPrefs.setOption('gameFrameRate', ClientPrefs.getOption('gameFrameRate') + 5));
+				gtText.text = 'Framerate is currently '+ (ClientPrefs.getOption('gameFrameRate')) + ' - Experimental!';
+				//FlxG.stage.frameRate = ClientPrefs.getOption('gameFrameRate');
 
-				if (controls.RIGHT_P)
-					if (framerate <150)
-						framerate = framerate + 5;
-				gtText.text = 'Framerate is currently '+ framerate + ' - Experimental!';*/
+			case "Note Splashes":
+				if (controls.ACCEPT)
+					ClientPrefs.setOption('notesplashes', !ClientPrefs.getOption('notesplashes'));
+	
+				gtText.text = 'Note Splashes are currently set to ${ClientPrefs.getOption('notesplashes')}';
 		}
 	}
 

@@ -13,7 +13,9 @@ class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
-	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Exit to menu'];
+	var menuItems:Array<String> = [];
+	var pauseMenuUI:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Exit to menu'];
+	var difficultyChoices:Array<String> = ['EASY', 'NORMAL', 'HARD', 'BACK'];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
@@ -21,6 +23,8 @@ class PauseSubState extends MusicBeatSubstate
 	public function new(x:Float, y:Float)
 	{
 		super();
+
+		menuItems = pauseMenuUI;
 
 		pauseMusic = new FlxSound().loadEmbedded('assets/music/breakfast' + TitleState.soundExt, true, true);
 		pauseMusic.volume = 0;
@@ -48,6 +52,25 @@ class PauseSubState extends MusicBeatSubstate
 
 		cameras = [FlxG.cameras.list[1]];
 	}
+
+	private function regenMenu():Void
+		{
+			while (grpMenuShit.members.length > 0)
+			{
+				grpMenuShit.remove(grpMenuShit.members[0], true);
+			}
+	
+			for (i in 0...menuItems.length)
+			{
+				var songText:Alphabet = new Alphabet(0, (70 * i) + 30, menuItems[i], true, false);
+				songText.isMenuItem = true;
+				songText.targetY = i;
+				grpMenuShit.add(songText);
+			}
+	
+			curSelected = 0;
+			changeSelection();
+		}
 
 	override function update(elapsed:Float)
 	{
@@ -79,8 +102,24 @@ class PauseSubState extends MusicBeatSubstate
 					close();
 				case "Restart Song":
 					FlxG.resetState();
+				case "Change Difficulty":
+					menuItems = difficultyChoices;
+					regenMenu();
 				case "Exit to menu":
 					FlxG.switchState(new MainMenuState());
+					PlayState.deathCounter = 0;
+
+				case "EASY" | 'NORMAL' | "HARD":
+					PlayState.SONG = Song.loadFromJson(Highscore.formatSong(PlayState.SONG.song.toLowerCase(), curSelected),
+						PlayState.SONG.song.toLowerCase());
+	
+					PlayState.storyDifficulty = curSelected;
+	
+					FlxG.resetState();
+
+				case 'BACK':
+					menuItems = pauseMenuUI;
+					regenMenu();
 			}
 		}
 

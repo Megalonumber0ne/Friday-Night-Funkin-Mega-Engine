@@ -33,6 +33,8 @@ class FreeplayState extends MusicBeatState
 
 	override function create()
 	{	
+		FlxG.stage.frameRate = ClientPrefs.getOption('gameFrameRate');
+		
 		songs = CoolUtil.loadTextLowercase('assets/data/freeplaySongs.txt');
 
 		if (ClientPrefs.getOption('chillMode') == false)

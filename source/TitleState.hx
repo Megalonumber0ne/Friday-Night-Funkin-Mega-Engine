@@ -48,6 +48,8 @@ class TitleState extends MusicBeatState
 
 		ClientPrefs.initOptions();
 
+		FlxG.stage.frameRate = ClientPrefs.getOption('gameFrameRate');
+		
 		Highscore.load();
 
 		if (FlxG.save.data.weekUnlocked != null)
