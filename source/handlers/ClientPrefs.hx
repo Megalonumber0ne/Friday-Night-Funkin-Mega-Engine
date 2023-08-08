@@ -44,5 +44,7 @@ class ClientPrefs
 			ClientPrefs.setOption('naughtiness', true);
 		if (ClientPrefs.getOption('notesplashes') == null)
 			ClientPrefs.setOption('notesplashes', true);
+		if (ClientPrefs.getOption('downscroll') == null)
+			ClientPrefs.setOption('downscroll', false);
 	}
 }

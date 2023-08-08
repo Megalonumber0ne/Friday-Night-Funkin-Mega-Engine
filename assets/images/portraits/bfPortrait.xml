@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="bfPortrait.png">
+	<!-- Created with MY OWN FUCKING HANDS -->
+	<!-- https://www.youtube.com/channel/UCJiGOmngd5RGGHwO1Dctnyg -->
+	<SubTexture name="Boyfriend portrait enter0000" x="168" y="244" width="410" height="300"/>
+</TextureAtlas>

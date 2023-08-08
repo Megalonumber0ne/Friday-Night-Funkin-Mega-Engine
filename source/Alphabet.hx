@@ -267,22 +267,22 @@ class AlphaCharacter extends FlxSprite
 	}
 
 	public function createLetter(letter:String):Void
-	{
-		var letterCase:String = "lowercase";
-		if (letter.toLowerCase() != letter)
 		{
-			letterCase = 'capital';
+			var letterCase:String = "lowercase";
+			if (letter.toLowerCase() != letter)
+			{
+				letterCase = 'capital';
+			}
+	
+			animation.addByPrefix(letter, letter + " " + letterCase, 24);
+			animation.play(letter);
+			updateHitbox();
+	
+			FlxG.log.add('the row' + row);
+	
+			y = (110 - height);
+			y += row * 60;
 		}
-
-		animation.addByPrefix(letter, letter + " " + letterCase, 24);
-		animation.play(letter);
-		updateHitbox();
-
-		FlxG.log.add('the row' + row);
-
-		y = (110 - height);
-		y += row * 60;
-	}
 
 	public function createNumber(letter:String):Void
 	{

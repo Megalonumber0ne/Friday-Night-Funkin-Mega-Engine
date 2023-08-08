@@ -96,10 +96,10 @@ class FreeplayState extends MusicBeatState
 					FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt, 0);
 				}
 			}
-		if (ClientPrefs.getOption('chillMode') == false)
+		if (ClientPrefs.getOption('chillMode') == true)
 			{
 				if (!FlxG.sound.music.playing) {
-					FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt, 0);
+					FlxG.sound.playMusic('assets/music/ChillMenu' + TitleState.soundExt, 0);
 				}
 			}
 

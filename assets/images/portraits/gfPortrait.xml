@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="gfPortrait.png">
+	<!-- Created with MY OWN FUCKING HANDS -->
+	<!-- https://www.youtube.com/channel/UCJiGOmngd5RGGHwO1Dctnyg -->
+	<SubTexture name="GF portrait enter0000" x="207" y="144" width="323" height="421"/>
+</TextureAtlas>

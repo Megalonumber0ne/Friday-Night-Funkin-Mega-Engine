@@ -23,7 +23,7 @@ class GameplayState extends MusicBeatState
 
 	var gtText:FlxText;
 
-	var menuItems:Array<String> = ['Ghost Tapping', 'Mods', 'ME Watermarks In Gameplay', 'Framerate', 'Note Splashes'];
+	var menuItems:Array<String> = ['Ghost Tapping', 'Mods', 'ME Watermarks In Gameplay', 'Framerate', 'Note Splashes', 'Downscroll'];
 	var curSelected:Int = 0;
 
 	public var isFreeplayItem:Bool = false;
@@ -117,6 +117,12 @@ class GameplayState extends MusicBeatState
 					ClientPrefs.setOption('notesplashes', !ClientPrefs.getOption('notesplashes'));
 	
 				gtText.text = 'Note Splashes are currently set to ${ClientPrefs.getOption('notesplashes')}';
+
+			case "Downscroll":
+				if (controls.ACCEPT)
+					ClientPrefs.setOption('downscroll', !ClientPrefs.getOption('downscroll'));
+		
+				gtText.text = 'Downscroll is currently set to ${ClientPrefs.getOption('downscroll')}';
 		}
 	}
 

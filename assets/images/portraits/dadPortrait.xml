@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="dadPortrait.png">
+	<!-- Created with MY OWN FUCKING HANDS -->
+	<!-- https://www.youtube.com/channel/UCJiGOmngd5RGGHwO1Dctnyg -->
+	<SubTexture name="Dad portrait enter0000" x="235" y="207" width="302" height="450"/>
+</TextureAtlas>

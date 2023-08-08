@@ -1,5 +1,7 @@
 package;
 
+import handlers.Files;
+import flixel.math.FlxRect;
 import handlers.Paths;
 import stagestuff.BackgroundDancer;
 import Section.SwagSection;
@@ -39,6 +41,8 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
+	var inCutscene:Bool = false;
+
 	public static var deathCounter:Int = 0;
 	public static var songAccuracy:Float = 0;
 	public var coolNoteFloat:Float = 0; 
@@ -150,22 +154,13 @@ class PlayState extends MusicBeatState
 		switch (SONG.song.toLowerCase())
 		{
 			case 'tutorial':
-				dialogue = ["Hey you're pretty cute.", 'Use the arrow keys to keep up \nwith me singing.'];
+				dialogue = CoolUtil.loadText(Paths.txt('tutorial/dialogue'));
 			case 'bopeebo':
-				dialogue = [
-					'HEY!',
-					"You think you can just sing\nwith my daughter like that?",
-					"If you want to date her...",
-					"You're going to have to go \nthrough ME first!"
-				];
+				dialogue = CoolUtil.loadText(Paths.txt('bopeebo/dialogue'));
 			case 'fresh':
-				dialogue = ["Not too shabby boy.", ""];
+				dialogue = CoolUtil.loadText(Paths.txt('fresh/dialogue'));
 			case 'dadbattle':
-				dialogue = [
-					"gah you think you're hot stuff?",
-					"If you can beat me here...",
-					"Only then I will even CONSIDER letting you\ndate my daughter!"
-				];
+				dialogue = CoolUtil.loadText(Paths.txt('dadbattle/dialogue'));
 		}
 
 		if (SONG.song.toLowerCase() == 'bopeebo' || SONG.song.toLowerCase() == 'fresh' || SONG.song.toLowerCase() == 'dadbattle' || SONG.song.toLowerCase() == 'tutorial')
@@ -196,6 +191,7 @@ class PlayState extends MusicBeatState
 
 		if (SONG.song.toLowerCase() == 'spookeez' || SONG.song.toLowerCase() == 'south' || SONG.song.toLowerCase() == 'monster')
 		{
+			curStage = 'spooky';
 			halloweenLevel = true;
 
 			var hallowTex = FlxAtlasFrames.fromSparrow('assets/images/stages/week2/halloween_bg.png', 'assets/images/stages/week2/halloween_bg.xml');
@@ -338,9 +334,7 @@ class PlayState extends MusicBeatState
 		}
 
 		var doof:DialogueBox = new DialogueBox(false, dialogue);
-		doof.y = FlxG.height * 0.5;
 		doof.scrollFactor.set();
-		//add (doof);
 		doof.finishThing = startCountdown;
 
 		Conductor.songPosition = -5000;
@@ -412,7 +406,13 @@ class PlayState extends MusicBeatState
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 
-		startCountdown();
+		if (isStoryMode)
+			{
+				if (Assets.exists(('assets/data/${curSong.toLowerCase()}/dialogue.txt')))
+					dialogueIntro(doof);
+				else
+					startCountdown();
+			}
 
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 
@@ -451,18 +451,54 @@ class PlayState extends MusicBeatState
 		else
 			deathWatermark.text = 'Deaths: ' + '${deathCounter}';
 
-		if (ClientPrefs.getOption('showInfoText')){
-			add(infoTxt);
-		}
-
 		if (ClientPrefs.getOption('MegaEngineWatermarks') == true)
 			add(engineWatermark);
 			add(songWatermark);
 			add(deathWatermark);
 
+		if (ClientPrefs.getOption('showInfoText')){
+			add(infoTxt);
+		}
+
+		function dialogueIntro(?dialogueBox:DialogueBox):Void
+			{
+				var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
+				black.scrollFactor.set();
+				add(black);
+			
+				new FlxTimer().start(0.1, function(tmr:FlxTimer)
+				{
+					black.alpha -= 0.15;
+			
+					if (black.alpha > 0)
+					{
+						tmr.reset(0.1);
+					}
+					else
+					{
+						if (dialogueBox != null)
+						{
+							inCutscene = true;
+							{
+								add(dialogueBox);
+							}
+						}
+						else
+							startCountdown();
+			
+						remove(black);
+					}
+				});
+			}
+
 		super.create();
 	}
 
+	function dialogueIntro(?dialogueBox:DialogueBox):Void
+		{
+			add(dialogueBox);
+		}
+	
 	var startTimer:FlxTimer;
 
 	function startCountdown():Void
@@ -988,10 +1024,25 @@ class PlayState extends MusicBeatState
 						daNote.active = true;
 					}
 
+					daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
+
+					if (daNote.isSustainNote
+						&& daNote.y + daNote.offset.y <= strumLine.y + Note.swagWidth / 2
+						&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
+					{
+						var swagRect = new FlxRect(0, strumLine.y + Note.swagWidth / 2 - daNote.y, daNote.width * 2, daNote.height * 2);
+						swagRect.y /= daNote.scale.y;
+						swagRect.height -= swagRect.y;
+	
+						daNote.clipRect = swagRect;
+					}
+					
 					if (!daNote.mustPress && daNote.wasGoodHit)
 					{
 						if (SONG.song != 'Tutorial')
 							camZooming = true;
+							if (SONG.needsVoices)
+								vocals.volume = 1;
 
 						var altAnim:String = "";
 
@@ -1520,7 +1571,10 @@ class PlayState extends MusicBeatState
 
 		if (generatedMusic)
 		{
-			notes.sort(FlxSort.byY, FlxSort.DESCENDING);
+			//if (ClientPrefs.getOption('downscroll') == false)
+				notes.sort(FlxSort.byY, FlxSort.DESCENDING);
+			//else
+				//notes.sort(FlxSort.byY, FlxSort.ASCENDING);
 		}
 
 		if (SONG.notes[Math.floor(curStep / 16)] != null)

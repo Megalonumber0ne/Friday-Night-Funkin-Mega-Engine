@@ -37,6 +37,11 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		super.update(elapsed);
 
+		if (FlxG.mouse.wheel != 0)
+			{
+				FlxG.camera.zoom -= (FlxG.mouse.wheel * FlxG.camera.zoom * 0.4);
+			}
+
 		if (controls.ACCEPT)
 		{
 			endBullshit();
