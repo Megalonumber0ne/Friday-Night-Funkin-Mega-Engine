@@ -47,9 +47,6 @@ class DialogueBox extends FlxSpriteGroup
 			case 'thorns':
 				FlxG.sound.playMusic(Paths.music('LunchboxScary'), 0);
 				FlxG.sound.music.fadeIn(1, 0, 0.8);
-			//case 'fading':
-				//FlxG.sound.playMusic(Paths.music('city_ambience'), 0);
-				//FlxG.sound.music.fadeIn(1, 0, 0.8);
 		}
 
 		bgFade = new FlxSprite(-200, -200).makeGraphic(Std.int(FlxG.width * 1.3), Std.int(FlxG.height * 1.3), 0xFFB3DFd8);
@@ -72,28 +69,7 @@ class DialogueBox extends FlxSpriteGroup
 		var hasDialog = false;
 		switch (PlayState.SONG.song.toLowerCase())
 		{
-			case 'tutorial':
-				hasDialog = true;
-				
-				box.frames = Paths.getSparrowAtlas('ui/speech_bubble_talking');
-				box.animation.addByIndices('normal', 'speech bubble normal1', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], "", 24, true);
-				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
-
-			case 'bopeebo':
-				hasDialog = true;
-				
-				box.frames = Paths.getSparrowAtlas('ui/speech_bubble_talking');
-				box.animation.addByIndices('normal', 'speech bubble normal1', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], "", 24, true);
-				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
-
-			case 'fresh':
-				hasDialog = true;
-				
-				box.frames = Paths.getSparrowAtlas('ui/speech_bubble_talking');
-				box.animation.addByIndices('normal', 'speech bubble normal1', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], "", 24, true);
-				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
-
-			case 'dadbattle':
+			case 'tutorial', 'bopeebo', 'fresh', 'dadbattle', 'spookeez', 'south', 'pico', 'philly nice', 'blammed', 'satin panties', 'high', 'milf', 'cocoa', 'eggnog':
 				hasDialog = true;
 				
 				box.frames = Paths.getSparrowAtlas('ui/speech_bubble_talking');
@@ -102,20 +78,20 @@ class DialogueBox extends FlxSpriteGroup
 
 			case 'senpai':
 				hasDialog = true;
-				box.frames = Paths.getSparrowAtlas('stages/week6/pixelUI/dialogueBox-pixel');
+				box.frames = Paths.getSparrowAtlas('ui/pixelUI/dialogueBox-pixel');
 				box.animation.addByPrefix('normalOpen', 'Text Box Appear', 24, false);
 				box.animation.addByIndices('normal', 'Text Box Appear', [4], "", 24);
 			case 'roses':
 				hasDialog = true;
 				FlxG.sound.play(Paths.sound('ANGRY_TEXT_BOX'));
 
-				box.frames = Paths.getSparrowAtlas('stages/week6/pixelUI/dialogueBox-senpaiMad');
+				box.frames = Paths.getSparrowAtlas('ui/pixelUI/dialogueBox-senpaiMad');
 				box.animation.addByPrefix('normalOpen', 'SENPAI ANGRY IMPACT SPEECH', 24, false);
 				box.animation.addByIndices('normal', 'SENPAI ANGRY IMPACT SPEECH', [4], "", 24);
 
 			case 'thorns':
 				hasDialog = true;
-				box.frames = Paths.getSparrowAtlas('stages/week6/pixelUI/dialogueBox-evil');
+				box.frames = Paths.getSparrowAtlas('ui/pixelUI/dialogueBox-evil');
 				box.animation.addByPrefix('normalOpen', 'Spirit Textbox spawn', 24, false);
 				box.animation.addByIndices('normal', 'Spirit Textbox spawn', [11], "", 24);
 
@@ -155,49 +131,138 @@ class DialogueBox extends FlxSpriteGroup
 
 
 		if(PlayState.SONG.song.toLowerCase()=='tutorial')
-		{
-			portraitLeft = new FlxSprite(100, 175);
-			portraitLeft.frames = Paths.getSparrowAtlas('portraits/gfPortrait');
-			portraitLeft.animation.addByPrefix('enter', 'GF portrait enter', 24, false);
-			portraitLeft.setGraphicSize(Std.int(portraitLeft.width * 0.9)); ///*PlayState.daPixelZoom*/ 6  * 0.9));
-			portraitLeft.updateHitbox();
-			portraitLeft.scrollFactor.set();
-			add(portraitLeft);
-			portraitLeft.visible = false;
-			portraitLeft.antialiasing = true;
+			{
+				portraitLeft = new FlxSprite(100, 175);
+				portraitLeft.frames = Paths.getSparrowAtlas('portraits/gfPortrait');
+				portraitLeft.animation.addByPrefix('enter', 'GF portrait enter', 24, false);
+				portraitLeft.setGraphicSize(Std.int(portraitLeft.width * 0.9)); ///*PlayState.daPixelZoom*/ 6  * 0.9));
+				portraitLeft.updateHitbox();
+				portraitLeft.scrollFactor.set();
+				add(portraitLeft);
+				portraitLeft.visible = false;
+				portraitLeft.antialiasing = true;
 
-			portraitRight = new FlxSprite(750, 185);
-			portraitRight.frames = Paths.getSparrowAtlas('portraits/bfPortrait');
-			portraitRight.animation.addByPrefix('enter', 'Boyfriend portrait enter', 24, false);
-			portraitRight.setGraphicSize(Std.int(portraitRight.width * 0.9)); ///*PlayState.daPixelZoom*/ 6  * 0.9));
-			portraitRight.updateHitbox();
-			portraitRight.scrollFactor.set();
-			add(portraitRight);
-			portraitRight.visible = false;
-			portraitRight.antialiasing = true;
-		}
+				portraitRight = new FlxSprite(750, 185);
+				portraitRight.frames = Paths.getSparrowAtlas('portraits/bfPortrait');
+				portraitRight.animation.addByPrefix('enter', 'Boyfriend portrait enter', 24, false);
+				portraitRight.setGraphicSize(Std.int(portraitRight.width * 0.9)); ///*PlayState.daPixelZoom*/ 6  * 0.9));
+				portraitRight.updateHitbox();
+				portraitRight.scrollFactor.set();
+				add(portraitRight);
+				portraitRight.visible = false;
+				portraitRight.antialiasing = true;
+			}
 		if(PlayState.SONG.song.toLowerCase()=='bopeebo' || PlayState.SONG.song.toLowerCase()=='fresh' || PlayState.SONG.song.toLowerCase()=='dadbattle')
-		{
-			portraitRight = new FlxSprite(750, 185);
-			portraitRight.frames = Paths.getSparrowAtlas('portraits/bfPortrait');
-			portraitRight.animation.addByPrefix('enter', 'Boyfriend portrait enter', 24, false);
-			portraitRight.setGraphicSize(Std.int(portraitRight.width * 0.9)); ///*PlayState.daPixelZoom*/ 6  * 0.9));
-			portraitRight.updateHitbox();
-			portraitRight.scrollFactor.set();
-			add(portraitRight);
-			portraitRight.visible = false;
-			portraitRight.antialiasing = true;
+			{
+				portraitRight = new FlxSprite(750, 185);
+				portraitRight.frames = Paths.getSparrowAtlas('portraits/bfPortrait');
+				portraitRight.animation.addByPrefix('enter', 'Boyfriend portrait enter', 24, false);
+				portraitRight.setGraphicSize(Std.int(portraitRight.width * 0.9)); ///*PlayState.daPixelZoom*/ 6  * 0.9));
+				portraitRight.updateHitbox();
+				portraitRight.scrollFactor.set();
+				add(portraitRight);
+				portraitRight.visible = false;
+				portraitRight.antialiasing = true;
 
-			portraitLeft = new FlxSprite(100, 140);
-			portraitLeft.frames = Paths.getSparrowAtlas('portraits/dadPortrait');
-			portraitLeft.animation.addByPrefix('enter', 'Dad portrait enter', 24, false);
-			portraitLeft.setGraphicSize(Std.int(portraitLeft.width * 0.9)); ///*PlayState.daPixelZoom*/ 6  * 0.9));
-			portraitLeft.updateHitbox();
-			portraitLeft.scrollFactor.set();
-			add(portraitLeft);
-			portraitLeft.visible = false;
-			portraitLeft.antialiasing = true;
-		}
+				portraitLeft = new FlxSprite(100, 140);
+				portraitLeft.frames = Paths.getSparrowAtlas('portraits/dadPortrait');
+				portraitLeft.animation.addByPrefix('enter', 'Dad portrait enter', 24, false);
+				portraitLeft.setGraphicSize(Std.int(portraitLeft.width * 0.9)); ///*PlayState.daPixelZoom*/ 6  * 0.9));
+				portraitLeft.updateHitbox();
+				portraitLeft.scrollFactor.set();
+				add(portraitLeft);
+				portraitLeft.visible = false;
+				portraitLeft.antialiasing = true;
+			}
+		if(PlayState.SONG.song.toLowerCase()=='spookeez' || PlayState.SONG.song.toLowerCase()=='south')
+			{
+				portraitRight = new FlxSprite(750, 185);
+				portraitRight.frames = Paths.getSparrowAtlas('portraits/bfPortrait');
+				portraitRight.animation.addByPrefix('enter', 'Boyfriend portrait enter', 24, false);
+				portraitRight.setGraphicSize(Std.int(portraitRight.width * 0.9)); ///*PlayState.daPixelZoom*/ 6  * 0.9));
+				portraitRight.updateHitbox();
+				portraitRight.scrollFactor.set();
+				add(portraitRight);
+				portraitRight.visible = false;
+				portraitRight.antialiasing = true;
+	
+				portraitLeft = new FlxSprite(100, 140);
+				portraitLeft.frames = Paths.getSparrowAtlas('portraits/spookyPortrait');
+				portraitLeft.animation.addByPrefix('enter', 'Spooky portrait enter', 24, false);
+				portraitLeft.setGraphicSize(Std.int(portraitLeft.width * 0.9)); ///*PlayState.daPixelZoom*/ 6  * 0.9));
+				portraitLeft.updateHitbox();
+				portraitLeft.scrollFactor.set();
+				add(portraitLeft);
+				portraitLeft.visible = false;
+				portraitLeft.antialiasing = true;
+			}
+		if(PlayState.SONG.song.toLowerCase()=='pico' || PlayState.SONG.song.toLowerCase()=='philly nice' || PlayState.SONG.song.toLowerCase()=='blammed')
+			{
+				portraitRight = new FlxSprite(750, 185);
+				portraitRight.frames = Paths.getSparrowAtlas('portraits/bfPortrait');
+				portraitRight.animation.addByPrefix('enter', 'Boyfriend portrait enter', 24, false);
+				portraitRight.setGraphicSize(Std.int(portraitRight.width * 0.9)); ///*PlayState.daPixelZoom*/ 6  * 0.9));
+				portraitRight.updateHitbox();
+				portraitRight.scrollFactor.set();
+				add(portraitRight);
+				portraitRight.visible = false;
+				portraitRight.antialiasing = true;
+		
+				portraitLeft = new FlxSprite(100, 140);
+				portraitLeft.frames = Paths.getSparrowAtlas('portraits/picoPortrait');
+				portraitLeft.animation.addByPrefix('enter', 'Pico portrait enter', 24, false);
+				portraitLeft.setGraphicSize(Std.int(portraitLeft.width * 0.9)); ///*PlayState.daPixelZoom*/ 6  * 0.9));
+				portraitLeft.updateHitbox();
+				portraitLeft.scrollFactor.set();
+				portraitLeft.flipX = true;
+				add(portraitLeft);
+				portraitLeft.visible = false;
+				portraitLeft.antialiasing = true;
+			}
+		if(PlayState.SONG.song.toLowerCase()=='satin panties' || PlayState.SONG.song.toLowerCase()=='high' || PlayState.SONG.song.toLowerCase()=='milf')
+			{
+				portraitRight = new FlxSprite(750, 185);
+				portraitRight.frames = Paths.getSparrowAtlas('portraits/bfPortrait');
+				portraitRight.animation.addByPrefix('enter', 'Boyfriend portrait enter', 24, false);
+				portraitRight.setGraphicSize(Std.int(portraitRight.width * 0.9)); ///*PlayState.daPixelZoom*/ 6  * 0.9));
+				portraitRight.updateHitbox();
+				portraitRight.scrollFactor.set();
+				add(portraitRight);
+				portraitRight.visible = false;
+				portraitRight.antialiasing = true;
+		
+				portraitLeft = new FlxSprite(100, 35);
+				portraitLeft.frames = Paths.getSparrowAtlas('portraits/momPortrait');
+				portraitLeft.animation.addByPrefix('enter', 'Mom portrait enter', 24, false);
+				portraitLeft.setGraphicSize(Std.int(portraitLeft.width * 0.9)); ///*PlayState.daPixelZoom*/ 6  * 0.9));
+				portraitLeft.updateHitbox();
+				portraitLeft.scrollFactor.set();
+				add(portraitLeft);
+				portraitLeft.visible = false;
+				portraitLeft.antialiasing = true;
+			}
+		if(PlayState.SONG.song.toLowerCase()=='cocoa' || PlayState.SONG.song.toLowerCase()=='eggnog')
+			{
+				portraitRight = new FlxSprite(750, 185);
+				portraitRight.frames = Paths.getSparrowAtlas('portraits/bfPortrait');
+				portraitRight.animation.addByPrefix('enter', 'Boyfriend portrait enter', 24, false);
+				portraitRight.setGraphicSize(Std.int(portraitRight.width * 0.9)); ///*PlayState.daPixelZoom*/ 6  * 0.9));
+				portraitRight.updateHitbox();
+				portraitRight.scrollFactor.set();
+				add(portraitRight);
+				portraitRight.visible = false;
+				portraitRight.antialiasing = true;
+		
+				portraitLeft = new FlxSprite(100, 140);
+				portraitLeft.frames = Paths.getSparrowAtlas('portraits/parentPortrait');
+				portraitLeft.animation.addByPrefix('enter', 'Parents portrait enter', 24, false);
+				portraitLeft.setGraphicSize(Std.int(portraitLeft.width * 0.9)); ///*PlayState.daPixelZoom*/ 6  * 0.9));
+				portraitLeft.updateHitbox();
+				portraitLeft.scrollFactor.set();
+				add(portraitLeft);
+				portraitLeft.visible = false;
+				portraitLeft.antialiasing = true;
+			}	
 
 		box.animation.play('normalOpen');
 		box.setGraphicSize(Std.int(box.width * 0.9)); ///*PlayState.daPixelZoom*/ 6  * 0.9));
@@ -206,7 +271,7 @@ class DialogueBox extends FlxSpriteGroup
 
 		box.screenCenter(X);
 
-		handSelect = new FlxSprite(FlxG.width * 0.9, FlxG.height * 0.9).loadGraphic(Paths.image('stages/week6/pixelUI/hand_textbox'));
+		handSelect = new FlxSprite(FlxG.width * 0.9, FlxG.height * 0.9).loadGraphic(Paths.image('ui/pixelUI/hand_textbox'));
 		add(handSelect);
 		
 		if (PlayState.SONG.song.toLowerCase()=='bopeebo')

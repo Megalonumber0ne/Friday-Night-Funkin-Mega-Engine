@@ -19,7 +19,11 @@ class BuildNumber {
         //File.saveContent(".build", Std.string(buildNumber));
         }
         else {
-            buildNumber = Std.parseInt(File.getContent("export/release/.build"));
+            //buildNumber = Std.parseInt(File.getContent("export/release/.build"));
+            var releaseBuilds = Std.parseInt(File.getContent("export/release/.build"));
+            var debugBuilds = Std.parseInt(File.getContent("export/debug/.build"));
+            
+            buildNumber = (releaseBuilds + debugBuilds);
             // File.saveContent(".build", Std.string(buildNumber + 1));
         }
         #end

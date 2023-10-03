@@ -10,7 +10,7 @@ import flixel.sound.FlxSound;
 import flixel.util.FlxColor;
 
 class PauseSubState extends MusicBeatSubstate
-{
+{	
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];

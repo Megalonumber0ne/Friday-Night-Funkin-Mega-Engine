@@ -35,7 +35,9 @@ class Character extends FlxSprite
 			charIcon == curCharacter;
 
 		var tex:FlxAtlasFrames;
-		antialiasing = true;
+
+		if (!curCharacter.endsWith('-pixel'))
+			antialiasing = true;
 
 		switch (curCharacter)
 		{
@@ -81,6 +83,24 @@ class Character extends FlxSprite
 				hpColor = (0xff31b0d1);
 				charIcon = 'bf';
 
+			case 'bf-dead':
+				var tex = FlxAtlasFrames.fromSparrow('assets/images/characters/BF-Dead.png', 'assets/images/characters/BF-Dead.xml');
+				frames = tex;
+				animation.addByPrefix('idle', "BF dies", 24, false);
+				animation.addByPrefix('firstDeath', "BF dies", 24, false);
+				animation.addByPrefix('deathLoop', "BF Dead Loop", 24, true);
+				animation.addByPrefix('deathConfirm', "BF Dead confirm", 24, false);
+				animation.play('firstDeath');
+	
+				addOffset('firstDeath', 37, 11);
+				addOffset('deathLoop', 37, 5);
+				addOffset('deathConfirm', 37, 69);
+				playAnim('firstDeath');
+				updateHitbox();
+				flipX = true;
+				charIcon = 'bf-pixel';
+				hpColor = 0xff7bd6f6;
+
 			case 'bf-car':
 				var tex = FlxAtlasFrames.fromSparrow('assets/images/characters/bfCar.png', 'assets/images/characters/bfCar.xml');
 				frames = tex;
@@ -105,10 +125,97 @@ class Character extends FlxSprite
 				addOffset("singLEFTmiss", 12, 24);
 				addOffset("singDOWNmiss", -11, -19);
 				playAnim('idle');
+				antialiasing = true;
 
 				flipX = true;
 				hpColor = (0xff31b0d1);
 				charIcon = 'bf';
+
+			case 'bf-christmas':
+				var tex = FlxAtlasFrames.fromSparrow('assets/images/characters/bfChristmas.png', 'assets/images/characters/bfChristmas.xml');
+				frames = tex;
+				animation.addByPrefix('idle', 'BF idle dance', 24, false);
+				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
+				animation.addByPrefix('singLEFT', 'BF NOTE LEFT0', 24, false);
+				animation.addByPrefix('singRIGHT', 'BF NOTE RIGHT0', 24, false);
+				animation.addByPrefix('singDOWN', 'BF NOTE DOWN0', 24, false);
+				animation.addByPrefix('singUPmiss', 'BF NOTE UP MISS', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'BF NOTE LEFT MISS', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'BF NOTE RIGHT MISS', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'BF NOTE DOWN MISS', 24, false);
+				animation.addByPrefix('hey', 'BF HEY', 24, false);
+	
+				addOffset('idle', -5);
+				addOffset("singUP", -29, 27);
+				addOffset("singRIGHT", -38, -7);
+				addOffset("singLEFT", 12, -6);
+				addOffset("singDOWN", -10, -50);
+				addOffset("singUPmiss", -29, 27);
+				addOffset("singRIGHTmiss", -30, 21);
+				addOffset("singLEFTmiss", 12, 24);
+				addOffset("singDOWNmiss", -11, -19);
+				addOffset("hey", 7, 4);
+	
+				playAnim('idle');
+	
+				flipX = true;
+				hpColor = (0xff31b0d1);
+				charIcon = 'bf';
+				antialiasing = true;
+
+			case 'bf-pixel':
+				frames = FlxAtlasFrames.fromSparrow('assets/images/characters/bfPixel.png', 'assets/images/characters/bfPixel.xml');
+				animation.addByPrefix('idle', 'BF IDLE', 24, false);
+				animation.addByPrefix('singUP', 'BF UP NOTE', 24, false);
+				animation.addByPrefix('singLEFT', 'BF LEFT NOTE', 24, false);
+				animation.addByPrefix('singRIGHT', 'BF RIGHT NOTE', 24, false);
+				animation.addByPrefix('singDOWN', 'BF DOWN NOTE', 24, false);
+				animation.addByPrefix('singUPmiss', 'BF UP MISS', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'BF LEFT MISS', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'BF RIGHT MISS', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'BF DOWN MISS', 24, false);
+	
+				addOffset('idle');
+				addOffset("singUP");
+				addOffset("singRIGHT");
+				addOffset("singLEFT");
+				addOffset("singDOWN");
+				addOffset("singUPmiss");
+				addOffset("singRIGHTmiss");
+				addOffset("singLEFTmiss");
+				addOffset("singDOWNmiss");
+	
+				setGraphicSize(Std.int(width * 6));
+				updateHitbox();
+	
+				playAnim('idle');
+	
+				width -= 100;
+				height -= 100;
+	
+				antialiasing = false;
+	
+				flipX = true;
+				hpColor = 0xff7bd6f6;
+
+			case 'bf-pixel-dead':
+				frames = FlxAtlasFrames.fromSparrow('assets/images/characters/bfPixelsDEAD.png', 'assets/images/characters/bfPixelsDEAD.xml');
+				animation.addByPrefix('singUP', "BF Dies pixel", 24, false);
+				animation.addByPrefix('firstDeath', "BF Dies pixel", 24, false);
+				animation.addByPrefix('deathLoop', "Retry Loop", 24, true);
+				animation.addByPrefix('deathConfirm', "RETRY CONFIRM", 24, false);
+				animation.play('firstDeath');
+	
+				addOffset('firstDeath');
+				addOffset('deathLoop', -37);
+				addOffset('deathConfirm', -37);
+				playAnim('firstDeath');
+				setGraphicSize(Std.int(width * 6));
+				updateHitbox();
+				antialiasing = false;
+				flipX = true;
+				charIcon = 'bf-pixel';
+				hpColor = 0xff7bd6f6;
 
 			case 'gf':
 				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/GF_assets.png', 'assets/images/characters/GF_assets.xml');
@@ -143,6 +250,7 @@ class Character extends FlxSprite
 				playAnim('danceRight');
 				charIcon = 'gf';
 				hpColor = (0xff9d0049);
+				antialiasing = true;
 
 			case 'gf-car':
 				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/gfCar.png', 'assets/images/characters/gfCar.xml');
@@ -158,6 +266,63 @@ class Character extends FlxSprite
 				playAnim('danceRight');
 				charIcon = 'gf';
 				hpColor = (0xff9d0049);
+				antialiasing = true;
+
+			case 'gf-christmas':
+				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/gfChristmas.png', 'assets/images/characters/gfChristmas.xml');
+				frames = tex;
+				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
+				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
+				animation.addByPrefix('singRIGHT', 'GF Right Note', 24, false);
+				animation.addByPrefix('singUP', 'GF Up Note', 24, false);
+				animation.addByPrefix('singDOWN', 'GF Down Note', 24, false);
+				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
+				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
+				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+				animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
+				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
+				animation.addByPrefix('scared', 'GF FEAR', 24);
+	
+				addOffset('cheer');
+				addOffset('sad', -2, -2);
+				addOffset('danceLeft', 0, -9);
+				addOffset('danceRight', 0, -9);
+	
+				addOffset("singUP", 0, 4);
+				addOffset("singRIGHT", 0, -20);
+				addOffset("singLEFT", 0, -19);
+				addOffset("singDOWN", 0, -20);
+				addOffset('hairBlow', 45, -8);
+				addOffset('hairFall', 0, -9);
+	
+				addOffset('scared', -2, -17);
+	
+				playAnim('danceRight');
+				charIcon = 'gf';
+				hpColor = (0xff9d0049);
+				antialiasing = true;
+
+			case 'gf-pixel':
+				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/gfPixel.png', 'assets/images/characters/gfPixel.xml');
+				antialiasing = false;
+				frames = tex;
+				animation.addByIndices('singUP', 'GF IDLE', [2], "", 24, false);
+				animation.addByIndices('danceLeft', 'GF IDLE', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
+				animation.addByIndices('danceRight', 'GF IDLE', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+	
+				addOffset('danceLeft', 0);
+				addOffset('danceRight', 0);
+	
+				playAnim('danceRight');
+	
+				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+				updateHitbox();
+				antialiasing = false;
+				charIcon = 'gf';
+				hpColor = (0xff9d0049);
+
+				width -= 100;
+				height -= 100;
 
 			case 'dad':
 				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/DADDY_DEAREST.png', 'assets/images/characters/DADDY_DEAREST.xml');
@@ -176,6 +341,7 @@ class Character extends FlxSprite
 				addOffset("singDOWN", 0, -30);
 				charIcon = 'icon-dad';
 				hpColor = (0xffaf66ce);
+				antialiasing = true;
 
 			case 'spooky':
 				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/spooky_kids_assets.png', 'assets/images/characters/spooky_kids_assets.xml');
@@ -198,6 +364,7 @@ class Character extends FlxSprite
 				playAnim('danceRight');
 				charIcon = 'spooky';
 				hpColor = (0xffd57e00);
+				antialiasing = true;
 
 			case 'monster':
 				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/Monster_Assets.png', 'assets/images/characters/Monster_Assets.xml');
@@ -216,6 +383,26 @@ class Character extends FlxSprite
 				playAnim('idle');
 				charIcon = 'monster';
 				hpColor = (0xfff3ff6e);
+				antialiasing = true;
+
+			case 'monster-christmas':
+				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/monsterChristmas.png', 'assets/images/characters/monsterChristmas.xml');
+				frames = tex;
+				animation.addByPrefix('idle', 'monster idle', 24, false);
+				animation.addByPrefix('singUP', 'monster up note', 24, false);
+				animation.addByPrefix('singDOWN', 'monster down', 24, false);
+				animation.addByPrefix('singLEFT', 'Monster left note', 24, false);
+				animation.addByPrefix('singRIGHT', 'Monster Right note', 24, false);
+	
+				addOffset('idle');
+				addOffset("singUP", -20, 50);
+				addOffset("singRIGHT", -51);
+				addOffset("singLEFT", -30);
+				addOffset("singDOWN", -40, -94);
+				playAnim('idle');
+				charIcon = 'monster';
+				hpColor = (0xfff3ff6e);
+				antialiasing = true;
 
 			case 'pico':
 				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/Pico_FNF_assetss.png', 'assets/images/characters/Pico_FNF_assetss.xml');
@@ -254,6 +441,7 @@ class Character extends FlxSprite
 				playAnim('idle');
 				flipX = true;
 				hpColor = (0xffb7d855);
+				antialiasing = true;
 
 			case 'mom-car':
 				tex = FlxAtlasFrames.fromSparrow('assets/images/characters/momCar.png', 'assets/images/characters/momCar.xml');
@@ -277,6 +465,105 @@ class Character extends FlxSprite
 				playAnim('idle');
 				hpColor = (0xffd8558e);
 				charIcon = 'mom';
+				antialiasing = true;
+
+			case 'parents-christmas':
+				frames = FlxAtlasFrames.fromSparrow('assets/images/characters/mom_dad_christmas_assets.png', 'assets/images/characters/mom_dad_christmas_assets.xml');
+				animation.addByPrefix('idle', 'Parent Christmas Idle', 24, false);
+				animation.addByPrefix('singUP', 'Parent Up Note Dad', 24, false);
+				animation.addByPrefix('singDOWN', 'Parent Down Note Dad', 24, false);
+				animation.addByPrefix('singLEFT', 'Parent Left Note Dad', 24, false);
+				animation.addByPrefix('singRIGHT', 'Parent Right Note Dad', 24, false);
+	
+				animation.addByPrefix('singUP-alt', 'Parent Up Note Mom', 24, false);
+				animation.addByPrefix('singDOWN-alt', 'Parent Down Note Mom', 24, false);
+				animation.addByPrefix('singLEFT-alt', 'Parent Left Note Mom', 24, false);
+				animation.addByPrefix('singRIGHT-alt', 'Parent Right Note Mom', 24, false);
+	
+				addOffset('idle');
+				addOffset("singUP", -47, 24);
+				addOffset("singRIGHT", -1, -23);
+				addOffset("singLEFT", -30, 16);
+				addOffset("singDOWN", -31, -29);
+				addOffset("singUP-alt", -47, 24);
+				addOffset("singRIGHT-alt", -1, -24);
+				addOffset("singLEFT-alt", -30, 15);
+				addOffset("singDOWN-alt", -30, -27);
+	
+				playAnim('idle');
+				hpColor = (0xffd8558e);
+				charIcon = 'icon-parents';
+				antialiasing = true;
+
+			case 'senpai':
+				frames = FlxAtlasFrames.fromSparrow('assets/images/characters/senpai.png', 'assets/images/characters/senpai.xml');
+				animation.addByPrefix('idle', 'Senpai Idle', 24, false);
+				animation.addByPrefix('singUP', 'SENPAI UP NOTE', 24, false);
+				animation.addByPrefix('singLEFT', 'SENPAI LEFT NOTE', 24, false);
+				animation.addByPrefix('singRIGHT', 'SENPAI RIGHT NOTE', 24, false);
+				animation.addByPrefix('singDOWN', 'SENPAI DOWN NOTE', 24, false);
+	
+				addOffset('idle', 0, 0);
+				addOffset("singUP", 5, 37);
+				addOffset("singRIGHT");
+				addOffset("singLEFT", 40);
+				addOffset("singDOWN", 14);
+	
+				playAnim('idle');
+	
+				setGraphicSize(Std.int(width * 6));
+				updateHitbox();
+	
+				antialiasing = false;
+				charIcon = 'senpai';
+				hpColor = 0xFFFFAA6F;
+				width -= 100;
+				height -= 100;
+			case 'senpai-angry':
+				frames = FlxAtlasFrames.fromSparrow('assets/images/characters/senpai.png', 'assets/images/characters/senpai.xml');
+				animation.addByPrefix('idle', 'Angry Senpai Idle', 24, false);
+				animation.addByPrefix('singUP', 'Angry Senpai UP NOTE', 24, false);
+				animation.addByPrefix('singLEFT', 'Angry Senpai LEFT NOTE', 24, false);
+				animation.addByPrefix('singRIGHT', 'Angry Senpai RIGHT NOTE', 24, false);
+				animation.addByPrefix('singDOWN', 'Angry Senpai DOWN NOTE', 24, false);
+	
+				addOffset('idle', 0, 0);
+				addOffset("singUP", 5, 37);
+				addOffset("singRIGHT");
+				addOffset("singLEFT", 40);
+				addOffset("singDOWN", 14);
+				playAnim('idle');
+	
+				setGraphicSize(Std.int(width * 6));
+				updateHitbox();
+	
+				antialiasing = false;
+				charIcon = 'senpai';
+				hpColor = 0xFFFFAA6F;
+				width -= 100;
+				height -= 100;
+			case 'spirit':
+				frames = FlxAtlasFrames.fromSpriteSheetPacker('assets/images/characters/spirit.png', 'assets/images/characters/spirit.txt');
+				animation.addByPrefix('idle', "idle spirit_", 24, false);
+				animation.addByPrefix('singUP', "up_", 24, false);
+				animation.addByPrefix('singRIGHT', "right_", 24, false);
+				animation.addByPrefix('singLEFT', "left_", 24, false);
+				animation.addByPrefix('singDOWN', "spirit down_", 24, false);
+
+				addOffset('idle', -220, -280);
+				addOffset('singUP', -220, -240);
+				addOffset("singRIGHT", -220, -280);
+				addOffset("singLEFT", -200, -280);
+				addOffset("singDOWN", 170, 110);
+
+				setGraphicSize(Std.int(width * 6));
+				updateHitbox();
+
+				playAnim('idle');
+
+				antialiasing = false;
+				charIcon = 'spirit';
+				hpColor = 0xFFFF3C6E;
 		}
 	
 		if (isPlayer)
@@ -324,7 +611,7 @@ class Character extends FlxSprite
 	{
 		switch (curCharacter)
 		{
-			case 'gf', 'gf-car':
+			case 'gf', 'gf-car', 'gf-christmas', 'gf-pixel':
 				danced = !danced;
 
 				if (danced)
