@@ -1,4 +1,4 @@
-package stagestuff;
+package stageStuff;
 
 import handlers.Paths;
 import flixel.FlxSprite;
